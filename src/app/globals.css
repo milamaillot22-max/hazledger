@@ -1,26 +1,175 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-jakarta), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-soft: var(--brand-soft);
+  --color-warning: var(--warning);
+  --color-success: var(--success);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ─────────────────────────────────────────────────────────────
+   HazLedger design tokens
+   Off-white matte canvas · Deep Emerald primary · Slate text
+   ───────────────────────────────────────────────────────────── */
+:root {
+  --background: #fafafa;
+  --foreground: #0f172a; /* slate-900 */
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #0a5c36; /* emerald 700 (brand) */
+  --primary-foreground: #ffffff;
+  --brand-deep: #042f1e; /* emerald 950 (brand deep) */
+  --brand-soft: #e8f2ec; /* tinted surface for brand accents */
+  --secondary: #f1f5f9; /* slate-100 */
+  --secondary-foreground: #0f172a;
+  --muted: #f4f4f5;
+  --muted-foreground: #475569; /* slate-600 */
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+  --destructive: #b42318;
+  --warning: #b54708;
+  --success: #0a5c36;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #0a5c36;
+  --chart-1: #0a5c36;
+  --chart-2: #2f7d57;
+  --chart-3: #64748b;
+  --chart-4: #94a3b8;
+  --chart-5: #042f1e;
+  --radius: 0.5rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #0a5c36;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f1f5f9;
+  --sidebar-accent-foreground: #0f172a;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #0a5c36;
+}
+
+/* Dark tokens are kept for the future app shell; the marketing site is light-only. */
+.dark {
+  --background: #0b1210;
+  --foreground: #f1f5f9;
+  --card: #111a17;
+  --card-foreground: #f1f5f9;
+  --popover: #111a17;
+  --popover-foreground: #f1f5f9;
+  --primary: #3fa877;
+  --primary-foreground: #04140d;
+  --brand-deep: #042f1e;
+  --brand-soft: #12261d;
+  --secondary: #1a2420;
+  --secondary-foreground: #f1f5f9;
+  --muted: #1a2420;
+  --muted-foreground: #94a3b8;
+  --accent: #1a2420;
+  --accent-foreground: #f1f5f9;
+  --destructive: #f97066;
+  --warning: #fdb022;
+  --success: #3fa877;
+  --border: #ffffff1a;
+  --input: #ffffff26;
+  --ring: #3fa877;
+  --chart-1: #3fa877;
+  --chart-2: #6cc49a;
+  --chart-3: #94a3b8;
+  --chart-4: #64748b;
+  --chart-5: #d1fae5;
+  --sidebar: #111a17;
+  --sidebar-foreground: #f1f5f9;
+  --sidebar-primary: #3fa877;
+  --sidebar-primary-foreground: #04140d;
+  --sidebar-accent: #1a2420;
+  --sidebar-accent-foreground: #f1f5f9;
+  --sidebar-border: #ffffff1a;
+  --sidebar-ring: #3fa877;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  button:not(:disabled), [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    @apply font-heading tracking-tight text-balance;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--primary) 18%, transparent);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  /* Hairline grid used behind the hero — Linear/Stripe style, no color gradients. */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, var(--border) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, #000 30%, transparent 85%);
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
 }

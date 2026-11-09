@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HazLedger
 
-## Getting Started
+SDS management & OSHA HazCom (29 CFR 1910.1200) compliance SaaS for US workplaces.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 (App Router, Cache Components) · React 19 · TypeScript
+- Tailwind CSS v4 (tokens in `src/app/globals.css`) · shadcn/ui (radix, `components.json`)
+- Fonts: Plus Jakarta Sans (headings, `font-heading`) · Inter (body, `font-sans`)
+- zod for env validation (`src/lib/env.ts`)
+
+## Getting started
 
 ```bash
+cp .env.example .env.local
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+  app/
+    (marketing)/   landing page — navbar, footer, sticky mobile CTA
+    (auth)/        /login, /signup — split-screen layout (Supabase wiring next)
+    (app)/         authenticated shell — /dashboard (SDS library + scanner next)
+  components/
+    ui/            shadcn primitives (add more: npx shadcn@latest add dialog)
+    marketing/     landing sections
+    brand/         logo
+  config/site.ts   brand name, routes, nav, CTA links — single source of truth
+  features/
+    sds/           SDS domain model (16 GHS sections, pictograms, statuses)
+    auth/          auth form shell
+  lib/             utils (cn), env
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Design system
 
-## Learn More
+| Token | Value | Use |
+| --- | --- | --- |
+| `bg-background` | `#FAFAFA` | matte off-white canvas |
+| `bg-primary` | `#0A5C36` | Deep Emerald — CTAs, accents |
+| `bg-brand-deep` | `#042F1E` | dark bands, auth panel |
+| `bg-brand-soft` | `#E8F2EC` | tinted brand surfaces |
+| `text-foreground` | slate-900 | headings, body |
+| `text-muted-foreground` | slate-600 | secondary text |
+| `border-border` | `#E2E8F0` | hairline borders |
 
-To learn more about Next.js, take a look at the following resources:
+Rules: no gradients, hairline borders over shadows, mono eyebrows, one primary CTA per view.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Before launch
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Re-check OSHA penalty floors and HazCom 2024 copy against osha.gov.
+- Replace `siteConfig.links.bookDemo` with a real booking link.
+- Validate every product claim on the page (comparison table, trust badges) against what ships.
