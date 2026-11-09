@@ -14,22 +14,22 @@ const FEATURES: { icon: LucideIcon; title: string; body: string }[] = [
   {
     icon: FileSearch,
     title: "AI SDS scanner",
-    body: "Turns any SDS — scanned, photographed or PDF — into a searchable, structured record.",
+    body: "Turns any SDS or product label — photographed, scanned or PDF — into a searchable, structured record.",
   },
   {
     icon: BellRing,
     title: "Revision alerts",
-    body: "Know when a supplier publishes a newer SDS, before an inspector does.",
+    body: "Know when a dental or veterinary supplier publishes a newer SDS — before an inspector does."
   },
   {
     icon: Boxes,
-    title: "Chemical inventory by location",
-    body: "Map every product to the site, building and work area where it's actually used.",
+    title: "Inventory by room",
+    body: "Map every product to the operatory, sterilization area, lab or surgery suite where it's used.",
   },
   {
     icon: Printer,
     title: "GHS secondary labels",
-    body: "Print compliant workplace labels with pictograms and signal words in one click.",
+    body: "Print compliant labels for decanted disinfectants and spray bottles in one click.",
   },
   {
     icon: ClipboardCheck,
@@ -39,7 +39,7 @@ const FEATURES: { icon: LucideIcon; title: string; body: string }[] = [
   {
     icon: Users,
     title: "Roles & multi-site",
-    body: "Safety managers edit, supervisors review, employees view. One account, every location.",
+    body: "Owners and office managers edit, staff view. One account for every location of your practice.",
   },
 ];
 
@@ -49,7 +49,7 @@ export function Features() {
       <SectionHeading
         eyebrow="Platform"
         title="Everything HazCom asks of you. Nothing it doesn't."
-        description="One focused tool for your SDS library and chemical inventory — not a sprawling EHS suite you'll spend a quarter implementing."
+        description="One focused tool for your SDS library and chemical inventory — built for busy practices, not for factories or EHS departments."
       />
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {FEATURES.map(({ icon: Icon, title, body }) => (

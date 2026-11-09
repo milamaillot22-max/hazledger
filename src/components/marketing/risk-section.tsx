@@ -11,7 +11,7 @@ const STATS = [
   },
   {
     value: "$16,000+",
-    label: "Maximum penalty per serious violation — each missing or outdated SDS can count.",
+    label: "Maximum OSHA penalty per serious violation — each missing or outdated SDS can count.",
   },
   {
     value: "$165,000+",
@@ -24,9 +24,9 @@ export function RiskSection() {
     <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
       <div className="grid gap-12">
         <SectionHeading
-          eyebrow="The cost of a binder"
-          title="An outdated SDS is a citation waiting to happen."
-          description="OSHA requires an SDS for every hazardous chemical, readily accessible to employees during every shift. Paper binders go missing, go stale, and never cover the night crew."
+          eyebrow="Why it matters"
+          title="An outdated SDS binder is a citation waiting to happen."
+          description="OSHA requires an SDS for every hazardous chemical in your practice — disinfectants, etchants, fixatives, anesthetic gases — readily accessible to your team on every shift. Paper binders go missing, go stale, and never make it to the second location."
         />
         <dl className="grid gap-4 md:grid-cols-3">
           {STATS.map((s) => (

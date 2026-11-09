@@ -15,14 +15,15 @@ const BADGES: { icon: LucideIcon; title: string; detail: string }[] = [
   { icon: FileCheck2, title: "Audit trail", detail: "Every change, timestamped" },
 ];
 
-const INDUSTRIES = [
-  "Manufacturing",
-  "Construction",
-  "Auto & fleet",
-  "Facilities",
-  "Labs",
-  "Janitorial",
-  "Agriculture",
+const SPECIALTIES = [
+  "Dental",
+  "Orthodontics",
+  "Oral surgery",
+  "Veterinary",
+  "Dermatology",
+  "Med spas",
+  "Urgent care",
+  "Optometry",
 ];
 
 export function TrustBar() {
@@ -43,8 +44,8 @@ export function TrustBar() {
           ))}
         </ul>
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-border py-4 text-xs text-slate-500">
-          <span className="font-medium text-slate-600">Built for teams in</span>
-          {INDUSTRIES.map((i) => (
+          <span className="font-medium text-slate-600">Built for practices in</span>
+          {SPECIALTIES.map((i) => (
             <span key={i}>{i}</span>
           ))}
         </div>

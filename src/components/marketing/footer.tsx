@@ -10,7 +10,7 @@ export function Footer() {
         <div className="max-w-xs">
           <Logo />
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            SDS management and HazCom compliance for US workplaces.
+            SDS management and HazCom compliance for US dental, veterinary and medical practices.
           </p>
         </div>
         <nav aria-label="Footer" className="grid grid-cols-2 gap-x-16 gap-y-2 text-sm">

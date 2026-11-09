@@ -6,63 +6,63 @@ import { cn } from "@/lib/utils";
 
 /**
  * Static, code-rendered product shot (no screenshot to keep in sync).
- * Sample data only — invented manufacturers, real CAS numbers.
+ * Sample data only — invented brands and manufacturers, real CAS numbers.
  */
 const SAMPLE: SdsRecord[] = [
   {
     id: "1",
-    productName: "Acetone, Technical Grade",
-    manufacturer: "Northfield Chemical",
-    casNumbers: ["67-64-1"],
+    productName: "ClearGuard Surface Disinfectant Wipes",
+    manufacturer: "Northline Medical Supply",
+    casNumbers: ["67-63-0"],
     revisionDate: "2026-03-02",
     signalWord: "Danger",
     pictograms: ["GHS02", "GHS07"],
     status: "current",
-    locationIds: ["paint-booth"],
+    locationIds: ["operatory-1"],
   },
   {
     id: "2",
-    productName: "Sodium Hypochlorite 12.5%",
-    manufacturer: "Keystone Supply Co.",
-    casNumbers: ["7681-52-9"],
+    productName: "Glutaraldehyde 2.5% High-Level Disinfectant",
+    manufacturer: "Brightline Health",
+    casNumbers: ["111-30-8"],
     revisionDate: "2021-08-17",
     signalWord: "Danger",
-    pictograms: ["GHS05"],
+    pictograms: ["GHS05", "GHS06", "GHS08"],
     status: "review_due",
-    locationIds: ["sanitation"],
+    locationIds: ["sterilization"],
   },
   {
     id: "3",
-    productName: "Isopropyl Alcohol 99%",
-    manufacturer: "Northfield Chemical",
-    casNumbers: ["67-63-0"],
+    productName: "Phosphoric Acid Etchant Gel 37%",
+    manufacturer: "Apex Dental Materials",
+    casNumbers: ["7664-38-2"],
     revisionDate: "2025-11-20",
     signalWord: "Danger",
-    pictograms: ["GHS02", "GHS07"],
+    pictograms: ["GHS05"],
     status: "current",
-    locationIds: ["maintenance"],
+    locationIds: ["operatory-2"],
   },
   {
     id: "4",
-    productName: "Toluene",
-    manufacturer: "Lakeshore Solvents",
-    casNumbers: ["108-88-3"],
+    productName: "Formalin 10% Neutral Buffered",
+    manufacturer: "Lakeshore Lab Supply",
+    casNumbers: ["50-00-0"],
     revisionDate: "2026-01-14",
     signalWord: "Danger",
-    pictograms: ["GHS02", "GHS06"],
+    pictograms: ["GHS07", "GHS08"],
     status: "processing",
-    locationIds: ["paint-booth"],
+    locationIds: ["lab"],
   },
   {
     id: "5",
-    productName: "Hydrochloric Acid 31%",
+    productName: "Isoflurane, USP",
     manufacturer: "—",
-    casNumbers: ["7647-01-0"],
+    casNumbers: ["26675-46-7"],
     revisionDate: "",
     signalWord: null,
     pictograms: [],
     status: "missing",
-    locationIds: ["wastewater"],
+    locationIds: ["surgery"],
   },
 ];
 
@@ -107,7 +107,7 @@ export function ProductPreview() {
             <span className="size-2.5 rounded-full bg-slate-200" />
           </div>
           <div className="rounded-md bg-white px-3 py-0.5 text-[11px] text-slate-400 ring-1 ring-slate-200">
-            app.hazledger.com/sds
+            app.hazledger.com/sds-library
           </div>
           <div className="w-10" />
         </div>
@@ -118,12 +118,12 @@ export function ProductPreview() {
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-5 py-4">
               <div>
                 <p className="text-[11px] font-medium tracking-wide text-slate-500 uppercase">
-                  Plant 2 · Dayton, OH
+                  Sunset Family Dental · San Diego, CA
                 </p>
                 <p className="font-heading text-[15px] font-semibold text-foreground">
                   SDS Library
                   <span className="ml-2 font-sans text-xs font-normal text-slate-500 tabular">
-                    412 documents
+                    86 documents
                   </span>
                 </p>
               </div>
@@ -209,24 +209,24 @@ export function ProductPreview() {
                 Audit readiness
               </p>
               <p className="mt-1 font-heading text-3xl font-semibold text-emerald-700 tabular">
-                98.6%
+                97.7%
               </p>
               <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-100">
-                <div className="h-full w-[98.6%] rounded-full bg-success" />
+                <div className="h-full w-[97.7%] rounded-full bg-success" />
               </div>
               <p className="mt-2 text-xs text-slate-500">
-                2 actions before you&apos;re inspection-ready
+                4 actions before you&apos;re inspection-ready
               </p>
             </div>
             <div className="h-px bg-border" />
             <ul className="space-y-2.5 text-xs">
               <li className="flex items-center justify-between">
                 <span className="text-slate-600">Current</span>
-                <span className="font-medium text-slate-900 tabular">406</span>
+                <span className="font-medium text-slate-900 tabular">82</span>
               </li>
               <li className="flex items-center justify-between">
                 <span className="text-slate-600">New revision</span>
-                <span className="font-medium text-warning tabular">5</span>
+                <span className="font-medium text-warning tabular">3</span>
               </li>
               <li className="flex items-center justify-between">
                 <span className="text-slate-600">Missing</span>
@@ -239,8 +239,8 @@ export function ProductPreview() {
                 <QrCode className="size-5 text-primary" />
               </div>
               <div>
-                <p className="text-xs font-medium text-slate-900">Paint booth</p>
-                <p className="text-[11px] text-slate-500">QR poster · 38 SDSs</p>
+                <p className="text-xs font-medium text-slate-900">Operatory 2</p>
+                <p className="text-[11px] text-slate-500">QR poster · 14 SDSs</p>
               </div>
             </div>
           </aside>

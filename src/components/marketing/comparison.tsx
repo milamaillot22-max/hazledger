@@ -13,7 +13,7 @@ const COLUMNS = [siteConfig.name, "Paper binders", "Legacy EHS suites"] as const
 const ROWS: { label: string; cells: [Cell, Cell, Cell] }[] = [
   {
     label: "Time to go live",
-    cells: ["Same day", "Weeks of manual filing", "6–12 week implementation"],
+    cells: ["Same day", "Hours of manual filing", "6–12 week implementation"],
   },
   {
     label: "SDS access on every shift",
@@ -82,7 +82,7 @@ export function Comparison() {
           align="center"
           eyebrow="Compare"
           title="Built to replace the binder — and the bloated suite."
-          description="Most teams come to us from one of two places. Here's what changes."
+          description="Most practices come to us from one of two places. Here's what changes."
         />
 
         <div className="relative mt-14 overflow-x-auto">

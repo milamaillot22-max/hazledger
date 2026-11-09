@@ -15,9 +15,9 @@ export const routes = {
 
 export const siteConfig = {
   name: "HazLedger",
-  tagline: "OSHA HazCom compliance, without the binder",
+  tagline: "OSHA compliance for dental, veterinary & medical practices",
   description:
-    "Scan, index and share every Safety Data Sheet in minutes. HazLedger keeps your SDS library current and your team audit-ready for OSHA 29 CFR 1910.1200.",
+    "Scan and organize every Safety Data Sheet in your dental, veterinary or dermatology practice. HazLedger keeps your SDS library current and your team inspection-ready for OSHA 29 CFR 1910.1200.",
   copyrightYear: 2026,
   contactEmail: "sales@hazledger.com",
   links: {
@@ -28,6 +28,7 @@ export const siteConfig = {
   },
   nav: [
     { label: "Product", href: "#product" },
+    { label: "Specialties", href: "#specialties" },
     { label: "How it works", href: "#how-it-works" },
     { label: "Compare", href: "#compare" },
     { label: "FAQ", href: "#faq" },

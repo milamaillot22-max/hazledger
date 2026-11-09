@@ -1,6 +1,7 @@
 # HazLedger
 
-SDS management & OSHA HazCom (29 CFR 1910.1200) compliance SaaS for US workplaces.
+SDS management & OSHA HazCom (29 CFR 1910.1200) compliance SaaS for US dental,
+veterinary and medical practices.
 
 ## Stack
 
@@ -40,15 +41,28 @@ src/
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `bg-background` | `#FAFAFA` | matte off-white canvas |
-| `bg-primary` | `#0A5C36` | Deep Emerald — CTAs, accents |
-| `bg-brand-deep` | `#042F1E` | dark bands, auth panel |
-| `bg-brand-soft` | `#E8F2EC` | tinted brand surfaces |
-| `text-foreground` | slate-900 | headings, body |
-| `text-muted-foreground` | slate-600 | secondary text |
-| `border-border` | `#E2E8F0` | hairline borders |
+| `bg-background` | `#F8FAFC` | page background |
+| `bg-white` / `bg-card` | `#FFFFFF` | cards (`shadow-lg shadow-slate-200/50`) |
+| `bg-primary` | `#0284C7` | medical blue — buttons, links, key icons |
+| `bg-success` | `#059669` | health emerald — OSHA compliance, success |
+| `bg-brand-soft` | `#F0F9FF` | tinted icon tiles, pills |
+| `text-slate-900` / `text-slate-600` | | headings / body |
 
-Rules: no gradients, hairline borders over shadows, mono eyebrows, one primary CTA per view.
+Rules: bright surfaces only, soft shadows, rounded-2xl cards, blue for actions,
+emerald for compliance. Photos: `src/assets/images` (credits in `CREDITS.md`).
+
+## Push to GitHub
+
+```bash
+# 1. Create an empty private repo (GitHub CLI), then push
+gh repo create hazledger --private --source=. --remote=origin --push
+
+# …or with a repo you created on github.com
+git remote add origin git@github.com:<you>/hazledger.git
+git push -u origin main
+```
+
+`.env.local` is git-ignored — set the same variables in your host (Vercel/Netlify).
 
 ## Before launch
 

@@ -11,12 +11,12 @@ export function FinalCta() {
         <div className="grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.4fr_1fr] lg:items-center lg:p-16">
           <div>
             <h2 className="text-3xl leading-tight font-semibold text-slate-900 sm:text-4xl">
-              Be inspection-ready before your next shift change.
+              Be inspection-ready before your next patient.
             </h2>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">
-              Start free, import your binders, post your first QR code today.
-              If an inspector walks in tomorrow, you&apos;ll have the answer in
-              your pocket.
+              Start free, scan your binder, post your first QR code today. If an
+              OSHA inspector walks into your practice tomorrow, you&apos;ll have
+              the answer in your pocket.
             </p>
           </div>
           <div className="flex flex-col gap-3">

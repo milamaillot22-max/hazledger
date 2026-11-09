@@ -1,57 +1,75 @@
+import Image from "next/image";
 import { Camera, QrCode, Sparkles, type LucideIcon } from "lucide-react";
 
+import hygienePhoto from "@/assets/images/clinic-hygiene.webp";
+import { ScanPhoneMockup } from "@/components/marketing/scan-phone-mockup";
 import { SectionHeading } from "@/components/marketing/section-heading";
 
 const STEPS: { icon: LucideIcon; title: string; body: string; meta: string }[] = [
   {
     icon: Camera,
-    title: "Snap, upload or forward",
-    body: "Photograph the binder page, drop in a PDF, or forward the supplier email. Bulk import handles thousands at once.",
-    meta: "PDF · JPG · email",
+    title: "Snap the label or the SDS",
+    body: "Photograph a disinfectant bottle, drop in a PDF, or forward the supplier email. Bulk import handles your whole binder at once.",
+    meta: "Photo · PDF · email",
   },
   {
     icon: Sparkles,
     title: "We extract all 16 sections",
-    body: "Product, manufacturer, CAS numbers, hazard classes, PPE and first aid are structured automatically — low-confidence fields are flagged for review.",
-    meta: "~30 seconds per SDS",
+    body: "Product, manufacturer, CAS numbers, hazards, PPE and first aid are structured automatically. Anything uncertain is flagged for a quick review.",
+    meta: "About 30 seconds per SDS",
   },
   {
     icon: QrCode,
-    title: "Post a QR code per work area",
-    body: "Employees scan with any phone camera. No app, no login, no barriers to access — exactly what HazCom asks for.",
+    title: "Post a QR code in each room",
+    body: "Operatories, sterilization, lab, surgery suite. Staff scan with any phone camera — no app, no login, no barriers to access.",
     meta: "Works on every shift",
   },
 ];
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="scroll-mt-20 border-t border-slate-200/70 bg-white">
-      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
-        <SectionHeading
-          eyebrow="How it works"
-          title="From filing cabinet to audit-ready in one afternoon."
-        />
-        <ol className="mt-14 grid gap-5 md:grid-cols-3">
-          {STEPS.map(({ icon: Icon, title, body, meta }, i) => (
-            <li key={title} className="flex flex-col rounded-2xl border border-slate-200/80 bg-white p-7 shadow-lg shadow-slate-200/50">
-              <div className="flex items-center justify-between">
-                <span className="flex size-12 items-center justify-center rounded-xl bg-brand-soft">
-                  <Icon className="size-5 text-primary" />
-                </span>
-                <span className="flex size-7 items-center justify-center rounded-full bg-slate-100 text-xs font-semibold text-slate-500">
-                  {i + 1}
-                </span>
-              </div>
-              <h3 className="mt-6 text-lg font-semibold text-foreground">{title}</h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-                {body}
-              </p>
-              <p className="mt-6 border-t border-slate-100 pt-4 text-xs font-medium text-sky-700">
-                {meta}
-              </p>
-            </li>
-          ))}
-        </ol>
+    <section id="how-it-works" className="scroll-mt-20 border-y border-slate-200/70 bg-white">
+      <div className="mx-auto grid max-w-6xl items-center gap-16 px-4 py-20 sm:px-6 sm:py-28 lg:grid-cols-2">
+        <div className="relative mx-auto w-full max-w-lg pb-16 lg:pb-0">
+          <div className="relative aspect-[4/3.4] overflow-hidden rounded-3xl ring-1 ring-slate-200/70">
+            <Image
+              src={hygienePhoto}
+              alt="Clinic team member using a disinfectant dispenser"
+              fill
+              placeholder="blur"
+              sizes="(min-width: 1024px) 512px, 100vw"
+              className="object-cover"
+            />
+          </div>
+          <ScanPhoneMockup className="absolute right-2 -bottom-4 w-48 sm:-right-6 sm:w-56 lg:-bottom-12" />
+        </div>
+
+        <div>
+          <SectionHeading
+            eyebrow="How it works"
+            title="From binder to inspection-ready in one afternoon."
+          />
+          <ol className="mt-10 space-y-6">
+            {STEPS.map(({ icon: Icon, title, body, meta }, i) => (
+              <li key={title} className="flex gap-5">
+                <div className="flex flex-col items-center">
+                  <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-brand-soft text-primary ring-1 ring-sky-100">
+                    <Icon className="size-5" />
+                  </span>
+                  {i < STEPS.length - 1 ? (
+                    <span className="mt-2 w-px flex-1 bg-slate-200" aria-hidden="true" />
+                  ) : null}
+                </div>
+                <div className="pb-2">
+                  <p className="text-xs font-semibold text-sky-700">Step {i + 1}</p>
+                  <h3 className="mt-0.5 text-lg font-semibold text-slate-900">{title}</h3>
+                  <p className="mt-1.5 text-[15px] leading-relaxed text-slate-600">{body}</p>
+                  <p className="mt-2 text-xs font-medium text-slate-500">{meta}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   );

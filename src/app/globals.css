@@ -183,3 +183,8 @@
     font-variant-numeric: tabular-nums;
   }
 }
+
+@keyframes scan {
+  0%, 100% { transform: translateY(-70px); opacity: 0.4; }
+  50% { transform: translateY(70px); opacity: 1; }
+}

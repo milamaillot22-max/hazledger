@@ -1,4 +1,11 @@
-import { Flame, FlaskConical, Skull, TriangleAlert } from "lucide-react";
+import {
+  Fish,
+  Flame,
+  FlaskConical,
+  PersonStanding,
+  Skull,
+  TriangleAlert,
+} from "lucide-react";
 
 import type { GhsPictogram } from "@/features/sds/types";
 import { cn } from "@/lib/utils";
@@ -8,6 +15,8 @@ const ICONS: Partial<Record<GhsPictogram, typeof Flame>> = {
   GHS05: FlaskConical,
   GHS06: Skull,
   GHS07: TriangleAlert,
+  GHS08: PersonStanding,
+  GHS09: Fish,
 };
 
 const LABELS: Record<GhsPictogram, string> = {

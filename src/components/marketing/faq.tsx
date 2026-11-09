@@ -10,19 +10,19 @@ import { siteConfig } from "@/config/site";
 const FAQ = [
   {
     q: "Is electronic SDS access OSHA-compliant?",
-    a: "Yes. 29 CFR 1910.1200(g)(8) permits electronic access instead of paper copies, as long as it creates no barriers to immediate employee access in each workplace. QR codes posted in each work area, with no login required to view, are designed for exactly that.",
+    a: "Yes. 29 CFR 1910.1200(g)(8) permits electronic access instead of paper copies, as long as it creates no barriers to immediate employee access in each workplace. QR codes posted in each operatory, lab or supply room, with no login required to view, are designed for exactly that.",
   },
   {
     q: "What does the HazCom 2024 update change for us?",
     a: "OSHA's updated Hazard Communication Standard aligns with a newer revision of the GHS, so manufacturers and distributors are reissuing SDSs and labels on a phased schedule. As updated sheets arrive, employers need to keep their library, labels and training current — revision alerts flag every product that needs attention.",
   },
   {
-    q: "Do employees need an account?",
-    a: "No. Anyone in the work area can scan a QR code and view the SDSs for that area. Accounts are only for the people who manage the library.",
+    q: "Do my hygienists, assistants and vet techs need an account?",
+    a: "No. Anyone in the room can scan the QR code and view the SDSs for that room. Accounts are only for the people who manage the library — usually the practice owner or office manager.",
   },
   {
     q: "What happens to our existing binders?",
-    a: "Send us scans, PDFs or the binders' supplier list. We bulk-import and extract them for you during onboarding, free of charge.",
+    a: "Snap the pages or send us your PDFs and supplier invoices. We bulk-import and extract them for you during onboarding, free of charge.",
   },
   {
     q: "How is our data protected?",
@@ -40,7 +40,7 @@ export function Faq() {
       <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
         <SectionHeading
           eyebrow="FAQ"
-          title="Questions safety managers ask us."
+          title="Questions practice managers ask us."
           description={
             <>
               Something else?{" "}
