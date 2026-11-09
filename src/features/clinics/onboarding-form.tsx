@@ -2,7 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
-import { AlertCircle, ArrowRight, Check, Loader2 } from "lucide-react";
+import { AlertCircle, ArrowRight, Check, Loader2, ShieldCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,7 +16,11 @@ import {
 } from "@/components/ui/select";
 import { createClinic, type CreateClinicState } from "@/features/clinics/actions";
 import { PRACTICE_TYPES, US_STATES } from "@/features/clinics/constants";
+import { PRACTICE_ICONS } from "@/features/clinics/practice-icons";
 import { cn } from "@/lib/utils";
+
+const FIELD_CLASS =
+  "h-12 rounded-xl border-slate-200 bg-white px-4 text-[15px] shadow-xs placeholder:text-slate-400 focus-visible:border-primary focus-visible:ring-sky-100";
 
 export function OnboardingForm() {
   const [state, formAction] = useActionState<CreateClinicState, FormData>(
@@ -30,29 +34,29 @@ export function OnboardingForm() {
   const errors = state.fieldErrors ?? {};
 
   return (
-    <form action={formAction} className="space-y-8" noValidate>
+    <form action={formAction} noValidate>
       {state.message ? (
         <div
           role="alert"
-          className="flex items-start gap-2.5 rounded-lg border border-destructive/20 bg-red-50 px-3.5 py-3 text-sm text-destructive"
+          className="mb-8 flex items-start gap-2.5 rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-700"
         >
           <AlertCircle className="mt-0.5 size-4 shrink-0" />
           <p>{state.message}</p>
         </div>
       ) : null}
 
-      <div className="grid gap-5 sm:grid-cols-[1fr_220px]">
+      <div className="grid gap-5 sm:grid-cols-[minmax(0,1fr)_240px]">
         <Field label="Clinic name" htmlFor="name" error={errors.name}>
           <Input
             id="name"
             name="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Sunset Family Dental"
+            placeholder="e.g. Sunset Family Dental"
             autoComplete="organization"
             aria-invalid={Boolean(errors.name) || undefined}
             aria-describedby={errors.name ? "name-error" : undefined}
-            className="h-10 bg-card"
+            className={FIELD_CLASS}
             maxLength={120}
             autoFocus
           />
@@ -64,11 +68,11 @@ export function OnboardingForm() {
               id="state"
               aria-invalid={Boolean(errors.state) || undefined}
               aria-describedby={errors.state ? "state-error" : undefined}
-              className="h-10! w-full bg-card"
+              className={cn(FIELD_CLASS, "h-12! w-full data-placeholder:text-slate-400")}
             >
               <SelectValue placeholder="Select a state" />
             </SelectTrigger>
-            <SelectContent position="popper" className="max-h-72">
+            <SelectContent position="popper" className="max-h-72 rounded-xl">
               {US_STATES.map((s) => (
                 <SelectItem key={s.code} value={s.code}>
                   {s.name}
@@ -79,49 +83,79 @@ export function OnboardingForm() {
         </Field>
       </div>
 
-      <fieldset aria-describedby={errors.practiceType ? "practiceType-error" : undefined}>
-        <legend className="text-sm font-medium text-foreground">Practice type</legend>
-        <p className="mt-1 text-sm text-muted-foreground">
-          We tailor your chemical templates and checklists to your specialty.
+      <fieldset
+        className="mt-10"
+        aria-describedby={errors.practiceType ? "practiceType-error" : undefined}
+      >
+        <legend className="text-base font-semibold text-slate-900">
+          What type of practice is it?
+        </legend>
+        <p className="mt-1 text-sm text-slate-600">
+          We tailor your chemical templates and safety checklists to your specialty.
         </p>
-        <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-3">
-          {PRACTICE_TYPES.map((p) => (
-            <label
-              key={p.value}
-              className={cn(
-                "group relative flex cursor-pointer flex-col rounded-lg border border-border bg-card px-3.5 py-3 transition-colors",
-                "hover:border-slate-300",
-                "has-[input:checked]:border-primary has-[input:checked]:bg-brand-soft/50 has-[input:checked]:ring-1 has-[input:checked]:ring-primary",
-                "has-[input:focus-visible]:ring-3 has-[input:focus-visible]:ring-ring/40"
-              )}
-            >
-              <input
-                type="radio"
-                name="practiceType"
-                value={p.value}
-                checked={practiceType === p.value}
-                onChange={() => setPracticeType(p.value)}
-                className="sr-only"
-              />
-              <span className="pr-5 text-sm font-medium text-foreground">{p.label}</span>
-              <span className="mt-0.5 text-xs text-muted-foreground">{p.hint}</span>
-              <span className="absolute top-3 right-3 hidden size-4 items-center justify-center rounded-full bg-primary text-primary-foreground group-has-[input:checked]:flex">
-                <Check className="size-2.5" strokeWidth={3.5} />
-              </span>
-            </label>
-          ))}
+
+        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {PRACTICE_TYPES.map((p) => {
+            const Icon = PRACTICE_ICONS[p.value];
+            const selected = practiceType === p.value;
+            return (
+              <label
+                key={p.value}
+                className={cn(
+                  "relative flex cursor-pointer flex-col gap-3 rounded-2xl border bg-white p-4 transition-all duration-150",
+                  selected
+                    ? "border-primary shadow-md ring-4 shadow-sky-100 ring-sky-100"
+                    : "border-slate-200 hover:-translate-y-px hover:border-sky-200 hover:shadow-md hover:shadow-slate-200/60",
+                  "has-[input:focus-visible]:ring-4 has-[input:focus-visible]:ring-sky-200"
+                )}
+              >
+                <input
+                  type="radio"
+                  name="practiceType"
+                  value={p.value}
+                  checked={selected}
+                  onChange={() => setPracticeType(p.value)}
+                  className="sr-only"
+                />
+                <span
+                  className={cn(
+                    "flex size-11 items-center justify-center rounded-xl transition-colors",
+                    selected ? "bg-primary text-white" : "bg-brand-soft text-primary"
+                  )}
+                >
+                  <Icon className="size-5" strokeWidth={1.75} />
+                </span>
+                <span>
+                  <span className="block text-[15px] font-semibold text-slate-900">
+                    {p.label}
+                  </span>
+                  <span className="mt-0.5 block text-xs leading-snug text-slate-500">
+                    {p.hint}
+                  </span>
+                </span>
+                {selected ? (
+                  <span className="absolute top-3.5 right-3.5 flex size-5 items-center justify-center rounded-full bg-success text-white ring-4 ring-success-soft">
+                    <Check className="size-3" strokeWidth={3.5} />
+                  </span>
+                ) : null}
+              </label>
+            );
+          })}
         </div>
         {errors.practiceType ? (
-          <p id="practiceType-error" className="mt-2 text-sm text-destructive">
+          <p id="practiceType-error" className="mt-3 text-sm text-red-600">
             {errors.practiceType}
           </p>
         ) : null}
       </fieldset>
 
-      <div className="flex flex-col-reverse items-start gap-4 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs text-slate-500">
-          You&apos;ll be the <span className="font-medium text-slate-700">Owner</span> of
-          this clinic. You can invite your team next.
+      <div className="mt-10 flex flex-col-reverse items-stretch gap-4 border-t border-slate-100 pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <p className="flex items-start gap-2 text-sm text-slate-500 sm:items-center">
+          <ShieldCheck className="mt-0.5 size-4 shrink-0 text-success sm:mt-0" />
+          <span>
+            You&apos;ll be the <span className="font-semibold text-slate-700">Owner</span> of
+            this clinic. Invite your team next.
+          </span>
         </p>
         <SubmitButton />
       </div>
@@ -141,11 +175,13 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <div className="space-y-1.5">
-      <Label htmlFor={htmlFor}>{label}</Label>
+    <div className="space-y-2">
+      <Label htmlFor={htmlFor} className="text-slate-700">
+        {label}
+      </Label>
       {children}
       {error ? (
-        <p id={`${htmlFor}-error`} className="text-sm text-destructive">
+        <p id={`${htmlFor}-error`} className="text-sm text-red-600">
           {error}
         </p>
       ) : null}
@@ -160,11 +196,11 @@ function SubmitButton() {
       {pending ? (
         <>
           <Loader2 data-icon="inline-start" className="animate-spin" />
-          Creating clinic…
+          Creating your clinic…
         </>
       ) : (
         <>
-          Create clinic
+          Create my clinic
           <ArrowRight data-icon="inline-end" />
         </>
       )}

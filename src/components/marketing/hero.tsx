@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, CheckCircle2, ShieldCheck } from "lucide-react";
 
 import { ProductPreview } from "@/components/marketing/product-preview";
+import { Eyebrow } from "@/components/marketing/section-heading";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 
@@ -16,21 +17,21 @@ export function Hero() {
     <section className="relative overflow-hidden">
       <div
         aria-hidden="true"
-        className="bg-grid mask-fade-b pointer-events-none absolute inset-0 opacity-60"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-sky-50 via-white to-background"
       />
       <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-20 sm:px-6 sm:pt-24 lg:pb-28">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
-            <span className="size-1.5 rounded-full bg-primary" />
+          <Eyebrow tone="success">
+            <ShieldCheck className="size-3.5" />
             Built for OSHA HazCom · 29 CFR 1910.1200
-          </p>
+          </Eyebrow>
 
-          <h1 className="mt-6 text-[2.5rem] leading-[1.05] font-bold text-foreground sm:text-6xl">
+          <h1 className="mt-6 text-[2.5rem] leading-[1.08] font-semibold text-slate-900 sm:text-6xl">
             Pass your next OSHA inspection.{" "}
             <span className="text-primary">Without the binder.</span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
             {siteConfig.name} scans, indexes and keeps every Safety Data Sheet
             current — so every employee, on every shift, can pull up the right
             SDS from their phone in seconds.
@@ -47,16 +48,16 @@ export function Hero() {
               asChild
               size="xl"
               variant="outline"
-              className="w-full bg-card sm:w-auto"
+              className="w-full border-slate-200 bg-white text-slate-700 shadow-xs sm:w-auto"
             >
               <a href={siteConfig.links.bookDemo}>Book a 15-min demo</a>
             </Button>
           </div>
 
-          <ul className="mt-6 flex flex-col items-center justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground sm:flex-row">
+          <ul className="mt-6 flex flex-col items-center justify-center gap-x-6 gap-y-2 text-sm text-slate-600 sm:flex-row">
             {REASSURANCE.map((item) => (
               <li key={item} className="flex items-center gap-1.5">
-                <Check className="size-4 text-primary" strokeWidth={2.5} />
+                <CheckCircle2 className="size-4 text-success" />
                 {item}
               </li>
             ))}

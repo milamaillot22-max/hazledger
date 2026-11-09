@@ -28,12 +28,12 @@ export function RiskSection() {
           title="An outdated SDS is a citation waiting to happen."
           description="OSHA requires an SDS for every hazardous chemical, readily accessible to employees during every shift. Paper binders go missing, go stale, and never cover the night crew."
         />
-        <dl className="grid gap-px overflow-hidden rounded-xl border border-border bg-border md:grid-cols-3">
+        <dl className="grid gap-4 md:grid-cols-3">
           {STATS.map((s) => (
-            <div key={s.value} className="bg-card p-6 sm:p-8">
+            <div key={s.value} className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-lg shadow-slate-200/50 sm:p-8">
               <dt className="sr-only">{s.label}</dt>
               <dd>
-                <p className="font-heading text-4xl font-bold text-foreground tabular">
+                <p className="font-heading text-4xl font-semibold text-slate-900 tabular">
                   {s.value}
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">

@@ -38,10 +38,10 @@ async function DashboardContent() {
         <p className="text-sm text-muted-foreground">
           {practiceTypeLabel(clinic.practiceType)} · {stateName(clinic.state)}
         </p>
-        <h1 className="text-2xl font-bold text-foreground sm:text-3xl">{clinic.name}</h1>
+        <h1 className="text-2xl font-semibold text-slate-900 sm:text-3xl">{clinic.name}</h1>
       </div>
 
-      <section className="mt-8 rounded-xl border border-border bg-card">
+      <section className="mt-8 rounded-2xl border border-slate-200/80 bg-white shadow-lg shadow-slate-200/50">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-5 py-4">
           <div>
             <h2 className="text-base font-semibold text-foreground">Get audit-ready</h2>
@@ -51,7 +51,7 @@ async function DashboardContent() {
           </div>
           <div className="h-1.5 w-40 overflow-hidden rounded-full bg-slate-100">
             <div
-              className="h-full rounded-full bg-primary"
+              className="h-full rounded-full bg-success"
               style={{ width: `${(done / SETUP_STEPS.length) * 100}%` }}
             />
           </div>
@@ -62,8 +62,8 @@ async function DashboardContent() {
               <span
                 className={
                   isDone
-                    ? "flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground"
-                    : "flex size-8 shrink-0 items-center justify-center rounded-full border border-border bg-background text-slate-500"
+                    ? "flex size-8 shrink-0 items-center justify-center rounded-full bg-success text-white"
+                    : "flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-soft text-primary"
                 }
               >
                 <Icon className="size-4" />
@@ -79,8 +79,8 @@ async function DashboardContent() {
         </ol>
       </section>
 
-      <section className="mt-6 flex flex-col items-center rounded-xl border border-dashed border-slate-300 bg-card/50 px-6 py-16 text-center">
-        <span className="flex size-12 items-center justify-center rounded-xl bg-brand-soft">
+      <section className="mt-6 flex flex-col items-center rounded-2xl border border-dashed border-sky-200 bg-white px-6 py-16 text-center">
+        <span className="flex size-14 items-center justify-center rounded-2xl bg-brand-soft">
           <ScanLine className="size-6 text-primary" />
         </span>
         <h2 className="mt-5 text-lg font-semibold text-foreground">Your SDS library is empty</h2>

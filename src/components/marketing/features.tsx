@@ -51,10 +51,12 @@ export function Features() {
         title="Everything HazCom asks of you. Nothing it doesn't."
         description="One focused tool for your SDS library and chemical inventory — not a sprawling EHS suite you'll spend a quarter implementing."
       />
-      <div className="mt-14 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {FEATURES.map(({ icon: Icon, title, body }) => (
-          <div key={title} className="border-l border-border pl-5">
-            <Icon className="size-5 text-primary" />
+          <div key={title} className="rounded-2xl border border-slate-200/80 bg-white p-6 transition-shadow hover:shadow-lg hover:shadow-slate-200/50">
+            <span className="flex size-11 items-center justify-center rounded-xl bg-brand-soft">
+              <Icon className="size-5 text-primary" />
+            </span>
             <h3 className="mt-4 text-base font-semibold text-foreground">{title}</h3>
             <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{body}</p>
           </div>

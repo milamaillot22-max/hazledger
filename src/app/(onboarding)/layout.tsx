@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 
 export default function OnboardingLayout({ children }: LayoutProps<"/">) {
   return (
-    <div className="flex min-h-dvh flex-col">
-      <header className="border-b border-border">
-        <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-4 sm:px-6">
+    <div className="flex min-h-dvh flex-col bg-background">
+      <header className="border-b border-slate-200/70 bg-white">
+        <div className="mx-auto flex h-16 max-w-4xl items-center justify-between px-4 sm:px-6">
           <Logo />
           <SignOutButton />
         </div>

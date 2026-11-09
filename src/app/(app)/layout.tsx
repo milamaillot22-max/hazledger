@@ -16,8 +16,8 @@ export const metadata: Metadata = {
  */
 export default function AppLayout({ children }: LayoutProps<"/">) {
   return (
-    <div className="flex min-h-dvh flex-col">
-      <header className="border-b border-border bg-card">
+    <div className="flex min-h-dvh flex-col bg-background">
+      <header className="border-b border-slate-200/70 bg-white">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
           <div className="flex min-w-0 items-center gap-4">
             <Logo />
@@ -45,7 +45,7 @@ async function ClinicBadge() {
   return (
     <div className="hidden min-w-0 items-center gap-2 sm:flex">
       <span className="truncate text-sm font-medium text-foreground">{clinic.name}</span>
-      <span className="rounded-sm border border-border px-1.5 py-0.5 font-mono text-[10px] text-slate-500">
+      <span className="rounded-full bg-brand-soft px-2 py-0.5 text-[11px] font-semibold text-sky-700 ring-1 ring-sky-100">
         {clinic.state}
       </span>
       <span className="sr-only">{stateName(clinic.state)}</span>

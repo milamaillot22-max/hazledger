@@ -81,13 +81,13 @@ function EmailFlow({
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-foreground">{copy.title}</h1>
-      <p className="mt-2 text-sm text-muted-foreground">{copy.subtitle}</p>
+      <h1 className="text-2xl font-semibold text-slate-900">{copy.title}</h1>
+      <p className="mt-2 text-[15px] text-slate-600">{copy.subtitle}</p>
 
       {error ? (
         <div
           role="alert"
-          className="mt-6 flex items-start gap-2.5 rounded-lg border border-destructive/20 bg-red-50 px-3.5 py-3 text-sm text-destructive"
+          className="mt-6 flex items-start gap-2.5 rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-700"
         >
           <AlertCircle className="mt-0.5 size-4 shrink-0" />
           <p>{error}</p>
@@ -99,16 +99,16 @@ function EmailFlow({
         <GoogleButton />
       </form>
 
-      <div className="my-6 flex items-center gap-3 text-xs text-slate-400">
-        <span className="h-px flex-1 bg-border" />
+      <div className="my-7 flex items-center gap-3 text-xs font-medium text-slate-400">
+        <span className="h-px flex-1 bg-slate-200" />
         or continue with email
-        <span className="h-px flex-1 bg-border" />
+        <span className="h-px flex-1 bg-slate-200" />
       </div>
 
-      <form action={formAction} className="space-y-4" noValidate>
+      <form action={formAction} className="space-y-5" noValidate>
         <input type="hidden" name="next" value={next} />
         <div className="space-y-1.5">
-          <Label htmlFor="email">Work email</Label>
+          <Label htmlFor="email" className="text-slate-700">Work email</Label>
           <Input
             id="email"
             name="email"
@@ -118,7 +118,7 @@ function EmailFlow({
             placeholder="you@yourclinic.com"
             defaultValue={state.status === "error" ? state.email : undefined}
             aria-invalid={state.status === "error" || undefined}
-            className="h-10 bg-card"
+            className="h-12 rounded-xl border-slate-200 bg-white px-4 text-[15px] shadow-xs placeholder:text-slate-400 focus-visible:border-primary focus-visible:ring-sky-100"
             required
             autoFocus
           />
@@ -127,17 +127,17 @@ function EmailFlow({
       </form>
 
       {mode === "signup" ? (
-        <p className="mt-4 text-xs leading-relaxed text-slate-500">
+        <p className="mt-4 text-center text-xs leading-relaxed text-slate-500">
           By creating an account you agree to the {siteConfig.name} Terms of
           Service and Privacy Policy.
         </p>
       ) : null}
 
-      <p className="mt-8 border-t border-border pt-6 text-center text-sm text-muted-foreground">
+      <p className="mt-8 border-t border-slate-100 pt-6 text-center text-sm text-slate-600">
         {mode === "signup" ? "Already have an account? " : `New to ${siteConfig.name}? `}
         <Link
           href={mode === "signup" ? routes.login : routes.signup}
-          className="font-medium text-primary underline-offset-4 hover:underline"
+          className="font-semibold text-primary underline-offset-4 hover:underline"
         >
           {mode === "signup" ? "Sign in" : "Start a free trial"}
         </Link>
@@ -154,7 +154,7 @@ function GoogleButton() {
       variant="outline"
       size="xl"
       disabled={pending}
-      className="w-full bg-card font-medium"
+      className="w-full border-slate-200 bg-white font-medium text-slate-700 shadow-xs hover:bg-slate-50"
     >
       {pending ? (
         <Loader2 data-icon="inline-start" className="animate-spin" />
@@ -188,16 +188,16 @@ function SubmitButton({ label }: { label: string }) {
 function CheckInbox({ email, onReset }: { email: string; onReset: () => void }) {
   return (
     <div role="status" aria-live="polite">
-      <span className="flex size-11 items-center justify-center rounded-xl bg-brand-soft">
-        <MailCheck className="size-5 text-primary" />
+      <span className="flex size-12 items-center justify-center rounded-2xl bg-success-soft ring-1 ring-emerald-100">
+        <MailCheck className="size-6 text-success" />
       </span>
-      <h1 className="mt-6 text-2xl font-bold text-foreground">Check your inbox</h1>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+      <h1 className="mt-6 text-2xl font-semibold text-slate-900">Check your inbox</h1>
+      <p className="mt-2 text-[15px] leading-relaxed text-slate-600">
         We sent a secure sign-in link to{" "}
-        <span className="font-medium text-foreground">{email}</span>. It expires
+        <span className="font-semibold text-slate-900">{email}</span>. It expires
         in 1 hour and can only be used once.
       </p>
-      <div className="mt-8 rounded-lg border border-border bg-card p-4 text-sm text-muted-foreground">
+      <div className="mt-8 rounded-xl bg-brand-soft p-4 text-sm leading-relaxed text-sky-900 ring-1 ring-sky-100">
         Not there? Check spam or quarantine — clinic email filters often hold
         automated messages.
       </div>
@@ -220,11 +220,11 @@ export function AuthFormSkeleton() {
     <div aria-hidden="true" className="animate-pulse">
       <div className="h-7 w-2/3 rounded-md bg-slate-200/70" />
       <div className="mt-3 h-4 w-5/6 rounded bg-slate-200/60" />
-      <div className="mt-8 h-11 rounded-lg bg-slate-200/60" />
+      <div className="mt-8 h-12 rounded-xl bg-slate-100" />
       <div className="my-6 h-px bg-border" />
       <div className="h-4 w-24 rounded bg-slate-200/60" />
-      <div className="mt-2 h-10 rounded-lg bg-slate-200/60" />
-      <div className="mt-4 h-11 rounded-lg bg-slate-200/70" />
+      <div className="mt-2 h-12 rounded-xl bg-slate-100" />
+      <div className="mt-5 h-12 rounded-xl bg-slate-200/70" />
     </div>
   );
 }

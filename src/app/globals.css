@@ -10,8 +10,11 @@
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-jakarta), var(--font-inter), ui-sans-serif, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  --color-brand-deep: var(--brand-deep);
+  --color-primary-hover: var(--primary-hover);
   --color-brand-soft: var(--brand-soft);
+  --color-brand-tint: var(--brand-tint);
+  --color-success-soft: var(--success-soft);
+  --color-success-foreground: var(--success-foreground);
   --color-warning: var(--warning);
   --color-success: var(--success);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -53,46 +56,49 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
-   HazLedger design tokens
-   Off-white matte canvas · Deep Emerald primary · Slate text
+   HazLedger design tokens — clinical, bright, reassuring
+   Page #F8FAFC · surfaces #FFFFFF · medical blue #0284C7 · health emerald #059669
    ───────────────────────────────────────────────────────────── */
 :root {
-  --background: #fafafa;
+  --background: #f8fafc; /* slate-50 page */
   --foreground: #0f172a; /* slate-900 */
   --card: #ffffff;
   --card-foreground: #0f172a;
   --popover: #ffffff;
   --popover-foreground: #0f172a;
-  --primary: #0a5c36; /* emerald 700 (brand) */
+  --primary: #0284c7; /* sky-600 — actions, links, key icons */
+  --primary-hover: #0369a1; /* sky-700 */
   --primary-foreground: #ffffff;
-  --brand-deep: #042f1e; /* emerald 950 (brand deep) */
-  --brand-soft: #e8f2ec; /* tinted surface for brand accents */
-  --secondary: #f1f5f9; /* slate-100 */
+  --brand-soft: #f0f9ff; /* sky-50 — tinted surfaces */
+  --brand-tint: #e0f2fe; /* sky-100 — icon tiles */
+  --success: #059669; /* emerald-600 — OSHA compliance, success */
+  --success-soft: #ecfdf5; /* emerald-50 */
+  --success-foreground: #ffffff;
+  --secondary: #f1f5f9;
   --secondary-foreground: #0f172a;
-  --muted: #f4f4f5;
+  --muted: #f1f5f9;
   --muted-foreground: #475569; /* slate-600 */
-  --accent: #f1f5f9;
-  --accent-foreground: #0f172a;
-  --destructive: #b42318;
-  --warning: #b54708;
-  --success: #0a5c36;
-  --border: #e2e8f0;
+  --accent: #f0f9ff;
+  --accent-foreground: #0c4a6e;
+  --destructive: #dc2626;
+  --warning: #d97706;
+  --border: #e2e8f0; /* slate-200 */
   --input: #e2e8f0;
-  --ring: #0a5c36;
-  --chart-1: #0a5c36;
-  --chart-2: #2f7d57;
-  --chart-3: #64748b;
-  --chart-4: #94a3b8;
-  --chart-5: #042f1e;
-  --radius: 0.5rem;
+  --ring: #0284c7;
+  --chart-1: #0284c7;
+  --chart-2: #059669;
+  --chart-3: #38bdf8;
+  --chart-4: #34d399;
+  --chart-5: #94a3b8;
+  --radius: 0.75rem;
   --sidebar: #ffffff;
   --sidebar-foreground: #0f172a;
-  --sidebar-primary: #0a5c36;
+  --sidebar-primary: #0284c7;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f1f5f9;
-  --sidebar-accent-foreground: #0f172a;
+  --sidebar-accent: #f0f9ff;
+  --sidebar-accent-foreground: #0c4a6e;
   --sidebar-border: #e2e8f0;
-  --sidebar-ring: #0a5c36;
+  --sidebar-ring: #0284c7;
 }
 
 /* Dark tokens are kept for the future app shell; the marketing site is light-only. */
@@ -103,10 +109,13 @@
   --card-foreground: #f1f5f9;
   --popover: #111a17;
   --popover-foreground: #f1f5f9;
-  --primary: #3fa877;
-  --primary-foreground: #04140d;
-  --brand-deep: #042f1e;
-  --brand-soft: #12261d;
+  --primary: #38bdf8;
+  --primary-foreground: #082f49;
+  --primary-hover: #7dd3fc;
+  --brand-soft: #0c2a3d;
+  --brand-tint: #0c4a6e;
+  --success-soft: #052e22;
+  --success-foreground: #04140d;
   --secondary: #1a2420;
   --secondary-foreground: #f1f5f9;
   --muted: #1a2420;
@@ -115,10 +124,10 @@
   --accent-foreground: #f1f5f9;
   --destructive: #f97066;
   --warning: #fdb022;
-  --success: #3fa877;
+  --success: #34d399;
   --border: #ffffff1a;
   --input: #ffffff26;
-  --ring: #3fa877;
+  --ring: #38bdf8;
   --chart-1: #3fa877;
   --chart-2: #6cc49a;
   --chart-3: #94a3b8;
@@ -126,12 +135,12 @@
   --chart-5: #d1fae5;
   --sidebar: #111a17;
   --sidebar-foreground: #f1f5f9;
-  --sidebar-primary: #3fa877;
+  --sidebar-primary: #38bdf8;
   --sidebar-primary-foreground: #04140d;
   --sidebar-accent: #1a2420;
   --sidebar-accent-foreground: #f1f5f9;
   --sidebar-border: #ffffff1a;
-  --sidebar-ring: #3fa877;
+  --sidebar-ring: #38bdf8;
 }
 
 @layer base {
@@ -151,7 +160,11 @@
     text-rendering: optimizeLegibility;
   }
   h1, h2, h3, h4 {
-    @apply font-heading tracking-tight text-balance;
+    @apply font-heading text-balance;
+    letter-spacing: -0.015em;
+  }
+  body {
+    line-height: 1.6;
   }
   ::selection {
     background: color-mix(in oklab, var(--primary) 18%, transparent);
@@ -159,15 +172,12 @@
 }
 
 @layer utilities {
-  /* Hairline grid used behind the hero — Linear/Stripe style, no color gradients. */
-  .bg-grid {
-    background-image:
-      linear-gradient(to right, var(--border) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-    background-size: 56px 56px;
-  }
-  .mask-fade-b {
-    mask-image: linear-gradient(to bottom, #000 30%, transparent 85%);
+  /* Signature elevation for white cards: soft, professional. */
+  .shadow-soft {
+    box-shadow:
+      0 1px 2px rgb(15 23 42 / 0.04),
+      0 10px 15px -3px rgb(226 232 240 / 0.5),
+      0 4px 6px -4px rgb(226 232 240 / 0.5);
   }
   .tabular {
     font-variant-numeric: tabular-nums;

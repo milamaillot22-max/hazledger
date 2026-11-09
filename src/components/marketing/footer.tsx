@@ -5,7 +5,7 @@ import { routes, siteConfig } from "@/config/site";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-card">
+    <footer className="border-t border-slate-200/70 bg-white">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6 md:flex-row md:items-start md:justify-between">
         <div className="max-w-xs">
           <Logo />

@@ -69,8 +69,8 @@ const SAMPLE: SdsRecord[] = [
 const STATUS_STYLES: Record<SdsStatus, { label: string; className: string; dot: string }> = {
   current: {
     label: "Current",
-    className: "bg-brand-soft text-primary",
-    dot: "bg-primary",
+    className: "bg-success-soft text-emerald-700",
+    dot: "bg-success",
   },
   review_due: {
     label: "New revision",
@@ -98,7 +98,7 @@ function formatDate(iso: string) {
 export function ProductPreview() {
   return (
     <div className="relative">
-      <div className="overflow-hidden rounded-xl border border-border bg-card shadow-[0_1px_2px_rgba(15,23,42,0.04),0_12px_32px_-12px_rgba(15,23,42,0.12)]">
+      <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-xl shadow-slate-200/60">
         {/* window chrome */}
         <div className="flex items-center justify-between border-b border-border bg-[#fcfcfc] px-4 py-2.5">
           <div className="flex items-center gap-1.5">
@@ -106,7 +106,7 @@ export function ProductPreview() {
             <span className="size-2.5 rounded-full bg-slate-200" />
             <span className="size-2.5 rounded-full bg-slate-200" />
           </div>
-          <div className="font-mono text-[11px] text-slate-400">
+          <div className="rounded-md bg-white px-3 py-0.5 text-[11px] text-slate-400 ring-1 ring-slate-200">
             app.hazledger.com/sds
           </div>
           <div className="w-10" />
@@ -166,7 +166,7 @@ export function ProductPreview() {
                             {row.manufacturer}
                           </p>
                         </td>
-                        <td className="px-3 py-3 font-mono text-xs text-slate-600">
+                        <td className="px-3 py-3 text-xs text-slate-600 tabular">
                           {row.casNumbers.join(", ")}
                         </td>
                         <td className="px-3 py-3">
@@ -208,11 +208,11 @@ export function ProductPreview() {
               <p className="text-[11px] font-medium tracking-wide text-slate-500 uppercase">
                 Audit readiness
               </p>
-              <p className="mt-1 font-heading text-3xl font-bold text-foreground tabular">
+              <p className="mt-1 font-heading text-3xl font-semibold text-emerald-700 tabular">
                 98.6%
               </p>
               <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-100">
-                <div className="h-full w-[98.6%] rounded-full bg-primary" />
+                <div className="h-full w-[98.6%] rounded-full bg-success" />
               </div>
               <p className="mt-2 text-xs text-slate-500">
                 2 actions before you&apos;re inspection-ready
@@ -234,7 +234,7 @@ export function ProductPreview() {
               </li>
             </ul>
             <div className="h-px bg-border" />
-            <div className="flex items-center gap-3 rounded-lg border border-border bg-card p-3">
+            <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3">
               <div className="flex size-10 items-center justify-center rounded-md bg-brand-soft">
                 <QrCode className="size-5 text-primary" />
               </div>

@@ -1,5 +1,30 @@
 import { cn } from "@/lib/utils";
 
+/** Soft pill label used above headings (replaces the old mono eyebrow). */
+export function Eyebrow({
+  children,
+  tone = "primary",
+  className,
+}: {
+  children: React.ReactNode;
+  tone?: "primary" | "success";
+  className?: string;
+}) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold",
+        tone === "primary"
+          ? "bg-brand-soft text-sky-700 ring-1 ring-sky-100"
+          : "bg-success-soft text-emerald-700 ring-1 ring-emerald-100",
+        className
+      )}
+    >
+      {children}
+    </span>
+  );
+}
+
 export function SectionHeading({
   eyebrow,
   title,
@@ -21,14 +46,12 @@ export function SectionHeading({
         className
       )}
     >
-      <p className="font-mono text-xs font-medium tracking-[0.08em] text-primary uppercase">
-        {eyebrow}
-      </p>
-      <h2 className="mt-3 text-3xl leading-tight font-bold text-foreground sm:text-4xl">
+      <Eyebrow>{eyebrow}</Eyebrow>
+      <h2 className="mt-4 text-3xl leading-tight font-semibold text-slate-900 sm:text-4xl">
         {title}
       </h2>
       {description ? (
-        <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+        <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
           {description}
         </p>
       ) : null}

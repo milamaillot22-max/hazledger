@@ -60,7 +60,7 @@ function CellContent({ cell, highlight }: { cell: Cell; highlight?: boolean }) {
       <span
         className={cn(
           "flex size-5 shrink-0 items-center justify-center rounded-full",
-          cell.kind === "yes" && "bg-primary text-primary-foreground",
+          cell.kind === "yes" && "bg-success text-white",
           cell.kind === "no" && "bg-slate-100 text-slate-400",
           cell.kind === "partial" && "bg-amber-50 text-warning"
         )}
@@ -76,7 +76,7 @@ function CellContent({ cell, highlight }: { cell: Cell; highlight?: boolean }) {
 
 export function Comparison() {
   return (
-    <section id="compare" className="scroll-mt-20 border-y border-border bg-card">
+    <section id="compare" className="scroll-mt-20 border-y border-slate-200/70 bg-white">
       <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
         <SectionHeading
           align="center"
@@ -105,7 +105,7 @@ export function Comparison() {
                     )}
                   >
                     {i === 0 ? (
-                      <span className="mb-2 block font-mono text-[10px] font-medium tracking-[0.08em] text-primary/80 uppercase">
+                      <span className="mb-2 flex w-fit rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-white">
                         Recommended
                       </span>
                     ) : null}

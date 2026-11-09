@@ -27,13 +27,13 @@ const INDUSTRIES = [
 
 export function TrustBar() {
   return (
-    <section aria-label="Compliance and security" className="border-y border-border bg-card">
+    <section aria-label="Compliance and security" className="border-y border-slate-200/70 bg-white">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <ul className="grid grid-cols-2 divide-border sm:grid-cols-3 lg:grid-cols-5 lg:divide-x">
           {BADGES.map(({ icon: Icon, title, detail }) => (
             <li key={title} className="flex items-center gap-3 px-2 py-5 lg:px-5">
-              <span className="flex size-9 shrink-0 items-center justify-center rounded-md border border-border bg-background">
-                <Icon className="size-4 text-primary" />
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-success-soft ring-1 ring-emerald-100">
+                <Icon className="size-[18px] text-success" />
               </span>
               <span>
                 <span className="block text-sm font-semibold text-foreground">{title}</span>
