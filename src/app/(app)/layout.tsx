@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
+import Link from "next/link";
+import { ScanLine } from "lucide-react";
+
+import { AppNav } from "@/components/app/app-nav";
 import { Logo } from "@/components/brand/logo";
+import { Button } from "@/components/ui/button";
+import { routes } from "@/config/site";
 import { SignOutButton } from "@/features/auth/sign-out-button";
 import { stateName } from "@/features/clinics/constants";
 import { getActiveClinic, getUser } from "@/lib/auth/dal";
@@ -30,8 +36,19 @@ export default function AppLayout({ children }: LayoutProps<"/">) {
             <Suspense fallback={null}>
               <UserEmail />
             </Suspense>
+            <Button asChild size="lg" className="ml-2 hidden rounded-lg px-3 sm:inline-flex">
+              <Link href={routes.sdsScan}>
+                <ScanLine data-icon="inline-start" />
+                Scan SDS
+              </Link>
+            </Button>
             <SignOutButton />
           </div>
+        </div>
+        <div className="mx-auto flex h-11 max-w-6xl items-center px-3 sm:px-5">
+          <Suspense fallback={null}>
+            <AppNav />
+          </Suspense>
         </div>
       </header>
       <div className="flex-1">{children}</div>

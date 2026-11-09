@@ -76,6 +76,116 @@ export type Database = {
         }
         Relationships: []
       }
+      sds_documents: {
+        Row: {
+          cas_numbers: string[]
+          clinic_id: string
+          confidence: Json
+          created_at: string
+          created_by: string
+          document_type: string | null
+          emergency_phone: string | null
+          error: string | null
+          extraction: Json | null
+          extraction_model: string | null
+          hazard_statements: Json
+          id: string
+          ingredients: Json
+          manufacturer: string | null
+          manufacturer_phone: string | null
+          pictograms: string[]
+          ppe: string[]
+          product_name: string | null
+          recommended_use: string | null
+          review_flags: string[]
+          reviewed_at: string | null
+          reviewed_by: string | null
+          revision_date: string | null
+          sections: Json
+          signal_word: string | null
+          source_mime: string
+          source_name: string | null
+          source_path: string
+          source_size: number
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          cas_numbers?: string[]
+          clinic_id: string
+          confidence?: Json
+          created_at?: string
+          created_by?: string
+          document_type?: string | null
+          emergency_phone?: string | null
+          error?: string | null
+          extraction?: Json | null
+          extraction_model?: string | null
+          hazard_statements?: Json
+          id?: string
+          ingredients?: Json
+          manufacturer?: string | null
+          manufacturer_phone?: string | null
+          pictograms?: string[]
+          ppe?: string[]
+          product_name?: string | null
+          recommended_use?: string | null
+          review_flags?: string[]
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_date?: string | null
+          sections?: Json
+          signal_word?: string | null
+          source_mime: string
+          source_name?: string | null
+          source_path: string
+          source_size: number
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          cas_numbers?: string[]
+          clinic_id?: string
+          confidence?: Json
+          created_at?: string
+          created_by?: string
+          document_type?: string | null
+          emergency_phone?: string | null
+          error?: string | null
+          extraction?: Json | null
+          extraction_model?: string | null
+          hazard_statements?: Json
+          id?: string
+          ingredients?: Json
+          manufacturer?: string | null
+          manufacturer_phone?: string | null
+          pictograms?: string[]
+          ppe?: string[]
+          product_name?: string | null
+          recommended_use?: string | null
+          review_flags?: string[]
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_date?: string | null
+          sections?: Json
+          signal_word?: string | null
+          source_mime?: string
+          source_name?: string | null
+          source_path?: string
+          source_size?: number
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sds_documents_clinic_id_fkey"
+            columns: ["clinic_id"]
+            isOneToOne: false
+            referencedRelation: "clinics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

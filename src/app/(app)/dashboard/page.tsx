@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Check, QrCode, ScanLine, UserPlus } from "lucide-react";
 
+import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
+import { routes } from "@/config/site";
+import { listSdsDocuments } from "@/features/sds/queries";
 import {
   practiceTypeLabel,
   stateName,
@@ -21,7 +25,7 @@ export default function DashboardPage() {
   );
 }
 
-const SETUP_STEPS = [
+const BASE_STEPS = [
   { title: "Create your clinic", body: "Done — you're the owner.", icon: Check, done: true },
   { title: "Scan your first SDS", body: "Photo, PDF or supplier email.", icon: ScanLine, done: false },
   { title: "Post a QR code", body: "One per operatory, lab or supply room.", icon: QrCode, done: false },
@@ -30,6 +34,10 @@ const SETUP_STEPS = [
 
 async function DashboardContent() {
   const { clinic } = await requireClinic();
+  const docs = await listSdsDocuments(clinic.id);
+  const current = docs.filter((d) => d.status === "current").length;
+  const toReview = docs.filter((d) => d.status === "needs_review").length;
+  const SETUP_STEPS = BASE_STEPS.map((step, i) => (i === 1 ? { ...step, done: current > 0 } : step));
   const done = SETUP_STEPS.filter((s) => s.done).length;
 
   return (
@@ -79,21 +87,41 @@ async function DashboardContent() {
         </ol>
       </section>
 
-      <section className="mt-6 flex flex-col items-center rounded-2xl border border-dashed border-sky-200 bg-white px-6 py-16 text-center">
-        <span className="flex size-14 items-center justify-center rounded-2xl bg-brand-soft">
-          <ScanLine className="size-6 text-primary" />
-        </span>
-        <h2 className="mt-5 text-lg font-semibold text-foreground">Your SDS library is empty</h2>
-        <p className="mt-1.5 max-w-sm text-sm text-muted-foreground">
-          Scan your first Safety Data Sheet — we&apos;ll extract all 16 sections
-          automatically.
-        </p>
-        <Button size="xl" className="mt-6" disabled>
-          <ScanLine data-icon="inline-start" />
-          Scan an SDS
-        </Button>
-        <p className="mt-2 text-xs text-slate-400">Scanner ships in the next release</p>
-      </section>
+      {docs.length === 0 ? (
+        <section className="mt-6 flex flex-col items-center rounded-2xl border border-dashed border-sky-200 bg-white px-6 py-16 text-center">
+          <span className="flex size-14 items-center justify-center rounded-2xl bg-brand-soft">
+            <ScanLine className="size-6 text-primary" />
+          </span>
+          <h2 className="mt-5 text-lg font-semibold text-foreground">Your SDS library is empty</h2>
+          <p className="mt-1.5 max-w-sm text-sm text-muted-foreground">
+            Scan your first Safety Data Sheet — we&apos;ll extract all 16 sections
+            automatically.
+          </p>
+          <Button asChild size="xl" className="mt-6">
+            <Link href={routes.sdsScan}>
+              <ScanLine data-icon="inline-start" />
+              Scan an SDS
+            </Link>
+          </Button>
+        </section>
+      ) : (
+        <section className="mt-6 grid gap-4 sm:grid-cols-3">
+          {[
+            { label: "SDSs current", value: current, tone: "text-emerald-700" },
+            { label: "Waiting for your review", value: toReview, tone: "text-amber-700" },
+            { label: "Total scanned", value: docs.length, tone: "text-slate-900" },
+          ].map((s) => (
+            <Link
+              key={s.label}
+              href={routes.sdsLibrary}
+              className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-lg shadow-slate-200/50 transition-shadow hover:shadow-xl"
+            >
+              <p className="text-sm text-slate-500">{s.label}</p>
+              <p className={`mt-1 font-heading text-3xl font-semibold tabular ${s.tone}`}>{s.value}</p>
+            </Link>
+          ))}
+        </section>
+      )}
     </>
   );
 }

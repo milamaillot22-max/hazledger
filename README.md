@@ -51,6 +51,17 @@ src/
 Rules: bright surfaces only, soft shadows, rounded-2xl cards, blue for actions,
 emerald for compliance. Photos: `src/assets/images` (credits in `CREDITS.md`).
 
+## SDS scanner
+
+Upload a PDF or photo → Claude extracts product, hazards, CAS numbers and the 16
+sections → a human reviews → the record goes live. Details: `src/features/sds/README.md`.
+
+```bash
+npm test   # unit tests (CAS validation, review flags)
+```
+
+Set `ANTHROPIC_API_KEY` in `.env.local` (and in your host) to enable it.
+
 ## Push to GitHub
 
 ```bash
