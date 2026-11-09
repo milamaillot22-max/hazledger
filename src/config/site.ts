@@ -7,6 +7,8 @@ export const routes = {
   login: "/login",
   signup: "/signup",
   dashboard: "/dashboard",
+  onboarding: "/onboarding",
+  authCallback: "/auth/callback",
   sdsLibrary: "/dashboard/sds",
   sdsScan: "/dashboard/sds/scan",
 } as const;

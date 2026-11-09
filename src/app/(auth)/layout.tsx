@@ -8,9 +8,9 @@ export const metadata: Metadata = {
 };
 
 const POINTS = [
-  "Unlimited SDS uploads during your trial",
-  "Free import of your existing binders",
-  "QR access for every work area",
+  "Built for dental, veterinary and medical practices",
+  "Free import of your existing SDS binders",
+  "QR access for every operatory, lab and supply room",
 ];
 
 export default function AuthLayout({ children }: LayoutProps<"/">) {

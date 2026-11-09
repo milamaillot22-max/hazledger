@@ -1,17 +1,15 @@
 import { z } from "zod";
 
 /**
- * Typed, validated environment variables.
- * Add server-only secrets to `serverSchema` and import `serverEnv` only from
- * server code (Route Handlers, Server Actions, Server Components).
+ * Typed, validated environment variables. The build fails fast when a
+ * required public variable is missing (see .env.example).
  *
- * Supabase keys are optional until the auth module lands; make them required
- * then so the build fails fast on a misconfigured deploy.
+ * Server-only secrets live in `getServerEnv()` — call it only from server code.
  */
 const publicSchema = z.object({
   NEXT_PUBLIC_SITE_URL: z.url().default("http://localhost:3000"),
-  NEXT_PUBLIC_SUPABASE_URL: z.url().optional(),
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1).optional(),
+  NEXT_PUBLIC_SUPABASE_URL: z.url(),
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
 });
 
 const serverSchema = z.object({
