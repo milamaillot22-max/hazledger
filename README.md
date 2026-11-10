@@ -62,6 +62,15 @@ npm test   # unit tests (CAS validation, review flags)
 
 Set `ANTHROPIC_API_KEY` in `.env.local` (and in your host) to enable it.
 
+## Team QR access
+
+`/dashboard/team-access` shows the clinic's QR code and prints a US Letter poster
+(`/dashboard/team-access/print`, `@media print`). Staff scan it to open `/c/<token>` —
+a login-free, read-only view of **confirmed** SDSs (first aid, spills, PPE first),
+served only through `get_public_safety_library()`. Owners can regenerate the code,
+which disables old posters. Set `NEXT_PUBLIC_SITE_URL` to the production domain before
+printing; "Open the full SDS" links appear once `SUPABASE_SERVICE_ROLE_KEY` is set.
+
 ## Push to GitHub
 
 ```bash

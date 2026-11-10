@@ -188,3 +188,19 @@
   0%, 100% { transform: translateY(-70px); opacity: 0.4; }
   50% { transform: translateY(70px); opacity: 1; }
 }
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media print {
+  @page { size: letter portrait; margin: 0.5in; }
+  html, body { background: #fff !important; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+@keyframes grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}

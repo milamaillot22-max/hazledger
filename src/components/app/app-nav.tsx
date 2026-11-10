@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 const ITEMS = [
   { href: routes.dashboard, label: "Overview", exact: true },
   { href: routes.sdsLibrary, label: "SDS library", exact: false },
+  { href: routes.teamAccess, label: "Team QR", exact: false },
 ];
 
 export function AppNav() {

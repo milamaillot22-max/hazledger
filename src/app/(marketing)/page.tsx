@@ -1,3 +1,4 @@
+import { AhaDemo } from "@/components/marketing/aha-demo";
 import { Comparison } from "@/components/marketing/comparison";
 import { Faq } from "@/components/marketing/faq";
 import { Features } from "@/components/marketing/features";
@@ -13,6 +14,7 @@ export default function LandingPage() {
   return (
     <>
       <Hero />
+      <AhaDemo />
       <TrustBar />
       <ProductShowcase />
       <HowItWorks />

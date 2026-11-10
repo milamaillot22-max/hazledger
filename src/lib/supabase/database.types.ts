@@ -53,6 +53,9 @@ export type Database = {
           id: string
           name: string
           practice_type: string
+          public_access_enabled: boolean
+          public_access_rotated_at: string | null
+          public_access_token: string
           state: string
           updated_at: string
         }
@@ -62,6 +65,9 @@ export type Database = {
           id?: string
           name: string
           practice_type: string
+          public_access_enabled?: boolean
+          public_access_rotated_at?: string | null
+          public_access_token?: string
           state: string
           updated_at?: string
         }
@@ -71,6 +77,9 @@ export type Database = {
           id?: string
           name?: string
           practice_type?: string
+          public_access_enabled?: boolean
+          public_access_rotated_at?: string | null
+          public_access_token?: string
           state?: string
           updated_at?: string
         }
@@ -193,6 +202,18 @@ export type Database = {
     Functions: {
       create_clinic: {
         Args: { p_name: string; p_practice_type: string; p_state: string }
+        Returns: string
+      }
+      get_public_safety_library: {
+        Args: { p_token: string }
+        Returns: Json
+      }
+      get_public_sds_source: {
+        Args: { p_document_id: string; p_token: string }
+        Returns: string
+      }
+      rotate_clinic_access_token: {
+        Args: { p_clinic_id: string }
         Returns: string
       }
     }

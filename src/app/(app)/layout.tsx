@@ -22,8 +22,8 @@ export const metadata: Metadata = {
  */
 export default function AppLayout({ children }: LayoutProps<"/">) {
   return (
-    <div className="flex min-h-dvh flex-col bg-background">
-      <header className="border-b border-slate-200/70 bg-white">
+    <div className="flex min-h-dvh flex-col bg-background print:bg-white">
+      <header className="border-b border-slate-200/70 bg-white print:hidden">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
           <div className="flex min-w-0 items-center gap-4">
             <Logo />
