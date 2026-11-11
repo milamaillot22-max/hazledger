@@ -85,7 +85,7 @@ export function Pricing({
 function BillingToggle({ cycle, onChange }: { cycle: BillingCycle; onChange: (c: BillingCycle) => void }) {
   return (
     <div className="mt-10 flex justify-center">
-      <div role="radiogroup" aria-label="Billing cycle" className="glass-capsule relative grid grid-cols-2 rounded-full p-1">
+      <div role="radiogroup" aria-label="Billing cycle" className="relative grid grid-cols-2 rounded-full bg-slate-100 p-1 ring-1 ring-slate-200/80">
         <span
           aria-hidden="true"
           className={cn(

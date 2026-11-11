@@ -26,8 +26,7 @@ const STATUS = {
 export function AppMockup({ className }: { className?: string }) {
   return (
     <div className={cn("relative", className)} role="img" aria-label="HazLedger dashboard: SDS library with 97.7% audit readiness and an SDS scan in progress">
-      <div aria-hidden="true" className="glass-shell absolute -inset-3 rounded-[1.9rem] sm:-inset-4" />
-      <div className="relative card-soft overflow-hidden rounded-2xl shadow-[0_1px_2px_rgb(15_23_42/0.04),0_30px_80px_-30px_rgb(15_23_42/0.18)]">
+      <div className="card-soft overflow-hidden rounded-2xl shadow-[0_1px_2px_rgb(15_23_42/0.04),0_30px_80px_-30px_rgb(15_23_42/0.18)]">
         {/* chrome */}
         <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/70 px-4 py-2.5">
           <div className="flex gap-1.5">

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Clock3, QrCode, ShieldCheck, type LucideIcon } from "lucide-react";
 
-import receptionPhoto from "@/assets/images/clinic-reception.webp";
+import hygienePhoto from "@/assets/images/clinic-hygiene.webp";
 import { ScanPhoneMockup } from "@/components/marketing/scan-phone-mockup";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { ComplianceFlow } from "@/components/product/compliance-flow";
@@ -38,8 +38,8 @@ export function HowItWorks() {
           <div className="relative mx-auto w-full max-w-lg pb-16 lg:pb-0">
             <div className="relative aspect-[4/3.4] overflow-hidden rounded-[2rem] shadow-[0_30px_60px_-30px_rgb(15_23_42/0.3)] ring-1 ring-slate-200/70">
               <Image
-                src={receptionPhoto}
-                alt="Bright dental practice reception with light wood floors"
+                src={hygienePhoto}
+                alt="Clinic team member at a hand-hygiene station"
                 fill
                 placeholder="blur"
                 sizes="(min-width: 1024px) 512px, 100vw"

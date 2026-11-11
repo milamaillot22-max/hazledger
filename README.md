@@ -53,13 +53,11 @@ src/
 
 **Light only** — no dark bands or night surfaces anywhere on the site.
 Type: Geist (headings, wordmark) + Inter (body). Logo: `src/components/brand/logo.tsx` is a
-shield + ledger symbol (`LogoMark`, also `src/app/icon.svg`) with a two-tone wordmark and an optional "HazCom 2024 Ready" badge. **Photography** — curated Pexels photos (sources and license in
-`src/assets/images/CREDITS.md`). Art direction: bright interiors, light wood, large windows,
-no masked staff, no generic stock. **Glass** — `.glass-capsule` (frosted cards and pills over
-photos/gradients) and `.glass-shell` (clear casing around photos and the app mockup).
-**HUD** — `src/components/product/hero-hud.tsx`: rings, connection lines and compliance
-nodes over the hero photo; decorative, every label maps to a shipped capability, motion off
-under reduced motion. **Top header** — night-blue over a muted clinic photo with grain. Effects (`SpotlightCard`, `Magnetic`) are
+plain typographic wordmark; `LogoMark` (neutral hairline frame) is kept for favicons/app chrome. **Photography** — curated
+Pexels photos of modern dental, veterinary and medical clinics (`src/assets/images`, sources and
+license in `CREDITS.md`), always paired with code-rendered product overlays
+(`src/components/product/*`): home hero, specialty cards, solution pages, product gallery,
+blog covers, final CTA and the sign-in panel. Review identifiable people before paid ads. Effects (`SpotlightCard`, `Magnetic`) are
 decorative and disabled under reduced motion / touch.
 
 ## Site map

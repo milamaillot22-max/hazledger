@@ -17,8 +17,8 @@ export function SectorMockup({
   const rows = solution.chemicals.slice(0, rowCount);
   return (
     <div className={cn("relative", className)} role="img" aria-label={`SDS library preview for ${solution.name.toLowerCase()}`}>
-      <div className="glass-capsule overflow-hidden rounded-[1.6rem]">
-        <div className="flex items-center justify-between border-b border-white/60 bg-white/35 px-4 py-3">
+      <div className="card-soft overflow-hidden rounded-2xl shadow-[0_1px_2px_rgb(15_23_42/0.04),0_24px_60px_-28px_rgb(15_23_42/0.2)]">
+        <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/60 px-4 py-3">
           <span className="flex items-center gap-2 text-slate-900">
             <LogoMark className="size-4" />
             <span className="font-heading text-[13px] font-semibold tracking-tight">SDS library</span>
@@ -31,7 +31,7 @@ export function SectorMockup({
           {rows.map((c, i) => {
             const review = i === 1;
             return (
-              <li key={c.name} className={cn("flex items-center gap-3 px-4 py-2.5", i > 0 && "border-t border-white/60")}>
+              <li key={c.name} className={cn("flex items-center gap-3 px-4 py-2.5", i > 0 && "border-t border-slate-100")}>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-[12.5px] font-medium text-slate-800">{c.name}</p>
                   <p className="truncate text-[10.5px] text-slate-400">{c.note}</p>
@@ -50,10 +50,10 @@ export function SectorMockup({
           })}
         </ul>
         {/* Room for the overlapping "Team QR poster" chip so it never hides a row. */}
-        <div aria-hidden="true" className="h-9 border-t border-white/60" />
+        <div aria-hidden="true" className="h-9 border-t border-slate-100 bg-slate-50/40" />
       </div>
-      <div className="glass-capsule absolute -bottom-7 -left-4 flex items-center gap-3 rounded-full py-2 pr-5 pl-2 sm:-left-8">
-        <span className="flex size-9 items-center justify-center rounded-full bg-brand-soft text-primary ring-1 ring-sky-100">
+      <div className="absolute -bottom-7 -left-4 flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white/90 px-4 py-3 shadow-[0_16px_40px_-16px_rgb(15_23_42/0.25)] backdrop-blur-xl sm:-left-8">
+        <span className="flex size-9 items-center justify-center rounded-xl bg-brand-soft text-primary ring-1 ring-sky-100">
           <QrCode className="size-[18px]" />
         </span>
         <div>

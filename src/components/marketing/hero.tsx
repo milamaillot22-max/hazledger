@@ -2,9 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Landmark, LockKeyhole, ScanLine, ShieldCheck } from "lucide-react";
 
-import operatoryPhoto from "@/assets/images/clinic-dental-window.webp";
+import operatoryPhoto from "@/assets/images/clinic-dental-operatory.webp";
 import { Magnetic } from "@/components/fx/magnetic";
-import { HeroHud } from "@/components/product/hero-hud";
 import { OSHA_PENALTIES } from "@/config/compliance";
 import { routes, siteConfig } from "@/config/site";
 
@@ -74,7 +73,7 @@ export function Hero() {
 
           <ul aria-label="Compliance and security" className="mt-8 grid gap-2.5 border-t border-slate-200/70 pt-6 sm:grid-cols-3">
             {BADGES.map(({ icon: Icon, label, detail }) => (
-              <li key={label} className="glass-capsule lift flex items-center gap-2.5 rounded-2xl px-3 py-2.5">
+              <li key={label} className="lift flex items-center gap-2.5 rounded-xl bg-white/80 px-3 py-2.5 ring-1 ring-slate-200/70 backdrop-blur">
                 <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-success-soft text-success">
                   <Icon className="size-4" />
                 </span>
@@ -96,58 +95,57 @@ export function Hero() {
 function HeroVisual() {
   return (
     <div className="relative mx-auto w-full max-w-xl pb-14 sm:pb-10 lg:pb-0">
-      {/* Geometry: dot lattice, fine ring, gold hairline */}
-      <div aria-hidden="true" className="bg-dots absolute top-[4%] -right-3 size-36 sm:-right-8" />
-      <div aria-hidden="true" className="absolute bottom-[12%] -left-2 size-24 rounded-full border border-emerald-300/50 sm:-left-8" />
-      <div aria-hidden="true" className="absolute -bottom-2 left-[30%] h-px w-40 bg-gradient-to-r from-transparent via-amber-300/70 to-transparent" />
+      {/* Geometry: echo arch, dot lattice and a fine ring — depth without noise */}
+      <div
+        aria-hidden="true"
+        className="absolute top-[-3%] left-[6%] h-[88%] w-[66%] rounded-[50%_50%_2.5rem_2.5rem/38%_38%_2.5rem_2.5rem] border border-sky-300/50 bg-gradient-to-b from-sky-100/50 via-white/10 to-emerald-100/40"
+      />
+      <div aria-hidden="true" className="bg-dots absolute top-[6%] -right-3 size-36 sm:-right-8" />
+      <div aria-hidden="true" className="absolute bottom-[14%] -left-4 size-24 rounded-full border border-emerald-300/50 sm:-left-10" />
+      <div aria-hidden="true" className="absolute -bottom-2 left-[38%] h-px w-40 bg-gradient-to-r from-transparent via-amber-300/70 to-transparent" />
 
-      {/* Glass capsule: clear casing around a stadium-shaped photo */}
-      <div className="relative mx-auto w-[78%] sm:ml-auto sm:mr-[4%]">
-        <div aria-hidden="true" className="glass-shell absolute -inset-3.5 rounded-full sm:-inset-4" />
-        <div className="relative aspect-[4/5.2] overflow-hidden rounded-full ring-1 ring-white/70">
-          <Image
-            src={operatoryPhoto}
-            alt="Bright dental operatory with a large window and light wood counters"
-            fill
-            priority
-            placeholder="blur"
-            sizes="(min-width: 1024px) 440px, 78vw"
-            className="object-cover object-[46%_50%]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-sky-900/10 via-transparent to-sky-950/25" />
-        </div>
-        {/* HUD overlay, centred on the capsule */}
-        <HeroHud className="top-1/2 left-1/2 w-[112%] -translate-x-1/2 -translate-y-1/2" />
+      {/* Main photo in an arch frame */}
+      <div className="relative ml-auto aspect-[4/4.9] w-[84%] overflow-hidden rounded-[50%_50%_2.5rem_2.5rem/41%_41%_2.5rem_2.5rem] shadow-[0_40px_80px_-40px_rgb(15_23_42/0.45)] ring-1 ring-slate-200/70">
+        <Image
+          src={operatoryPhoto}
+          alt="Bright, modern dental operatory"
+          fill
+          priority
+          placeholder="blur"
+          sizes="(min-width: 1024px) 460px, 80vw"
+          className="object-cover object-[35%_50%]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/15 via-transparent to-transparent" />
       </div>
 
       {/* Floating: label scan result (illustrative) */}
-      <div className="glass-capsule lift absolute top-[6%] right-0 flex items-center gap-3 rounded-full py-2 pr-5 pl-2 motion-safe:animate-[float-y_7s_ease-in-out_infinite] sm:-right-6">
-        <span className="flex size-9 items-center justify-center rounded-full bg-brand-soft text-primary ring-1 ring-sky-100">
+      <div className="lift absolute top-[9%] right-0 flex items-center gap-3 rounded-2xl bg-white/95 px-4 py-3 shadow-lg ring-1 shadow-slate-300/40 ring-slate-200/70 backdrop-blur motion-safe:animate-[float-y_7s_ease-in-out_infinite] sm:-right-6">
+        <span className="flex size-9 items-center justify-center rounded-xl bg-brand-soft text-primary">
           <ScanLine className="size-[18px]" />
         </span>
         <div>
           <p className="text-xs font-semibold text-slate-900">Label scanned</p>
-          <p className="text-[11px] text-slate-600">Glutaraldehyde 2.5% · 16/16 sections</p>
+          <p className="text-[11px] text-slate-500">Glutaraldehyde 2.5% · 16/16 sections</p>
         </div>
       </div>
 
       {/* Floating: compliance status (illustrative example clinic) */}
-      <div className="glass-capsule lift absolute right-2 -bottom-2 w-[16.5rem] rounded-[1.75rem] p-4 sm:-right-8 lg:-bottom-8">
+      <div className="lift absolute right-2 -bottom-2 w-[16.5rem] rounded-2xl bg-white p-4 shadow-xl ring-1 shadow-slate-300/40 ring-slate-200/70 sm:-right-8 lg:-bottom-8">
         <div className="flex items-center justify-between">
           <p className="text-sm font-semibold text-slate-900">Sunset Family Dental</p>
           <CheckCircle2 className="size-4 text-success" />
         </div>
-        <p className="text-xs text-slate-600">Example clinic · San Diego, CA</p>
+        <p className="text-xs text-slate-500">Example clinic · San Diego, CA</p>
         <div className="mt-3 flex items-end justify-between">
           <span className="font-heading text-2xl font-semibold text-emerald-700 tabular">100%</span>
           <span className="rounded-full bg-success-soft px-2 py-0.5 text-[11px] font-semibold text-emerald-700 ring-1 ring-emerald-100">
             Inspection-ready
           </span>
         </div>
-        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/70">
+        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-100">
           <div className="h-full w-full rounded-full bg-success" />
         </div>
-        <p className="mt-2 text-[11px] text-slate-600">86 SDSs current · 6 rooms with QR access</p>
+        <p className="mt-2 text-[11px] text-slate-500">86 SDSs current · 6 rooms with QR access</p>
       </div>
     </div>
   );

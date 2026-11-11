@@ -84,8 +84,7 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
             <TrialForm source={s.slug} className="mt-9" />
           </div>
           <div className="relative mx-auto w-full max-w-md pb-40 sm:pb-36">
-            <div aria-hidden="true" className="glass-shell absolute -inset-3 bottom-auto aspect-[4/3.3] rounded-[2.6rem]" />
-            <div className="relative aspect-[4/3.3] overflow-hidden rounded-[2rem] ring-1 ring-white/70">
+            <div className="relative aspect-[4/3.3] overflow-hidden rounded-[2rem] shadow-[0_30px_60px_-30px_rgb(15_23_42/0.35)] ring-1 ring-slate-200/70">
               <Image
                 src={s.photo}
                 alt={s.photoAlt}
