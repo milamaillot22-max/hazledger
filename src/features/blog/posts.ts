@@ -3,6 +3,12 @@
  * source in `sources`. Review dates and figures before republishing.
  */
 
+import type { StaticImageData } from "next/image";
+
+import hygienePhoto from "@/assets/images/clinic-hygiene.webp";
+import supplyRoomPhoto from "@/assets/images/clinic-supply-room.webp";
+import waitingRoomPhoto from "@/assets/images/clinic-waiting-room.webp";
+
 export type Block =
   | { type: "p"; text: string }
   | { type: "h2"; text: string }
@@ -17,6 +23,8 @@ export type Post = {
   category: "Regulation" | "Inspections" | "Penalties";
   publishedAt: string;
   readingMinutes: number;
+  cover: StaticImageData;
+  coverAlt: string;
   keywords: string[];
   blocks: Block[];
   sources: { label: string; url: string }[];
@@ -31,6 +39,8 @@ export const POSTS: Post[] = [
     category: "Regulation",
     publishedAt: "2026-11-11",
     readingMinutes: 6,
+    cover: supplyRoomPhoto,
+    coverAlt: "Organized clinic supply room with labeled chemical storage",
     keywords: ["HazCom 2024", "OSHA hazard communication deadline", "HCS 2024 compliance dates", "GHS Revision 7"],
     blocks: [
       {
@@ -98,6 +108,8 @@ export const POSTS: Post[] = [
     category: "Inspections",
     publishedAt: "2026-11-11",
     readingMinutes: 7,
+    cover: hygienePhoto,
+    coverAlt: "Clinic team member at a hand-hygiene station",
     keywords: ["OSHA inspection dental office", "HazCom checklist", "SDS requirements clinic", "1910.1200 checklist"],
     blocks: [
       {
@@ -159,6 +171,8 @@ export const POSTS: Post[] = [
     category: "Penalties",
     publishedAt: "2026-11-11",
     readingMinutes: 5,
+    cover: waitingRoomPhoto,
+    coverAlt: "Modern clinic waiting room",
     keywords: ["OSHA penalties 2026", "OSHA fine dental office", "HazCom citation cost", "OSHA small business penalty reduction"],
     blocks: [
       {

@@ -1,3 +1,11 @@
+import type { StaticImageData } from "next/image";
+
+import supplyRoomPhoto from "@/assets/images/clinic-supply-room.webp";
+import dentalPhoto from "@/assets/images/specialty-dental.webp";
+import medicalPhoto from "@/assets/images/specialty-medical.webp";
+import veterinaryPhoto from "@/assets/images/specialty-veterinary.webp";
+import dentalTeamPhoto from "@/assets/images/team-dental-xray.webp";
+import vetUltrasoundPhoto from "@/assets/images/vet-ultrasound.webp";
 import type { Sector } from "@/features/roi/calculator";
 
 export type Solution = {
@@ -13,6 +21,11 @@ export type Solution = {
   title: string;
   titleAccent: string;
   intro: string;
+  photo: StaticImageData;
+  photoAlt: string;
+  /** Second, in-context photo shown next to the chemical list. */
+  scenePhoto: StaticImageData;
+  sceneAlt: string;
   pains: { title: string; body: string }[];
   chemicalsIntro: string;
   chemicals: { name: string; note: string }[];
@@ -43,6 +56,10 @@ export const SOLUTIONS: Solution[] = [
     titleAccent: "without the binder in the sterilization room.",
     intro:
       "Etchants, bonding resins, amalgam, sterilants and surface disinfectants — every product in your operatories needs a current Safety Data Sheet your team can reach on every shift. HazLedger scans them, keeps them current and puts them one QR scan away.",
+    photo: dentalPhoto,
+    photoAlt: "Dentist and dental assistant treating a patient in a modern operatory",
+    scenePhoto: dentalTeamPhoto,
+    sceneAlt: "Dental hygienist reviewing an X-ray on a tablet with a patient",
     pains: [
       {
         title: "Dozens of products, constant reorders",
@@ -112,6 +129,10 @@ export const SOLUTIONS: Solution[] = [
     titleAccent: "from the surgery suite to the kennels.",
     intro:
       "Anesthetic gases, formalin, radiology chemicals, lab reagents and the disinfectants used in every run — veterinary clinics handle more hazardous products than most medical offices. HazLedger keeps every SDS reviewed and one QR scan away for every tech.",
+    photo: veterinaryPhoto,
+    photoAlt: "Veterinarian examining a dog during a checkup",
+    scenePhoto: vetUltrasoundPhoto,
+    sceneAlt: "Veterinary team performing an ultrasound on a small dog",
     pains: [
       {
         title: "More products than most clinics",
@@ -176,6 +197,10 @@ export const SOLUTIONS: Solution[] = [
     titleAccent: "and ambulatory surgery centers.",
     intro:
       "Sterilants, fixatives, lab reagents, cryogens and hand antiseptics move through procedure rooms, labs and reprocessing areas every day. HazLedger gives every location one current SDS library and every employee instant access.",
+    photo: medicalPhoto,
+    photoAlt: "Two clinicians reviewing information on a tablet",
+    scenePhoto: supplyRoomPhoto,
+    sceneAlt: "Organized clinic supply and procedure room with labeled storage",
     pains: [
       {
         title: "Multiple departments, one standard",

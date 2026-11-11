@@ -112,6 +112,7 @@ export function articleStructuredData(post: Post) {
       inLanguage: "en-US",
       keywords: post.keywords.join(", "),
       mainEntityOfPage: absoluteUrl(path),
+      image: absoluteUrl(post.cover.src),
       author: { "@type": "Organization", name: `${siteConfig.name} Editorial`, url: absoluteUrl("/") },
       publisher: { "@type": "Organization", name: siteConfig.name, url: absoluteUrl("/") },
       citation: post.sources.map((s) => s.url),

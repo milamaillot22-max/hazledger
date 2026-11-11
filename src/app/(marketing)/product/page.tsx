@@ -4,6 +4,7 @@ import { ArrowRight, Database, KeyRound, Landmark, LockKeyhole, RefreshCw, type 
 
 import { Magnetic } from "@/components/fx/magnetic";
 import { SpotlightCard } from "@/components/fx/spotlight-card";
+import { ClinicGallery } from "@/components/marketing/clinic-gallery";
 import { Comparison } from "@/components/marketing/comparison";
 import { Features } from "@/components/marketing/features";
 import { FinalCta } from "@/components/marketing/final-cta";
@@ -78,6 +79,7 @@ export default function ProductPage() {
         </div>
       </section>
 
+      <ClinicGallery />
       <ProductShowcase />
       <HowItWorks />
       <Features />

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
@@ -36,8 +37,20 @@ export default function BlogIndexPage() {
 
           <Link
             href={routes.blogPost(featured.slug)}
-            className="card-soft group mt-12 block rounded-3xl p-7 transition-shadow duration-300 hover:shadow-[0_1px_2px_rgb(15_23_42/0.04),0_24px_48px_-20px_rgb(15_23_42/0.18)] sm:p-10"
+            className="card-soft group mt-12 grid overflow-hidden rounded-3xl transition-shadow duration-300 hover:shadow-[0_1px_2px_rgb(15_23_42/0.04),0_24px_48px_-20px_rgb(15_23_42/0.18)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]"
           >
+            <div className="relative aspect-[16/9] overflow-hidden lg:aspect-auto lg:min-h-[22rem]">
+              <Image
+                src={featured.cover}
+                alt={featured.coverAlt}
+                fill
+                priority
+                placeholder="blur"
+                sizes="(min-width: 1024px) 540px, 100vw"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              />
+            </div>
+            <div className="p-7 sm:p-10">
             <span className="text-xs font-semibold tracking-wider text-emerald-700 uppercase">
               Featured · {featured.category}
             </span>
@@ -49,6 +62,7 @@ export default function BlogIndexPage() {
               Read the article · {featured.readingMinutes} min
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
             </span>
+            </div>
           </Link>
         </div>
       </section>
@@ -57,7 +71,18 @@ export default function BlogIndexPage() {
         <ul className="grid gap-5 md:grid-cols-2">
           {rest.map((p) => (
             <li key={p.slug}>
-              <SpotlightCard className="h-full rounded-2xl border border-slate-200/80 bg-white p-7 shadow-sm transition-shadow hover:shadow-lg hover:shadow-slate-200/60">
+              <SpotlightCard className="group h-full overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm transition-shadow hover:shadow-lg hover:shadow-slate-200/60">
+                <div className="relative aspect-[16/8] overflow-hidden">
+                  <Image
+                    src={p.cover}
+                    alt={p.coverAlt}
+                    fill
+                    placeholder="blur"
+                    sizes="(min-width: 768px) 560px, 100vw"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  />
+                </div>
+                <div className="p-7">
                 <p className="text-xs font-semibold tracking-wider text-primary uppercase">{p.category}</p>
                 <h2 className="mt-3 font-heading text-xl leading-snug font-semibold tracking-[-0.02em] text-slate-900">
                   <Link href={routes.blogPost(p.slug)} className="after:absolute after:inset-0">
@@ -68,6 +93,7 @@ export default function BlogIndexPage() {
                 <p className="mt-5 text-xs text-slate-500">
                   {formatPostDate(p.publishedAt)} · {p.readingMinutes} min read
                 </p>
+                </div>
               </SpotlightCard>
             </li>
           ))}

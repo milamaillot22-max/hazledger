@@ -1,8 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, Landmark, LockKeyhole, ShieldCheck } from "lucide-react";
+import { ArrowRight, CheckCircle2, Landmark, LockKeyhole, ScanLine, ShieldCheck } from "lucide-react";
 
+import operatoryPhoto from "@/assets/images/clinic-dental-operatory.webp";
 import { Magnetic } from "@/components/fx/magnetic";
-import { AppMockup } from "@/components/product/app-mockup";
 import { OSHA_PENALTIES } from "@/config/compliance";
 import { routes, siteConfig } from "@/config/site";
 
@@ -18,9 +19,10 @@ const BADGES = [
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-white">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-b from-sky-50/70 via-white to-white" />
       <div aria-hidden="true" className="bg-aurora pointer-events-none absolute inset-0" />
-      <div className="relative mx-auto max-w-6xl px-4 pt-20 pb-24 sm:px-6 sm:pt-28 lg:pb-32">
-        <div className="mx-auto max-w-3xl text-center">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-4 pt-14 pb-20 sm:px-6 sm:pt-20 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-12 lg:pb-28">
+        <div>
           <Link
             href={routes.blogPost("hazcom-2024-compliance-deadlines")}
             className="group inline-flex items-center gap-2 rounded-full bg-white py-1 pr-3 pl-1 text-xs text-slate-600 shadow-sm ring-1 ring-slate-200/80 transition-colors hover:ring-slate-300"
@@ -30,18 +32,18 @@ export function Hero() {
             <ArrowRight className="size-3 text-slate-400 transition-transform group-hover:translate-x-0.5" />
           </Link>
 
-          <h1 className="mt-8 font-heading text-[2.6rem] leading-[1.04] font-semibold tracking-[-0.04em] text-slate-900 sm:text-[4.2rem]">
+          <h1 className="mt-7 font-heading text-[2.5rem] leading-[1.05] font-semibold tracking-[-0.04em] text-slate-900 sm:text-[3.5rem]">
             OSHA Compliance Isn&apos;t Optional.{" "}
             <span className="text-gradient-brand">Stay Inspection-Ready, Every Day.</span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-500">
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600">
             A single serious HazCom citation can reach ${OSHA_PENALTIES.seriousMax.toLocaleString("en-US")}.{" "}
             {siteConfig.name} keeps every Safety Data Sheet in your practice current, reviewed and one QR scan away for
-            your team.
+            your team — so you have the answer the day OSHA walks in.
           </p>
 
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Magnetic className="w-full sm:w-auto">
               <Link
                 href={siteConfig.links.startTrial}
@@ -59,7 +61,7 @@ export function Hero() {
             </Link>
           </div>
 
-          <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-slate-500">
+          <ul className="mt-5 flex flex-col gap-x-6 gap-y-2 text-sm text-slate-600 sm:flex-row sm:flex-wrap">
             {REASSURANCE.map((item) => (
               <li key={item} className="flex items-center gap-1.5">
                 <CheckCircle2 className="size-4 text-success" />
@@ -67,24 +69,73 @@ export function Hero() {
               </li>
             ))}
           </ul>
+
+          <ul aria-label="Compliance and security" className="mt-8 grid gap-2.5 border-t border-slate-200/70 pt-6 sm:grid-cols-3">
+            {BADGES.map(({ icon: Icon, label, detail }) => (
+              <li key={label} className="flex items-center gap-2.5 rounded-xl bg-white/80 px-3 py-2.5 ring-1 ring-slate-200/70">
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-success-soft text-success">
+                  <Icon className="size-4" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-xs font-semibold text-slate-900">{label}</span>
+                  <span className="block text-[11px] leading-snug text-slate-500">{detail}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <AppMockup className="mx-auto mt-16 max-w-5xl" />
-
-        <ul aria-label="Compliance and security" className="mx-auto mt-20 grid max-w-4xl gap-3 sm:grid-cols-3">
-          {BADGES.map(({ icon: Icon, label, detail }) => (
-            <li key={label} className="card-soft flex items-center gap-3 rounded-2xl px-4 py-3">
-              <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-success-soft text-success ring-1 ring-emerald-100">
-                <Icon className="size-4" />
-              </span>
-              <span>
-                <span className="block text-[13px] font-semibold text-slate-900">{label}</span>
-                <span className="block text-xs leading-snug text-slate-500">{detail}</span>
-              </span>
-            </li>
-          ))}
-        </ul>
+        <HeroVisual />
       </div>
     </section>
+  );
+}
+
+function HeroVisual() {
+  return (
+    <div className="relative mx-auto w-full max-w-xl pb-10 lg:pb-0">
+      <div className="relative aspect-[4/3.6] overflow-hidden rounded-[2rem] shadow-[0_30px_60px_-30px_rgb(15_23_42/0.35)] ring-1 ring-slate-200/70">
+        <Image
+          src={operatoryPhoto}
+          alt="Bright, modern dental operatory"
+          fill
+          priority
+          placeholder="blur"
+          sizes="(min-width: 1024px) 560px, 100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/15 via-transparent to-transparent" />
+      </div>
+
+      {/* Floating: label scan result (illustrative) */}
+      <div className="absolute top-6 right-3 flex items-center gap-3 rounded-2xl bg-white/95 px-4 py-3 shadow-lg ring-1 shadow-slate-300/40 ring-slate-200/70 backdrop-blur motion-safe:animate-[float-y_7s_ease-in-out_infinite] sm:-right-6">
+        <span className="flex size-9 items-center justify-center rounded-xl bg-brand-soft text-primary">
+          <ScanLine className="size-[18px]" />
+        </span>
+        <div>
+          <p className="text-xs font-semibold text-slate-900">Label scanned</p>
+          <p className="text-[11px] text-slate-500">Glutaraldehyde 2.5% · 16/16 sections</p>
+        </div>
+      </div>
+
+      {/* Floating: compliance status (illustrative example clinic) */}
+      <div className="absolute bottom-0 left-3 w-[17rem] rounded-2xl bg-white p-4 shadow-xl ring-1 shadow-slate-300/40 ring-slate-200/70 sm:-left-8 lg:-bottom-8">
+        <div className="flex items-center justify-between">
+          <p className="text-sm font-semibold text-slate-900">Sunset Family Dental</p>
+          <CheckCircle2 className="size-4 text-success" />
+        </div>
+        <p className="text-xs text-slate-500">Example clinic · San Diego, CA</p>
+        <div className="mt-3 flex items-end justify-between">
+          <span className="font-heading text-2xl font-semibold text-emerald-700 tabular">100%</span>
+          <span className="rounded-full bg-success-soft px-2 py-0.5 text-[11px] font-semibold text-emerald-700 ring-1 ring-emerald-100">
+            Inspection-ready
+          </span>
+        </div>
+        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-100">
+          <div className="h-full w-full rounded-full bg-success" />
+        </div>
+        <p className="mt-2 text-[11px] text-slate-500">86 SDSs current · 6 rooms with QR access</p>
+      </div>
+    </div>
   );
 }

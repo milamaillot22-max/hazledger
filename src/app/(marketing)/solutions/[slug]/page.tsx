@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Building2, ChevronRight, FlaskConical, QrCode, ScanLine, ShieldCheck } from "lucide-react";
@@ -81,7 +82,21 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-500">{s.intro}</p>
             <TrialForm source={s.slug} className="mt-9" />
           </div>
-          <SectorMockup solution={s} className="mx-auto w-full max-w-md" />
+          <div className="relative mx-auto w-full max-w-md pb-40 sm:pb-36">
+            <div className="relative aspect-[4/3.3] overflow-hidden rounded-[2rem] shadow-[0_30px_60px_-30px_rgb(15_23_42/0.35)] ring-1 ring-slate-200/70">
+              <Image
+                src={s.photo}
+                alt={s.photoAlt}
+                fill
+                priority
+                placeholder="blur"
+                sizes="(min-width: 1024px) 448px, 100vw"
+                className="object-cover"
+              />
+              <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-slate-900/20 via-transparent to-transparent" />
+            </div>
+            <SectorMockup solution={s} rows={3} className="absolute inset-x-4 bottom-0 sm:-right-8 sm:left-10" />
+          </div>
         </div>
       </section>
 
@@ -114,6 +129,10 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
               ones. These are the products most practices like yours start with.
             </p>
           </div>
+          <div>
+          <div className="relative mb-5 aspect-[16/7] overflow-hidden rounded-3xl ring-1 ring-slate-200/70">
+            <Image src={s.scenePhoto} alt={s.sceneAlt} fill placeholder="blur" sizes="(min-width: 1024px) 640px, 100vw" className="object-cover" />
+          </div>
           <ul className="grid gap-3 sm:grid-cols-2">
             {s.chemicals.map((c) => (
               <li key={c.name} className="rounded-2xl border border-slate-200/80 bg-white p-4">
@@ -122,6 +141,7 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
               </li>
             ))}
           </ul>
+          </div>
         </div>
       </section>
 

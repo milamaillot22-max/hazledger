@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { ClipboardCheck, Clock3, QrCode, ShieldCheck } from "lucide-react";
 
+import chairPhoto from "@/assets/images/clinic-dental-chair.webp";
 import { Logo } from "@/components/brand/logo";
 import { SectorMockup } from "@/components/product/sector-mockup";
 import { SOLUTIONS } from "@/features/solutions/data";
@@ -48,7 +50,20 @@ export default function AuthLayout({ children }: LayoutProps<"/">) {
             every employee&apos;s reach.
           </p>
 
-          <SectorMockup solution={SOLUTIONS[0]} className="mt-10 mb-12" />
+          <div className="relative mt-10 mb-14 pb-32">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-3xl shadow-[0_30px_60px_-30px_rgb(15_23_42/0.3)] ring-1 ring-slate-200/70">
+              <Image
+                src={chairPhoto}
+                alt="Bright, modern dental treatment room"
+                fill
+                priority
+                placeholder="blur"
+                sizes="(min-width: 1024px) 512px, 0px"
+                className="object-cover"
+              />
+            </div>
+            <SectorMockup solution={SOLUTIONS[0]} rows={3} className="absolute inset-x-6 bottom-0" />
+          </div>
 
           <ul className="space-y-5">
             {BENEFITS.map(({ icon: Icon, title, body }) => (

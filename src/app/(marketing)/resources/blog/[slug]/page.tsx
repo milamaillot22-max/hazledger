@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink, Info } from "lucide-react";
@@ -30,6 +31,7 @@ export async function generateMetadata({ params }: PageProps<"/resources/blog/[s
       title: post.title,
       description: post.description,
       publishedTime: post.publishedAt,
+      images: [{ url: post.cover.src, width: post.cover.width, height: post.cover.height, alt: post.coverAlt }],
     },
   };
 }
@@ -131,6 +133,11 @@ export default async function BlogPostPage({ params }: PageProps<"/resources/blo
             <p className="mt-6 text-sm text-slate-500">
               {siteConfig.name} Editorial · {formatDate(post.publishedAt)} · {post.readingMinutes} min read
             </p>
+          </div>
+          <div className="relative mx-auto max-w-5xl px-4 sm:px-6">
+            <div className="relative aspect-[21/9] overflow-hidden rounded-3xl shadow-[0_30px_60px_-30px_rgb(15_23_42/0.3)] ring-1 ring-slate-200/70">
+              <Image src={post.cover} alt={post.coverAlt} fill priority placeholder="blur" sizes="(min-width: 1024px) 1024px, 100vw" className="object-cover" />
+            </div>
           </div>
         </header>
 

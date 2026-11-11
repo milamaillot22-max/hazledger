@@ -5,8 +5,16 @@ import type { Solution } from "@/features/solutions/data";
 import { cn } from "@/lib/utils";
 
 /** Compact library preview built from a solution's own chemical list. */
-export function SectorMockup({ solution, className }: { solution: Solution; className?: string }) {
-  const rows = solution.chemicals.slice(0, 5);
+export function SectorMockup({
+  solution,
+  rows: rowCount = 5,
+  className,
+}: {
+  solution: Solution;
+  rows?: number;
+  className?: string;
+}) {
+  const rows = solution.chemicals.slice(0, rowCount);
   return (
     <div className={cn("relative", className)} role="img" aria-label={`SDS library preview for ${solution.name.toLowerCase()}`}>
       <div className="card-soft overflow-hidden rounded-2xl shadow-[0_1px_2px_rgb(15_23_42/0.04),0_24px_60px_-28px_rgb(15_23_42/0.2)]">
@@ -41,6 +49,8 @@ export function SectorMockup({ solution, className }: { solution: Solution; clas
             );
           })}
         </ul>
+        {/* Room for the overlapping "Team QR poster" chip so it never hides a row. */}
+        <div aria-hidden="true" className="h-9 border-t border-slate-100 bg-slate-50/40" />
       </div>
       <div className="absolute -bottom-7 -left-4 flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white/90 px-4 py-3 shadow-[0_16px_40px_-16px_rgb(15_23_42/0.25)] backdrop-blur-xl sm:-left-8">
         <span className="flex size-9 items-center justify-center rounded-xl bg-brand-soft text-primary ring-1 ring-sky-100">

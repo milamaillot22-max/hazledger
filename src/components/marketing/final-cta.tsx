@@ -1,6 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 
+import waitingRoomPhoto from "@/assets/images/clinic-waiting-room.webp";
 import { Magnetic } from "@/components/fx/magnetic";
 import { OSHA_PENALTIES } from "@/config/compliance";
 import { getPlan } from "@/config/pricing";
@@ -11,9 +13,9 @@ const pro = getPlan("pro");
 export function FinalCta({ title }: { title?: string }) {
   return (
     <section id="demo" className="scroll-mt-20 px-4 py-20 sm:px-6 sm:py-24">
-      <div className="card-soft relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] px-6 py-16 text-center sm:px-12 sm:py-20">
+      <div className="card-soft relative mx-auto grid max-w-6xl overflow-hidden rounded-[2rem] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
         <div aria-hidden="true" className="bg-aurora pointer-events-none absolute inset-0" />
-        <div className="relative mx-auto max-w-2xl">
+        <div className="relative px-6 py-14 text-center sm:px-12 sm:py-16 lg:py-20 lg:text-left">
           <p className="inline-flex items-center gap-2 rounded-full bg-success-soft px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-100">
             <ShieldCheck className="size-3.5" />
             One serious citation: up to ${OSHA_PENALTIES.seriousMax.toLocaleString("en-US")}
@@ -21,10 +23,10 @@ export function FinalCta({ title }: { title?: string }) {
           <h2 className="mt-6 font-heading text-3xl leading-tight font-semibold tracking-[-0.03em] text-slate-900 sm:text-5xl">
             {title ?? "Be inspection-ready before your next patient."}
           </h2>
-          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-slate-500 sm:text-lg">
+          <p className="mx-auto mt-5 max-w-xl text-base lg:mx-0 leading-relaxed text-slate-500 sm:text-lg">
             Start on {pro.name} for {siteConfig.trialDays} days, free. We import your binder, you print your team QR poster today.
           </p>
-          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
             <Magnetic className="w-full sm:w-auto">
               <Link
                 href={`${routes.signup}?plan=${pro.id}&source=final-cta`}
@@ -42,6 +44,16 @@ export function FinalCta({ title }: { title?: string }) {
             </Link>
           </div>
           <p className="mt-5 text-xs text-slate-400">No credit card · Cancel anytime · ${pro.monthly}/month per location after the trial</p>
+        </div>
+        <div className="relative hidden min-h-[22rem] [mask-image:linear-gradient(to_right,transparent,black_28%)] lg:block">
+          <Image
+            src={waitingRoomPhoto}
+            alt="Calm, modern clinic waiting room"
+            fill
+            placeholder="blur"
+            sizes="(min-width: 1024px) 480px, 0px"
+            className="object-cover"
+          />
         </div>
       </div>
     </section>

@@ -53,8 +53,11 @@ src/
 
 **Light only** — no dark bands or night surfaces anywhere on the site.
 Type: Geist (headings, wordmark) + Inter (body). Logo: `src/components/brand/logo.tsx` is a
-plain typographic wordmark; `LogoMark` (neutral hairline frame) is kept for favicons/app chrome. **No stock photography** — visuals are code-rendered
-product mockups (`src/components/product/*`). Effects (`SpotlightCard`, `Magnetic`) are
+plain typographic wordmark; `LogoMark` (neutral hairline frame) is kept for favicons/app chrome. **Photography** — curated
+Pexels photos of modern dental, veterinary and medical clinics (`src/assets/images`, sources and
+license in `CREDITS.md`), always paired with code-rendered product overlays
+(`src/components/product/*`): home hero, specialty cards, solution pages, product gallery,
+blog covers, final CTA and the sign-in panel. Review identifiable people before paid ads. Effects (`SpotlightCard`, `Magnetic`) are
 decorative and disabled under reduced motion / touch.
 
 ## Site map

@@ -1,6 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Clock3, QrCode, ShieldCheck, type LucideIcon } from "lucide-react";
 
+import hygienePhoto from "@/assets/images/clinic-hygiene.webp";
 import { ScanPhoneMockup } from "@/components/marketing/scan-phone-mockup";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { ComplianceFlow } from "@/components/product/compliance-flow";
@@ -32,10 +34,19 @@ export function HowItWorks() {
 
         <ComplianceFlow className="mt-14" />
 
-        <div className="mt-20 grid items-center gap-14 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
-          <div className="relative mx-auto w-60 sm:w-64">
-            <div aria-hidden="true" className="absolute -inset-10 -z-10 rounded-full bg-[radial-gradient(closest-side,rgb(2_132_199/0.10),transparent)] blur-2xl" />
-            <ScanPhoneMockup />
+        <div className="mt-20 grid items-center gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+          <div className="relative mx-auto w-full max-w-lg pb-16 lg:pb-0">
+            <div className="relative aspect-[4/3.4] overflow-hidden rounded-[2rem] shadow-[0_30px_60px_-30px_rgb(15_23_42/0.3)] ring-1 ring-slate-200/70">
+              <Image
+                src={hygienePhoto}
+                alt="Clinic team member at a hand-hygiene station"
+                fill
+                placeholder="blur"
+                sizes="(min-width: 1024px) 512px, 100vw"
+                className="object-cover"
+              />
+            </div>
+            <ScanPhoneMockup className="absolute right-2 -bottom-4 w-44 sm:-right-6 sm:w-52 lg:-bottom-12" />
           </div>
           <div>
             <ul className="space-y-7">
