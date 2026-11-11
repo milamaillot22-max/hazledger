@@ -47,9 +47,23 @@ src/
 | `bg-success` | `#059669` | health emerald — OSHA compliance, success |
 | `bg-brand-soft` | `#F0F9FF` | tinted icon tiles, pills |
 | `text-slate-900` / `text-slate-600` | | headings / body |
+| `bg-night` / `.surface-night` | `#050B14` | dark bands: header, hero, product flow, CTAs, footer |
+| `.glass-night`, `.grid-night`, `.bg-grain` | | frosted cards, hairline grid, noise overlay on dark |
 
-Rules: bright surfaces only, soft shadows, rounded-2xl cards, blue for actions,
-emerald for compliance. Photos: `src/assets/images` (credits in `CREDITS.md`).
+Type: Geist (headings, wordmark) + Inter (body). Logo: `src/components/brand/logo.tsx`
+(hairline ledger frame + emerald seal). **No stock photography** — visuals are code-rendered
+product mockups (`src/components/product/*`). Effects (`SpotlightCard`, `Magnetic`) are
+decorative and disabled under reduced motion / touch.
+
+## Site map
+
+| Route | Content |
+| --- | --- |
+| `/` | Hero, demo, compliance flow, ROI dashboard, specialties, pricing, FAQ |
+| `/product` | Product detail, features, security, comparison, roadmap |
+| `/pricing` | Plans, Starter vs Pro matrix, calculator, pricing FAQ |
+| `/solutions/[slug]` | Dental, veterinary, medical niche pages |
+| `/resources/blog`, `/resources/blog/[slug]` | Sourced OSHA articles (`src/features/blog/posts.ts`) |
 
 ## SDS scanner
 

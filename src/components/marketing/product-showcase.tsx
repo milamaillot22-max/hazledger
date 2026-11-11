@@ -8,7 +8,7 @@ export function ProductShowcase() {
         align="center"
         eyebrow="Your SDS library"
         title="Every chemical in your practice, in one inspection-ready place."
-        description="Disinfectants, etchants, fixatives, anesthetic gases — always the latest revision, mapped to the room where it's used, and flagged the moment something is missing."
+        description="Disinfectants, etchants, fixatives, anesthetic gases — reviewed by you, searchable by your team, and flagged when a revision is old or a field needs a second look."
       />
       <div className="mx-auto mt-14 max-w-5xl">
         <ProductPreview />

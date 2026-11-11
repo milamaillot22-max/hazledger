@@ -14,6 +14,10 @@ export const routes = {
   teamAccess: "/dashboard/team-access",
   teamAccessPrint: "/dashboard/team-access/print",
   solution: (slug: string) => `/solutions/${slug}`,
+  product: "/product",
+  pricing: "/pricing",
+  blog: "/resources/blog",
+  blogPost: (slug: string) => `/resources/blog/${slug}`,
 } as const;
 
 /** Login-free employee view opened by the team QR code. */
@@ -35,13 +39,10 @@ export const siteConfig = {
     startTrial: routes.signup,
     signIn: routes.login,
   },
+  /** Top-level pages; Solutions and Resources menus are built from their data. */
   nav: [
-    { label: "Product", href: "/#product" },
-    { label: "Specialties", href: "/#specialties" },
-    { label: "How it works", href: "/#how-it-works" },
-    { label: "Compare", href: "/#compare" },
-    { label: "Pricing", href: "/#pricing" },
-    { label: "FAQ", href: "/#faq" },
+    { label: "Product", href: "/product" },
+    { label: "Pricing", href: "/pricing" },
   ],
   trialDays: 14,
 } as const;

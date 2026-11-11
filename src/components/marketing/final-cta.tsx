@@ -1,51 +1,47 @@
 import Link from "next/link";
-import { ArrowRight, CalendarClock } from "lucide-react";
+import { ArrowRight, ShieldCheck } from "lucide-react";
 
 import { Magnetic } from "@/components/fx/magnetic";
-import { Button } from "@/components/ui/button";
-import { siteConfig } from "@/config/site";
+import { OSHA_PENALTIES } from "@/config/compliance";
+import { getPlan } from "@/config/pricing";
+import { routes, siteConfig } from "@/config/site";
 
-export function FinalCta() {
+const pro = getPlan("pro");
+
+export function FinalCta({ title }: { title?: string }) {
   return (
-    <section id="demo" className="scroll-mt-20 px-4 pb-20 sm:px-6 sm:pb-28">
-      <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-slate-200/80 bg-gradient-to-br from-sky-50 via-white to-emerald-50 shadow-lg shadow-slate-200/50">
-        <div className="grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.4fr_1fr] lg:items-center lg:p-16">
-          <div>
-            <h2 className="text-3xl leading-tight font-semibold text-slate-900 sm:text-4xl">
-              Be inspection-ready before your next patient.
-            </h2>
-            <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg">
-              Start free, scan your binder, post your first QR code today. If an
-              OSHA inspector walks into your practice tomorrow, you&apos;ll have
-              the answer in your pocket.
-            </p>
-          </div>
-          <div className="flex flex-col gap-3">
-            <Magnetic className="w-full">
-              <Button asChild size="xl" className="w-full">
-                <Link href={siteConfig.links.startTrial}>
-                  Start {siteConfig.trialDays}-Day Clinic Trial
-                  <ArrowRight data-icon="inline-end" />
-                </Link>
-              </Button>
-            </Magnetic>
-            <Button
-              asChild
-              size="xl"
-              variant="outline"
-              className="border-slate-200 bg-white text-slate-700 shadow-xs hover:bg-slate-50"
-            >
-              <a
-                href={`mailto:${siteConfig.contactEmail}?subject=Demo%20request`}
+    <section id="demo" className="scroll-mt-20 px-4 py-20 sm:px-6 sm:py-24">
+      <div className="surface-night bg-grain mx-auto max-w-6xl overflow-hidden rounded-[2rem] px-6 py-14 text-center ring-1 ring-white/10 sm:px-12 sm:py-20">
+        <div aria-hidden="true" className="grid-night pointer-events-none absolute inset-0" />
+        <div className="relative mx-auto max-w-2xl">
+          <p className="inline-flex items-center gap-2 rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300 ring-1 ring-emerald-400/20">
+            <ShieldCheck className="size-3.5" />
+            One serious citation: up to ${OSHA_PENALTIES.seriousMax.toLocaleString("en-US")}
+          </p>
+          <h2 className="mt-6 font-heading text-3xl leading-tight font-semibold tracking-[-0.03em] text-white sm:text-5xl">
+            {title ?? "Be inspection-ready before your next patient."}
+          </h2>
+          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-slate-400 sm:text-lg">
+            Start on {pro.name} for {siteConfig.trialDays} days, free. We import your binder, you print your team QR poster today.
+          </p>
+          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Magnetic className="w-full sm:w-auto">
+              <Link
+                href={`${routes.signup}?plan=${pro.id}&source=final-cta`}
+                className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white px-6 text-[15px] font-semibold text-night shadow-[0_10px_30px_-10px_rgb(56_189_248/0.6)] transition-all duration-200 hover:bg-sky-50 hover:shadow-[0_0_0_4px_rgb(56_189_248/0.18),0_16px_40px_-12px_rgb(56_189_248/0.7)] sm:w-auto"
               >
-                <CalendarClock data-icon="inline-start" />
-                Talk to a compliance specialist
-              </a>
-            </Button>
-            <p className="text-center text-xs text-slate-500">
-              No credit card · Setup in under 10 minutes
-            </p>
+                Start {siteConfig.trialDays}-Day {pro.name} Trial
+                <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+              </Link>
+            </Magnetic>
+            <Link
+              href={routes.pricing}
+              className="inline-flex h-12 w-full items-center justify-center rounded-xl px-6 text-[15px] font-medium text-slate-200 ring-1 ring-white/15 transition-colors hover:bg-white/[0.05] hover:text-white sm:w-auto"
+            >
+              Compare plans
+            </Link>
           </div>
+          <p className="mt-5 text-xs text-slate-500">No credit card · Cancel anytime · ${pro.monthly}/month per location after the trial</p>
         </div>
       </div>
     </section>

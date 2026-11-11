@@ -21,7 +21,16 @@ import { cn } from "@/lib/utils";
 
 const usd = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
 
-export function Pricing() {
+export function Pricing({
+  showDetailsLink = false,
+  headingLevel = "h2",
+}: {
+  /** Home: link to the full /pricing page. */
+  showDetailsLink?: boolean;
+  /** /pricing uses the section title as its page h1. */
+  headingLevel?: "h1" | "h2";
+}) {
+  const Heading = headingLevel;
   const [cycle, setCycle] = useState<BillingCycle>("annual");
 
   return (
@@ -30,9 +39,9 @@ export function Pricing() {
       <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
         <div className="mx-auto max-w-2xl text-center">
           <Eyebrow>Pricing</Eyebrow>
-          <h2 id="pricing-title" className="mt-4 text-3xl leading-tight font-semibold text-slate-900 sm:text-5xl">
+          <Heading id="pricing-title" className="mt-4 font-heading text-3xl leading-tight font-semibold tracking-[-0.03em] text-slate-900 sm:text-5xl">
             Simple pricing. Serious protection.
-          </h2>
+          </Heading>
           <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
             Per location, everything included in your {siteConfig.trialDays}-day trial. No setup fees, no long contracts.
           </p>
@@ -59,6 +68,14 @@ export function Pricing() {
             Multiple locations or a DSO? Talk to us
           </a>
         </div>
+        {showDetailsLink ? (
+          <p className="mt-6 text-center">
+            <Link href={routes.pricing} className="group inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline">
+              Full plan details and pricing FAQ
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+          </p>
+        ) : null}
       </div>
     </section>
   );

@@ -81,3 +81,35 @@ export function priceFor(plan: Plan, cycle: BillingCycle) {
 }
 
 export const ANNUAL_DISCOUNT_PERCENT = Math.round((ANNUAL_FREE_MONTHS / 12) * 100);
+
+/** Plan comparison matrix for /pricing. `true` = included, string = value, "soon" = coming soon. */
+export type MatrixValue = boolean | string | "soon";
+export const PLAN_MATRIX: { group: string; rows: { label: string; starter: MatrixValue; pro: MatrixValue }[] }[] = [
+  {
+    group: "Library",
+    rows: [
+      { label: "Locations", starter: "1", pro: "1" },
+      { label: "SDSs in your library", starter: "Up to 150", pro: "Unlimited" },
+      { label: "AI scans per month", starter: "25", pro: "100" },
+    ],
+  },
+  {
+    group: "Compliance workflow",
+    rows: [
+      { label: "AI SDS scanner (PDF & label photos)", starter: true, pro: true },
+      { label: "Human review with CAS-number validation", starter: true, pro: true },
+      { label: "Team QR poster & login-free staff view", starter: true, pro: true },
+      { label: "Emergency-first view: first aid, spills, PPE", starter: true, pro: true },
+      { label: "Supplier revision alerts", starter: false, pro: "soon" },
+      { label: "GHS secondary label printing", starter: false, pro: "soon" },
+      { label: "Inspector-ready PDF export", starter: false, pro: "soon" },
+    ],
+  },
+  {
+    group: "Service",
+    rows: [
+      { label: "We import your existing binder", starter: false, pro: true },
+      { label: "Support", starter: "Email", pro: "Priority, same business day" },
+    ],
+  },
+];

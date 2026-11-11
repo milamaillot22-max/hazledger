@@ -8,7 +8,10 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-jakarta), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-heading: var(--font-geist), var(--font-inter), ui-sans-serif, sans-serif;
+  --color-night: #050b14;
+  --color-night-2: #0b1220;
+  --color-night-3: #111a2b;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   --color-primary-hover: var(--primary-hover);
   --color-brand-soft: var(--brand-soft);
@@ -285,4 +288,64 @@ html {
 }
 h1, h2 {
   letter-spacing: -0.025em;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Night surfaces — deep navy bands for hero, product and CTAs
+   ───────────────────────────────────────────────────────────── */
+@layer components {
+  .surface-night {
+    position: relative;
+    isolation: isolate;
+    color: #e2e8f0;
+    background-color: var(--color-night);
+    background-image:
+      radial-gradient(55% 45% at 18% 0%, rgb(14 165 233 / 0.16), transparent 70%),
+      radial-gradient(40% 40% at 88% 18%, rgb(16 185 129 / 0.10), transparent 70%),
+      radial-gradient(60% 50% at 50% 110%, rgb(30 64 175 / 0.18), transparent 70%);
+  }
+  /* Hairline grid that fades out toward the edges. */
+  .grid-night {
+    background-image:
+      linear-gradient(to right, rgb(148 163 184 / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(148 163 184 / 0.07) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 30%, transparent 75%);
+  }
+  .surface-night .bg-grain::after,
+  .surface-night.bg-grain::after {
+    mix-blend-mode: overlay;
+    opacity: 0.08;
+  }
+  /* Frosted glass on dark. */
+  .glass-night {
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.07), rgb(255 255 255 / 0.03));
+    border: 1px solid rgb(255 255 255 / 0.09);
+    box-shadow:
+      0 1px 0 0 rgb(255 255 255 / 0.06) inset,
+      0 24px 60px -24px rgb(0 0 0 / 0.6);
+    backdrop-filter: blur(18px) saturate(140%);
+  }
+  .text-gradient-brand {
+    background: linear-gradient(90deg, #7dd3fc 0%, #38bdf8 40%, #34d399 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .spotlight-card[data-glow="night"] {
+    --spot-color: rgb(125 211 252 / 0.7);
+    --spot-sheen: rgb(56 189 248 / 0.08);
+  }
+}
+
+@keyframes shimmer {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+@keyframes dash-flow {
+  to { stroke-dashoffset: -24; }
+}
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }

@@ -1,54 +1,18 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import {
-  CheckCircle2,
-  ClipboardCheck,
-  Clock3,
-  PawPrint,
-  QrCode,
-  ShieldCheck,
-  Sparkles,
-  Stethoscope,
-} from "lucide-react";
+import { ClipboardCheck, Clock3, QrCode, ShieldCheck } from "lucide-react";
 
-import chairPhoto from "@/assets/images/clinic-dental-chair.webp";
 import { Logo } from "@/components/brand/logo";
-import { Tooth } from "@/components/icons/tooth";
-import { Eyebrow } from "@/components/marketing/section-heading";
+import { SectorMockup } from "@/components/product/sector-mockup";
+import { SOLUTIONS } from "@/features/solutions/data";
 
 export const metadata: Metadata = {
   robots: { index: false },
 };
 
 const BENEFITS = [
-  {
-    icon: Clock3,
-    title: "Set up in 10 minutes",
-    body: "Snap your existing SDS binder — we digitize and organize every sheet.",
-  },
-  {
-    icon: QrCode,
-    title: "Instant access, every room",
-    body: "A QR code per operatory, lab or supply room. No app, no login.",
-  },
-  {
-    icon: ClipboardCheck,
-    title: "Inspection-ready, always",
-    body: "Your HazCom program and chemical list, exported in one click.",
-  },
-];
-
-const CHECKS = [
-  { label: "SDS library", value: "48 sheets" },
-  { label: "QR posters", value: "6 rooms" },
-  { label: "Written HazCom program", value: "Up to date" },
-];
-
-const SPECIALTIES = [
-  { icon: Tooth, label: "Dental" },
-  { icon: PawPrint, label: "Veterinary" },
-  { icon: Stethoscope, label: "Medical" },
-  { icon: Sparkles, label: "Med spa" },
+  { icon: Clock3, title: "Set up in minutes", body: "Create your clinic, print your team QR poster, scan your first SDS." },
+  { icon: QrCode, title: "Instant access, every room", body: "Staff scan the poster with any phone. No app, no login." },
+  { icon: ClipboardCheck, title: "Reviewed, always", body: "Nothing reaches your team until you confirm it." },
 ];
 
 export default function AuthLayout({ children }: LayoutProps<"/">) {
@@ -58,11 +22,7 @@ export default function AuthLayout({ children }: LayoutProps<"/">) {
       <div className="flex flex-col px-4 py-8 sm:px-10">
         <Logo />
         <div className="flex flex-1 flex-col items-center justify-center py-10">
-          <Eyebrow tone="success" className="mb-6 lg:hidden">
-            <ShieldCheck className="size-3.5" />
-            OSHA-ready in 10 minutes
-          </Eyebrow>
-          <div className="w-full max-w-md rounded-2xl border border-slate-200/80 bg-white p-7 shadow-lg shadow-slate-200/50 sm:p-10">
+          <div className="w-full max-w-md rounded-2xl border border-slate-200/80 bg-white p-7 shadow-xl shadow-slate-200/50 sm:p-10">
             {children}
           </div>
           <p className="mt-6 flex items-center gap-1.5 text-xs text-slate-500">
@@ -72,102 +32,37 @@ export default function AuthLayout({ children }: LayoutProps<"/">) {
         </div>
       </div>
 
-      {/* Bright, welcoming value panel */}
-      <aside className="relative hidden overflow-hidden border-l border-slate-200/70 bg-gradient-to-br from-sky-50 via-white to-emerald-50/70 lg:flex lg:flex-col lg:justify-center">
-        <div className="mx-auto w-full max-w-lg px-12 py-12">
-          <Eyebrow tone="success">
+      {/* Product panel */}
+      <aside className="surface-night bg-grain hidden overflow-hidden lg:flex lg:flex-col lg:justify-center">
+        <div aria-hidden="true" className="grid-night pointer-events-none absolute inset-0" />
+        <div className="relative mx-auto w-full max-w-lg px-12 py-14">
+          <p className="inline-flex items-center gap-2 rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300 ring-1 ring-emerald-400/20">
             <ShieldCheck className="size-3.5" />
             OSHA HazCom · 29 CFR 1910.1200
-          </Eyebrow>
-          <h2 className="mt-5 text-[2.5rem] leading-[1.1] font-semibold text-slate-900">
-            OSHA-compliant in <span className="text-primary">10 minutes.</span>
+          </p>
+          <h2 className="mt-5 font-heading text-[2.4rem] leading-[1.08] font-semibold tracking-[-0.035em] text-white">
+            Your SDS library, <span className="text-gradient-brand">inspection-ready.</span>
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-slate-600">
-            The simplest way for medical, dental and veterinary practices to
-            manage Safety Data Sheets — and be ready the day an inspector walks
-            in.
+          <p className="mt-4 text-[15px] leading-relaxed text-slate-400">
+            The simplest way for dental, veterinary and medical practices to keep Safety Data Sheets current and in
+            every employee&apos;s reach.
           </p>
 
-          {/* Clinic photo with overlapping compliance status card */}
-          <div className="relative mt-10">
-            <div className="relative aspect-[16/9] overflow-hidden rounded-3xl ring-1 ring-slate-200/70">
-              <Image
-                src={chairPhoto}
-                alt="Bright, modern dental treatment room"
-                fill
-                priority
-                placeholder="blur"
-                sizes="(min-width: 1024px) 512px, 0px"
-                className="object-cover"
-              />
-            </div>
-            <div className="relative mx-3 -mt-14 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-lg shadow-slate-200/50">
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex min-w-0 items-center gap-3">
-                  <span className="flex size-10 items-center justify-center rounded-xl bg-brand-tint text-primary">
-                    <Tooth className="size-5" />
-                  </span>
-                  <div>
-                    <p className="text-sm font-semibold text-slate-900">
-                      Sunset Family Dental
-                    </p>
-                    <p className="text-xs text-slate-500">San Diego, CA</p>
-                  </div>
-                </div>
-                <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-success-soft px-2.5 py-1 text-xs whitespace-nowrap font-semibold text-emerald-700 ring-1 ring-emerald-100">
-                  <CheckCircle2 className="size-3.5" />
-                  Inspection-ready
-                </span>
-              </div>
-              <ul className="mt-5 space-y-3 border-t border-slate-100 pt-5">
-                {CHECKS.map((c) => (
-                  <li
-                    key={c.label}
-                    className="flex items-center justify-between text-sm"
-                  >
-                    <span className="flex items-center gap-2.5 text-slate-700">
-                      <CheckCircle2 className="size-4 text-success" />
-                      {c.label}
-                    </span>
-                    <span className="text-slate-500 tabular">{c.value}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          <SectorMockup solution={SOLUTIONS[0]} className="mt-10 mb-12" />
 
-          <ul className="mt-8 space-y-4">
+          <ul className="space-y-5">
             {BENEFITS.map(({ icon: Icon, title, body }) => (
               <li key={title} className="flex gap-4">
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white text-primary shadow-sm ring-1 ring-slate-200/80">
-                  <Icon className="size-5" />
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-white/[0.05] text-sky-300 ring-1 ring-white/10">
+                  <Icon className="size-4" />
                 </span>
                 <div>
-                  <p className="text-[15px] font-semibold text-slate-900">
-                    {title}
-                  </p>
-                  <p className="mt-0.5 text-sm leading-relaxed text-slate-600">
-                    {body}
-                  </p>
+                  <p className="text-[14px] font-semibold text-white">{title}</p>
+                  <p className="mt-0.5 text-[13px] leading-relaxed text-slate-400">{body}</p>
                 </div>
               </li>
             ))}
           </ul>
-
-          <div className="mt-10 flex flex-wrap items-center gap-2 border-t border-slate-200/70 pt-6">
-            <span className="mr-1 text-xs font-medium text-slate-500">
-              Trusted workflows for
-            </span>
-            {SPECIALTIES.map(({ icon: Icon, label }) => (
-              <span
-                key={label}
-                className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-medium text-slate-700 ring-1 ring-slate-200"
-              >
-                <Icon className="size-3.5 text-primary" />
-                {label}
-              </span>
-            ))}
-          </div>
         </div>
       </aside>
     </div>

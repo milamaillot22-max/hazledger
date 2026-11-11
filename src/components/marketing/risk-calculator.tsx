@@ -2,22 +2,11 @@
 
 import Link from "next/link";
 import { useId, useMemo, useState } from "react";
-import {
-  ArrowRight,
-  Clock3,
-  ExternalLink,
-  PawPrint,
-  Scale,
-  SlidersHorizontal,
-  Stethoscope,
-  TrendingUp,
-} from "lucide-react";
+import { ArrowRight, ExternalLink, PawPrint, Scale, SlidersHorizontal, Stethoscope } from "lucide-react";
 
 import { Magnetic } from "@/components/fx/magnetic";
 import { Tooth } from "@/components/icons/tooth";
-import { AnimatedNumber } from "@/components/marketing/animated-number";
 import { Eyebrow } from "@/components/marketing/section-heading";
-import { Button } from "@/components/ui/button";
 import { CORE_HAZCOM_REQUIREMENTS, OSHA_PENALTIES } from "@/config/compliance";
 import { PLANS, type Plan } from "@/config/pricing";
 import { siteConfig } from "@/config/site";
@@ -32,97 +21,60 @@ import {
 } from "@/features/roi/calculator";
 import { cn } from "@/lib/utils";
 
-const usd = (n: number) =>
-  new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(n);
-const hrs = (n: number) =>
-  `${(Math.round(n * 10) / 10).toLocaleString("en-US")} h`;
-const pct = (n: number) =>
-  `${n >= 0 ? "+" : ""}${Math.round(n).toLocaleString("en-US")}%`;
+/** Bar colors validated for the #0b1220 surface (dataviz validator): emphasis vs de-emphasis. */
+const BAR_HAZLEDGER = "#1d9bd6";
+const BAR_BINDER = "#526077";
 
-const SECTOR_ICONS: Record<
-  Sector,
-  React.ComponentType<{ className?: string }>
-> = {
+const usd = (n: number) =>
+  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
+const hrs = (n: number) => `${(Math.round(n * 10) / 10).toLocaleString("en-US")} h`;
+
+const SECTOR_ICONS: Record<Sector, React.ComponentType<{ className?: string }>> = {
   dental: Tooth,
   veterinary: PawPrint,
   medical: Stethoscope,
 };
 
-export function RiskCalculator({
-  defaultSector = "dental",
-}: {
-  defaultSector?: Sector;
-}) {
+export function RiskCalculator({ defaultSector = "dental" }: { defaultSector?: Sector }) {
   const [sector, setSector] = useState<Sector>(defaultSector);
   const [employees, setEmployees] = useState(12);
   const [rooms, setRooms] = useState(4);
-  const [productsOverride, setProductsOverride] = useState<number | undefined>(
-    undefined,
-  );
-  const [assumptions, setAssumptions] =
-    useState<Assumptions>(DEFAULT_ASSUMPTIONS);
-  const [planId, setPlanId] = useState<Plan["id"]>("starter");
+  const [productsOverride, setProductsOverride] = useState<number | undefined>(undefined);
+  const [assumptions, setAssumptions] = useState<Assumptions>(DEFAULT_ASSUMPTIONS);
+  const [planId, setPlanId] = useState<Plan["id"]>("pro");
   const plan = PLANS.find((p) => p.id === planId) ?? PLANS[0];
-  const price = plan.monthly;
 
+  // Pure and cheap: recomputed synchronously on every input event — no lag, no tween.
   const r = useMemo(
-    () =>
-      calculate({
-        sector,
-        employees,
-        rooms,
-        products: productsOverride,
-        assumptions,
-        monthlyPrice: price,
-      }),
-    [sector, employees, rooms, productsOverride, assumptions, price],
+    () => calculate({ sector, employees, rooms, products: productsOverride, assumptions, monthlyPrice: plan.monthly }),
+    [sector, employees, rooms, productsOverride, assumptions, plan.monthly]
   );
   const reductionPct = Math.round(r.risk.sizeReduction * 100);
+  const maxHours = Math.max(r.time.manualHours, r.time.hazledgerHours, 1);
 
   return (
-    <section
-      id="calculator"
-      aria-labelledby="calc-title"
-      className="relative scroll-mt-20 overflow-hidden"
-    >
-      <div
-        aria-hidden="true"
-        className="bg-aurora pointer-events-none absolute inset-0"
-      />
-      <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-24">
+    <section id="calculator" aria-labelledby="calc-title" className="relative scroll-mt-20 overflow-hidden">
+      <div aria-hidden="true" className="bg-aurora pointer-events-none absolute inset-0" />
+      <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
         <div className="mx-auto max-w-2xl text-center">
           <Eyebrow>
             <Scale className="size-3.5" />
             OSHA risk &amp; ROI calculator
           </Eyebrow>
-          <h2
-            id="calc-title"
-            className="mt-4 text-3xl leading-tight font-semibold text-slate-900 sm:text-4xl"
-          >
-            What is a paper SDS binder really costing your practice?
+          <h2 id="calc-title" className="mt-4 font-heading text-3xl leading-tight font-semibold tracking-[-0.03em] text-slate-900 sm:text-5xl">
+            What is a paper SDS binder really costing you?
           </h2>
           <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
-            Published {OSHA_PENALTIES.effectiveYear} OSHA penalty maximums, your
-            headcount, and transparent time assumptions you can change.
+            Published {OSHA_PENALTIES.effectiveYear} OSHA maximums, your headcount, and time assumptions you control.
           </p>
         </div>
 
-        <div className="mt-12 grid overflow-hidden rounded-3xl border border-white/70 bg-white/80 shadow-2xl ring-1 shadow-slate-300/30 ring-slate-200/70 backdrop-blur-xl lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-          {/* Inputs */}
-          <div className="border-b border-slate-100 p-6 sm:p-8 lg:border-r lg:border-b-0">
+        <div className="mt-12 grid overflow-hidden rounded-[1.75rem] bg-white shadow-2xl ring-1 shadow-slate-300/40 ring-slate-200/80 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+          {/* ── Controls ─────────────────────────────── */}
+          <div className="p-6 sm:p-8">
             <fieldset>
-              <legend className="text-sm font-semibold text-slate-900">
-                Your practice
-              </legend>
-              <div
-                className="mt-3 grid grid-cols-3 gap-2"
-                role="radiogroup"
-                aria-label="Practice type"
-              >
+              <legend className="text-sm font-semibold text-slate-900">Your practice</legend>
+              <div className="mt-3 grid grid-cols-3 gap-2" role="radiogroup" aria-label="Practice type">
                 {(Object.keys(SECTORS) as Sector[]).map((key) => {
                   const Icon = SECTOR_ICONS[key];
                   const active = key === sector;
@@ -137,18 +89,11 @@ export function RiskCalculator({
                         setProductsOverride(undefined);
                       }}
                       className={cn(
-                        "flex flex-col items-center gap-2 rounded-2xl border px-2 py-3 text-center text-xs font-medium transition-all outline-none focus-visible:ring-4 focus-visible:ring-sky-200",
-                        active
-                          ? "border-primary bg-brand-soft text-sky-800 ring-4 ring-sky-50"
-                          : "border-slate-200 text-slate-600 hover:border-sky-200 hover:bg-slate-50",
+                        "flex flex-col items-center gap-2 rounded-xl border px-2 py-3 text-center text-xs font-medium transition-colors duration-150 outline-none focus-visible:ring-4 focus-visible:ring-sky-200",
+                        active ? "border-sky-300 bg-sky-50 text-sky-900" : "border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50"
                       )}
                     >
-                      <Icon
-                        className={cn(
-                          "size-5",
-                          active ? "text-primary" : "text-slate-400",
-                        )}
-                      />
+                      <Icon className={cn("size-5", active ? "text-primary" : "text-slate-400")} />
                       {SECTORS[key].label}
                     </button>
                   );
@@ -157,15 +102,7 @@ export function RiskCalculator({
             </fieldset>
 
             <div className="mt-8 space-y-7">
-              <RangeField
-                label="Employees"
-                hint="All locations"
-                value={employees}
-                min={LIMITS.employees.min}
-                max={150}
-                inputMax={LIMITS.employees.max}
-                onChange={setEmployees}
-              />
+              <RangeField label="Employees" hint="All locations" value={employees} min={LIMITS.employees.min} max={150} inputMax={LIMITS.employees.max} onChange={setEmployees} />
               <RangeField
                 label={SECTORS[sector].roomsLabel}
                 value={rooms}
@@ -179,83 +116,29 @@ export function RiskCalculator({
               />
             </div>
 
-            <details className="group mt-8 rounded-2xl border border-slate-200/80 bg-slate-50/60">
+            <details className="group mt-8 rounded-xl border border-slate-200/80 bg-slate-50/60">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-4 py-3 text-sm font-medium text-slate-700 [&::-webkit-details-marker]:hidden">
                 <span className="flex items-center gap-2">
                   <SlidersHorizontal className="size-4 text-primary" />
                   Assumptions
                 </span>
-                <span className="text-xs text-slate-500">Edit</span>
+                <span className="text-xs text-slate-500 group-open:hidden">Edit</span>
               </summary>
               <div className="grid gap-4 border-t border-slate-200/80 p-4 sm:grid-cols-2">
                 <NumberField
                   label="Hazardous products"
-                  suffix={
-                    productsOverride === undefined ? "estimated" : "your count"
-                  }
+                  suffix={productsOverride === undefined ? "estimated" : "your count"}
                   value={r.products}
                   min={LIMITS.products.min}
                   max={LIMITS.products.max}
                   onChange={setProductsOverride}
-                  help={`Estimate: ${estimateProducts(sector, rooms)} for this practice`}
+                  help={`Estimate: ${estimateProducts(sector, rooms)}`}
                 />
-                <NumberField
-                  label="Staff cost per hour"
-                  prefix="$"
-                  value={assumptions.hourlyCost}
-                  min={0}
-                  max={500}
-                  onChange={(v) =>
-                    setAssumptions((a) => ({ ...a, hourlyCost: v }))
-                  }
-                  help="Fully loaded wage"
-                />
-                <NumberField
-                  label="Manual min / product / year"
-                  value={assumptions.manualMinutesPerProduct}
-                  min={0}
-                  max={600}
-                  onChange={(v) =>
-                    setAssumptions((a) => ({
-                      ...a,
-                      manualMinutesPerProduct: v,
-                    }))
-                  }
-                  help="Find, print, file, check revisions"
-                />
-                <NumberField
-                  label="Binder audit h / month"
-                  value={assumptions.auditHoursPerMonth}
-                  min={0}
-                  max={40}
-                  step={0.5}
-                  onChange={(v) =>
-                    setAssumptions((a) => ({ ...a, auditHoursPerMonth: v }))
-                  }
-                />
-                <NumberField
-                  label="Lookup h / employee / year"
-                  value={assumptions.lookupHoursPerEmployee}
-                  min={0}
-                  max={40}
-                  step={0.5}
-                  onChange={(v) =>
-                    setAssumptions((a) => ({ ...a, lookupHoursPerEmployee: v }))
-                  }
-                />
-                <NumberField
-                  label="HazLedger min / product / year"
-                  value={assumptions.hazledgerMinutesPerProduct}
-                  min={0}
-                  max={120}
-                  onChange={(v) =>
-                    setAssumptions((a) => ({
-                      ...a,
-                      hazledgerMinutesPerProduct: v,
-                    }))
-                  }
-                  help="Scan + review"
-                />
+                <NumberField label="Staff cost per hour" prefix="$" value={assumptions.hourlyCost} min={0} max={500} onChange={(v) => setAssumptions((a) => ({ ...a, hourlyCost: v }))} help="Fully loaded wage" />
+                <NumberField label="Manual min / product / yr" value={assumptions.manualMinutesPerProduct} min={0} max={600} onChange={(v) => setAssumptions((a) => ({ ...a, manualMinutesPerProduct: v }))} help="Find, print, file, check revisions" />
+                <NumberField label="Binder audit h / month" value={assumptions.auditHoursPerMonth} min={0} max={40} step={0.5} onChange={(v) => setAssumptions((a) => ({ ...a, auditHoursPerMonth: v }))} />
+                <NumberField label="Lookup h / employee / yr" value={assumptions.lookupHoursPerEmployee} min={0} max={40} step={0.5} onChange={(v) => setAssumptions((a) => ({ ...a, lookupHoursPerEmployee: v }))} />
+                <NumberField label="HazLedger min / product / yr" value={assumptions.hazledgerMinutesPerProduct} min={0} max={120} onChange={(v) => setAssumptions((a) => ({ ...a, hazledgerMinutesPerProduct: v }))} help="Scan + review" />
                 <button
                   type="button"
                   onClick={() => {
@@ -270,99 +153,45 @@ export function RiskCalculator({
             </details>
           </div>
 
-          {/* Results */}
-          <div
-            className="bg-gradient-to-br from-white via-white to-sky-50/50 p-6 sm:p-8"
-            aria-live="polite"
-          >
-            <ResultBlock icon={Scale} title="OSHA penalty exposure" tone="red">
-              <p className="font-heading text-3xl font-semibold text-slate-900 sm:text-4xl">
-                <AnimatedNumber
-                  value={r.risk.seriousAfterSizeReduction}
-                  format={usd}
-                />
-                <span className="mx-1.5 text-slate-300">–</span>
+          {/* ── Dashboard ────────────────────────────── */}
+          <div className="surface-night bg-grain p-6 sm:p-8" aria-live="polite">
+            <div className="relative">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-xs font-semibold tracking-wider text-slate-400 uppercase">Penalty exposure · per serious citation</p>
+                <span className="rounded-full bg-rose-400/10 px-2 py-0.5 text-[11px] font-medium text-rose-300 ring-1 ring-rose-400/20">
+                  {reductionPct > 0 ? `−${reductionPct}% size reduction` : "No size reduction"}
+                </span>
+              </div>
+              {/* Hero figure — one per view */}
+              <p className="mt-3 font-heading text-[2.6rem] leading-none font-semibold tracking-[-0.03em] text-white sm:text-5xl">
+                {usd(r.risk.seriousAfterSizeReduction)}
+                <span className="mx-2 text-slate-600">–</span>
                 {usd(r.risk.seriousMax)}
               </p>
-              <p className="mt-1 text-sm text-slate-600">
-                per serious HazCom citation
-                {reductionPct > 0
-                  ? `, after OSHA's maximum ${reductionPct}% size reduction for your headcount`
-                  : " (no size reduction above 250 employees)"}
-                .
-              </p>
-              <dl className="mt-4 grid gap-2 text-sm sm:grid-cols-2">
-                <div className="rounded-xl bg-white px-3.5 py-2.5 ring-1 ring-slate-200/80">
-                  <dt className="text-xs text-slate-500">
-                    Cited on all {r.risk.coreRequirements} core HazCom
-                    requirements
-                  </dt>
-                  <dd className="mt-0.5 font-semibold text-slate-900">
-                    up to{" "}
-                    <AnimatedNumber value={r.risk.allCoreMax} format={usd} />
-                  </dd>
+              <dl className="mt-5 grid gap-2 text-sm sm:grid-cols-2">
+                <div className="rounded-xl bg-white/[0.04] px-3.5 py-2.5 ring-1 ring-white/[0.07]">
+                  <dt className="text-xs text-slate-400">Cited on all {r.risk.coreRequirements} core requirements</dt>
+                  <dd className="mt-0.5 font-semibold text-white">up to {usd(r.risk.allCoreMax)}</dd>
                 </div>
-                <div className="rounded-xl bg-white px-3.5 py-2.5 ring-1 ring-slate-200/80">
-                  <dt className="text-xs text-slate-500">
-                    Willful or repeated violation
-                  </dt>
-                  <dd className="mt-0.5 font-semibold text-red-700">
-                    up to {usd(r.risk.willfulOrRepeatedMax)}
-                  </dd>
+                <div className="rounded-xl bg-white/[0.04] px-3.5 py-2.5 ring-1 ring-white/[0.07]">
+                  <dt className="text-xs text-slate-400">Willful or repeated, per violation</dt>
+                  <dd className="mt-0.5 font-semibold text-white">up to {usd(r.risk.willfulOrRepeatedMax)}</dd>
                 </div>
               </dl>
-            </ResultBlock>
 
-            <ResultBlock
-              icon={Clock3}
-              title="Staff time on SDS paperwork, per year"
-              tone="blue"
-            >
-              <div className="flex flex-wrap items-end gap-x-6 gap-y-2">
-                <div>
-                  <p className="text-xs text-slate-500">Paper binder</p>
-                  <p className="font-heading text-2xl font-semibold text-slate-900">
-                    <AnimatedNumber value={r.time.manualHours} format={hrs} />
-                  </p>
-                </div>
-                <ArrowRight
-                  className="mb-2 size-4 text-slate-300"
-                  aria-hidden="true"
-                />
-                <div>
-                  <p className="text-xs text-slate-500">
-                    With {siteConfig.name}
-                  </p>
-                  <p className="font-heading text-2xl font-semibold text-sky-700">
-                    <AnimatedNumber
-                      value={r.time.hazledgerHours}
-                      format={hrs}
-                    />
-                  </p>
+              {/* Hours comparison — emphasis bar vs de-emphasized gray, direct labels */}
+              <div className="mt-8">
+                <p className="text-xs font-semibold tracking-wider text-slate-400 uppercase">Staff hours on SDS paperwork · per year</p>
+                <div className="mt-3 space-y-3">
+                  <Bar label="Paper binder" value={r.time.manualHours} max={maxHours} color={BAR_BINDER} />
+                  <Bar label={siteConfig.name} value={r.time.hazledgerHours} max={maxHours} color={BAR_HAZLEDGER} />
                 </div>
               </div>
-              <p className="mt-2 text-sm text-slate-600">
-                <span className="font-semibold text-slate-900">
-                  <AnimatedNumber value={r.time.hoursSaved} format={hrs} />{" "}
-                  saved
-                </span>{" "}
-                ≈ <AnimatedNumber value={r.time.valueSaved} format={usd} /> of
-                staff time · {r.products} products
-                {r.productsEstimated ? " (estimated)" : ""}
-              </p>
-            </ResultBlock>
 
-            <ResultBlock
-              icon={TrendingUp}
-              title={`${siteConfig.name} plan`}
-              tone="green"
-              last
-              action={
-                <div
-                  role="radiogroup"
-                  aria-label="Plan"
-                  className="flex rounded-lg bg-slate-100 p-0.5 text-xs font-semibold"
-                >
+              {/* KPI tiles */}
+              <div className="mt-8 flex items-center justify-between gap-3">
+                <p className="text-xs font-semibold tracking-wider text-slate-400 uppercase">Return</p>
+                <div role="radiogroup" aria-label="Plan" className="flex rounded-lg bg-white/[0.06] p-0.5 text-xs font-semibold ring-1 ring-white/10">
                   {PLANS.map((p) => (
                     <button
                       key={p.id}
@@ -371,146 +200,106 @@ export function RiskCalculator({
                       aria-checked={p.id === planId}
                       onClick={() => setPlanId(p.id)}
                       className={cn(
-                        "rounded-md px-2.5 py-1 transition-all duration-200",
-                        p.id === planId
-                          ? "bg-white text-slate-900 shadow-sm"
-                          : "text-slate-500 hover:text-slate-800",
+                        "rounded-md px-2.5 py-1 transition-colors duration-150",
+                        p.id === planId ? "bg-white text-night" : "text-slate-400 hover:text-white"
                       )}
                     >
-                      {p.name}
+                      {p.name} · ${p.monthly}
                     </button>
                   ))}
                 </div>
-              }
-            >
-              <div className="flex flex-wrap items-end justify-between gap-4">
-                <div>
-                  <p className="font-heading text-2xl font-semibold text-slate-900">
-                    <AnimatedNumber value={r.subscriptionAnnual} format={usd} />
-                    <span className="text-sm font-normal text-slate-500">
-                      {" "}
-                      / year
-                    </span>
-                  </p>
-                  <p className="text-xs text-slate-500">
-                    {plan.name} · {usd(price)} / month per location
-                  </p>
-                </div>
-                {r.roiPercent !== null ? (
-                  <span
-                    className={cn(
-                      "rounded-full px-3 py-1 text-sm font-semibold ring-1",
-                      r.roiPercent >= 0
-                        ? "bg-success-soft text-emerald-700 ring-emerald-100"
-                        : "bg-slate-100 text-slate-600 ring-slate-200",
-                    )}
-                  >
-                    <AnimatedNumber value={r.roiPercent} format={pct} /> ROI on
-                    staff time
-                  </span>
-                ) : null}
               </div>
-              <ul className="mt-3 space-y-1.5 text-sm text-slate-600">
-                {r.roiPercent !== null &&
-                r.roiPercent >= 0 &&
-                r.paybackDays !== null ? (
-                  <li>
-                    Pays for itself in{" "}
-                    <span className="font-semibold text-slate-900">
-                      {r.paybackDays} days
-                    </span>{" "}
-                    of saved staff time.
-                  </li>
-                ) : (
-                  <li>
-                    At this size, time savings alone don&apos;t cover the plan —
-                    the case is compliance risk.
-                  </li>
-                )}
+              <dl className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                <Kpi label="Hours saved" value={hrs(r.time.hoursSaved)} />
+                <Kpi label="Staff time saved" value={usd(r.time.valueSaved)} />
+                <Kpi label={`${plan.name} / year`} value={usd(r.subscriptionAnnual)} />
+                <Kpi
+                  label="ROI on staff time"
+                  value={r.roiPercent === null ? "—" : `${r.roiPercent >= 0 ? "+" : ""}${r.roiPercent}%`}
+                  tone={r.roiPercent !== null && r.roiPercent >= 0 ? "good" : "neutral"}
+                />
+              </dl>
+
+              <p className="mt-5 rounded-xl bg-emerald-400/[0.07] px-4 py-3 text-sm leading-relaxed text-emerald-100/90 ring-1 ring-emerald-400/15">
                 {r.yearsCoveredByOneCitation !== null ? (
-                  <li>
-                    One serious citation at your size (
-                    {usd(r.risk.seriousAfterSizeReduction)}) equals{" "}
-                    <span className="font-semibold text-slate-900">
-                      {r.yearsCoveredByOneCitation} years
-                    </span>{" "}
-                    of {siteConfig.name}.
-                  </li>
+                  <>
+                    One serious citation at your size ({usd(r.risk.seriousAfterSizeReduction)}) equals{" "}
+                    <span className="font-semibold text-white">{r.yearsCoveredByOneCitation} years</span> of {siteConfig.name} {plan.name}.
+                  </>
                 ) : null}
-              </ul>
-              <Magnetic className="mt-5 w-full sm:w-auto">
-                <Button asChild size="xl" className="w-full sm:w-auto">
-                  <Link href={`${siteConfig.links.startTrial}?plan=${planId}`}>
-                    Start {siteConfig.trialDays}-Day Clinic Trial
-                    <ArrowRight data-icon="inline-end" />
-                  </Link>
-                </Button>
+                {r.roiPercent !== null && r.roiPercent < 0 ? " Time savings alone don't cover the plan at this size — the case is compliance risk." : null}
+              </p>
+
+              <details className="mt-4 text-xs text-slate-400">
+                <summary className="cursor-pointer hover:text-slate-200">Show the numbers as a table</summary>
+                <table className="mt-3 w-full text-left">
+                  <tbody className="tabular">
+                    {[
+                      ["Hazardous products", `${r.products}${r.productsEstimated ? " (estimated)" : ""}`],
+                      ["Paper binder, hours / year", hrs(r.time.manualHours)],
+                      [`${siteConfig.name}, hours / year`, hrs(r.time.hazledgerHours)],
+                      ["Hours saved", hrs(r.time.hoursSaved)],
+                      ["Staff time saved", usd(r.time.valueSaved)],
+                      [`${plan.name} plan / year`, usd(r.subscriptionAnnual)],
+                      ["Payback", r.paybackDays === null ? "—" : `${r.paybackDays} days`],
+                    ].map(([k, v]) => (
+                      <tr key={k} className="border-t border-white/[0.06]">
+                        <th scope="row" className="py-1.5 pr-3 font-normal">{k}</th>
+                        <td className="py-1.5 text-right text-slate-200">{v}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </details>
+
+              <Magnetic className="mt-6 w-full">
+                <Link
+                  href={`${siteConfig.links.startTrial}?plan=${plan.id}&source=calculator`}
+                  className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white px-6 text-[15px] font-semibold text-night transition-all duration-200 hover:bg-sky-50 hover:shadow-[0_0_0_4px_rgb(56_189_248/0.18)]"
+                >
+                  Start {siteConfig.trialDays}-Day {plan.name} Trial
+                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                </Link>
               </Magnetic>
-            </ResultBlock>
+            </div>
           </div>
         </div>
 
         <p className="mx-auto mt-5 max-w-4xl text-center text-xs leading-relaxed text-slate-500">
-          Penalties: statutory maximums for {OSHA_PENALTIES.effectiveYear} (
-          {OSHA_PENALTIES.source}{" "}
-          <a
-            href={OSHA_PENALTIES.sourceUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-0.5 font-medium text-primary hover:underline"
-          >
+          Penalties: statutory maximums for {OSHA_PENALTIES.effectiveYear} ({OSHA_PENALTIES.source}{" "}
+          <a href={OSHA_PENALTIES.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-0.5 font-medium text-primary hover:underline">
             Source <ExternalLink className="size-3" />
           </a>
-          ). Size reduction per OSHA&apos;s Field Operations Manual, Ch. 6 (July
-          2025). Actual penalties depend on gravity, history and good faith.
-          Core requirements:{" "}
-          {CORE_HAZCOM_REQUIREMENTS.map((c) => c.ref).join(", ")}. Time figures
-          are estimates from the assumptions above, not a guarantee.
+          ). Size reduction per OSHA&apos;s Field Operations Manual, Ch. 6 (July 2025). Actual penalties depend on gravity, history and
+          good faith. Core requirements: {CORE_HAZCOM_REQUIREMENTS.map((c) => c.ref).join(", ")}. Time figures are estimates from the
+          assumptions above, not a guarantee.
         </p>
       </div>
     </section>
   );
 }
 
-function ResultBlock({
-  icon: Icon,
-  title,
-  tone,
-  last,
-  action,
-  children,
-}: {
-  icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  tone: "red" | "blue" | "green";
-  last?: boolean;
-  action?: React.ReactNode;
-  children: React.ReactNode;
-}) {
-  const tones = {
-    red: "bg-red-50 text-red-700",
-    blue: "bg-brand-soft text-primary",
-    green: "bg-success-soft text-success",
-  } as const;
+function Bar({ label, value, max, color }: { label: string; value: number; max: number; color: string }) {
+  const pct = Math.max(2, (value / max) * 100);
   return (
-    <div
-      className={cn("py-5 first:pt-0", !last && "border-b border-slate-100")}
-    >
-      <div className="flex items-center justify-between gap-3">
-        <p className="flex items-center gap-2 text-sm font-semibold text-slate-700">
-          <span
-            className={cn(
-              "flex size-7 items-center justify-center rounded-lg",
-              tones[tone],
-            )}
-          >
-            <Icon className="size-4" />
-          </span>
-          {title}
-        </p>
-        {action}
-      </div>
-      <div className="mt-3">{children}</div>
+    <div className="grid grid-cols-[96px_minmax(0,1fr)_64px] items-center gap-3 text-sm">
+      <span className="truncate text-slate-300">{label}</span>
+      <span className="h-3 overflow-hidden rounded-r bg-white/[0.04]" role="img" aria-label={`${label}: ${hrs(value)} per year`}>
+        <span
+          className="block h-full origin-left rounded-r motion-safe:transition-transform motion-safe:duration-150 motion-safe:ease-out"
+          style={{ width: "100%", transform: `scaleX(${pct / 100})`, backgroundColor: color }}
+        />
+      </span>
+      <span className="text-right font-semibold text-white">{hrs(value)}</span>
+    </div>
+  );
+}
+
+function Kpi({ label, value, tone = "neutral" }: { label: string; value: string; tone?: "good" | "neutral" }) {
+  return (
+    <div className="rounded-xl bg-white/[0.04] px-3 py-3 ring-1 ring-white/[0.07]">
+      <dt className="text-[11px] leading-tight text-slate-400">{label}</dt>
+      <dd className={cn("mt-1 text-lg font-semibold", tone === "good" ? "text-emerald-300" : "text-white")}>{value}</dd>
     </div>
   );
 }
@@ -533,17 +322,13 @@ function RangeField({
   onChange: (n: number) => void;
 }) {
   const id = useId();
-  const pctFill = ((Math.min(value, max) - min) / (max - min)) * 100;
+  const fill = ((Math.min(value, max) - min) / (max - min)) * 100;
   return (
     <div>
       <div className="flex items-center justify-between gap-3">
         <label htmlFor={id} className="text-sm font-medium text-slate-700">
           {label}
-          {hint ? (
-            <span className="ml-1.5 text-xs font-normal text-slate-400">
-              {hint}
-            </span>
-          ) : null}
+          {hint ? <span className="ml-1.5 text-xs font-normal text-slate-400">{hint}</span> : null}
         </label>
         <input
           type="number"
@@ -553,8 +338,7 @@ function RangeField({
           max={inputMax}
           onChange={(e) => {
             const n = Number(e.target.value);
-            if (Number.isFinite(n))
-              onChange(Math.min(inputMax, Math.max(min, Math.round(n))));
+            if (Number.isFinite(n)) onChange(Math.min(inputMax, Math.max(min, Math.round(n))));
           }}
           className="h-9 w-20 rounded-lg border border-slate-200 bg-white px-2 text-right text-sm font-semibold text-slate-900 tabular outline-none focus:border-primary focus:ring-4 focus:ring-sky-100"
         />
@@ -565,11 +349,10 @@ function RangeField({
         min={min}
         max={max}
         value={Math.min(value, max)}
+        onInput={(e) => onChange(Number((e.target as HTMLInputElement).value))}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="mt-3 h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-[#0284c7] outline-none focus-visible:ring-4 focus-visible:ring-sky-100 [&::-moz-range-thumb]:size-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white [&::-moz-range-thumb]:bg-primary [&::-moz-range-thumb]:shadow-md [&::-webkit-slider-thumb]:size-5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:shadow-[0_2px_8px_rgba(2,132,199,0.35)] [&::-webkit-slider-thumb]:transition-transform [&::-webkit-slider-thumb]:duration-150 active:[&::-webkit-slider-thumb]:scale-110"
-        style={{
-          background: `linear-gradient(to right, #0284c7 ${pctFill}%, #e2e8f0 ${pctFill}%)`,
-        }}
+        className="mt-3 h-1.5 w-full cursor-pointer appearance-none rounded-full outline-none focus-visible:ring-4 focus-visible:ring-sky-100 [&::-moz-range-thumb]:size-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white [&::-moz-range-thumb]:bg-primary [&::-webkit-slider-thumb]:size-5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:shadow-[0_2px_8px_rgba(2,132,199,0.4)] [&::-webkit-slider-thumb]:transition-transform [&::-webkit-slider-thumb]:duration-100 active:[&::-webkit-slider-thumb]:scale-110"
+        style={{ background: `linear-gradient(to right, #0284c7 ${fill}%, #e2e8f0 ${fill}%)` }}
       />
     </div>
   );
@@ -599,19 +382,12 @@ function NumberField({
   const id = useId();
   return (
     <div>
-      <label
-        htmlFor={id}
-        className="flex items-baseline justify-between gap-2 text-xs font-medium text-slate-600"
-      >
+      <label htmlFor={id} className="flex items-baseline justify-between gap-2 text-xs font-medium text-slate-600">
         {label}
-        {suffix ? (
-          <span className="font-normal text-slate-400">{suffix}</span>
-        ) : null}
+        {suffix ? <span className="font-normal text-slate-400">{suffix}</span> : null}
       </label>
       <div className="mt-1 flex items-center rounded-lg border border-slate-200 bg-white focus-within:border-primary focus-within:ring-4 focus-within:ring-sky-100">
-        {prefix ? (
-          <span className="pl-2.5 text-sm text-slate-400">{prefix}</span>
-        ) : null}
+        {prefix ? <span className="pl-2.5 text-sm text-slate-400">{prefix}</span> : null}
         <input
           id={id}
           type="number"

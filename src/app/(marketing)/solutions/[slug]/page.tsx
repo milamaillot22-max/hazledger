@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Building2, ChevronRight, FlaskConical, QrCode, ScanLine, ShieldCheck } from "lucide-react";
 
 import { RiskCalculator } from "@/components/marketing/risk-calculator";
+import { SectorMockup } from "@/components/product/sector-mockup";
 import { Eyebrow } from "@/components/marketing/section-heading";
 import { TrialForm } from "@/components/marketing/trial-form";
 import {
@@ -62,38 +62,26 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
       ))}
 
       {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-b from-sky-50 via-white to-background" />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 pt-10 pb-16 sm:px-6 sm:pt-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:pb-24">
+      <section className="surface-night bg-grain overflow-hidden">
+        <div aria-hidden="true" className="grid-night pointer-events-none absolute inset-0" />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-4 pt-12 pb-20 sm:px-6 sm:pt-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:pb-28">
           <div>
             <nav aria-label="Breadcrumb" className="flex items-center gap-1 text-xs font-medium text-slate-500">
-              <Link href="/" className="hover:text-primary">{siteConfig.name}</Link>
+              <Link href="/" className="hover:text-slate-300">{siteConfig.name}</Link>
               <ChevronRight className="size-3" />
-              <span className="text-slate-700">{s.name}</span>
+              <span className="text-slate-300">{s.name}</span>
             </nav>
-            <Eyebrow tone="success" className="mt-5">
+            <p className="mt-6 inline-flex items-center gap-2 rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300 ring-1 ring-emerald-400/20">
               <ShieldCheck className="size-3.5" />
               {s.eyebrow}
-            </Eyebrow>
-            <h1 className="mt-5 text-[2.2rem] leading-[1.1] font-semibold text-slate-900 sm:text-5xl">
-              {s.title} <span className="text-primary">{s.titleAccent}</span>
+            </p>
+            <h1 className="mt-5 font-heading text-[2.3rem] leading-[1.06] font-semibold tracking-[-0.035em] text-white sm:text-[3.3rem]">
+              {s.title} <span className="text-gradient-brand">{s.titleAccent}</span>
             </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-600">{s.intro}</p>
-            <TrialForm source={s.slug} className="mt-8" />
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-400">{s.intro}</p>
+            <TrialForm source={s.slug} tone="night" className="mt-9" />
           </div>
-          <div className="relative mx-auto w-full max-w-md">
-            <div className="relative aspect-[4/3.6] overflow-hidden rounded-3xl shadow-xl ring-1 shadow-slate-300/40 ring-slate-200/70">
-              <Image src={s.photo} alt={s.photoAlt} fill priority placeholder="blur" sizes="(min-width: 1024px) 448px, 100vw" className="object-cover" />
-            </div>
-            <div className="absolute -bottom-6 left-4 right-4 rounded-2xl bg-white p-4 shadow-xl ring-1 shadow-slate-300/40 ring-slate-200/70 sm:left-auto sm:-left-6 sm:right-auto sm:w-72">
-              <p className="text-xs font-semibold text-slate-500">One team QR poster, posted in</p>
-              <ul className="mt-2 flex flex-wrap gap-1.5">
-                {s.rooms.map((r) => (
-                  <li key={r} className="rounded-full bg-brand-soft px-2.5 py-1 text-xs font-medium text-sky-800 ring-1 ring-sky-100">{r}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          <SectorMockup solution={s} className="mx-auto w-full max-w-md" />
         </div>
       </section>
 

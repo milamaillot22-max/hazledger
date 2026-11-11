@@ -30,3 +30,28 @@ export const CORE_HAZCOM_REQUIREMENTS = [
   { ref: "1910.1200(g)(8)", label: "SDSs readily accessible on every shift" },
   { ref: "1910.1200(h)(1)", label: "Employee information and training" },
 ] as const;
+
+/**
+ * HazCom 2024 (89 FR 44144, effective July 19, 2024) as amended by the
+ * January 15, 2026 final rule (91 FR 1695) that pushed every date by four months.
+ */
+export const HAZCOM_2024 = {
+  effective: "2024-07-19",
+  extensionRule: "91 FR 1695 (January 15, 2026)",
+  extensionUrl: "https://www.osha.gov/hazcom/rulemaking/extension",
+  milestones: [
+    { date: "2026-05-19", who: "Manufacturers, importers & distributors", what: "Substances: updated SDSs and labels" },
+    { date: "2026-11-20", who: "Employers", what: "Substances: workplace labels, written program, training" },
+    { date: "2027-11-19", who: "Manufacturers, importers & distributors", what: "Mixtures: updated SDSs and labels" },
+    { date: "2028-05-19", who: "Employers", what: "Mixtures: workplace labels, written program, training" },
+  ],
+} as const;
+
+export function formatUsDate(iso: string) {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
