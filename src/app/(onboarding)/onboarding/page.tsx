@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 const STEPS = [
   { label: "Account", state: "done" },
   { label: "Your clinic", state: "current" },
-  { label: "First SDS", state: "todo" },
+  { label: "Print QR poster", state: "todo" },
 ] as const;
 
 export default function OnboardingPage() {

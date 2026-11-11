@@ -25,6 +25,7 @@ export type ActiveClinic = {
   state: string;
   practiceType: PracticeType;
   role: ClinicRole;
+  qrPosterPrintedAt: string | null;
 };
 
 export const getUser = cache(async (): Promise<SessionUser | null> => {
@@ -51,7 +52,7 @@ export const getActiveClinic = cache(async (): Promise<ActiveClinic | null> => {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("clinic_members")
-    .select("role, clinics ( id, name, state, practice_type )")
+    .select("role, clinics ( id, name, state, practice_type, qr_poster_printed_at )")
     .eq("user_id", user.id)
     .order("created_at", { ascending: true })
     .limit(1)
@@ -66,6 +67,7 @@ export const getActiveClinic = cache(async (): Promise<ActiveClinic | null> => {
     state: data.clinics.state,
     practiceType: data.clinics.practice_type as PracticeType,
     role: data.role as ClinicRole,
+    qrPosterPrintedAt: data.clinics.qr_poster_printed_at,
   };
 });
 

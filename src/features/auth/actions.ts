@@ -17,6 +17,12 @@ export type MagicLinkState =
 const emailSchema = z.object({
   email: z.email("Enter a valid work email.").trim().toLowerCase(),
   next: z.string().optional(),
+  /** Acquisition source (e.g. "dental-compliance"), stored on new accounts. */
+  source: z
+    .string()
+    .regex(/^[a-z0-9-]{1,48}$/)
+    .optional()
+    .catch(undefined),
 });
 
 async function getOrigin() {
@@ -37,6 +43,7 @@ export async function sendMagicLink(
   const parsed = emailSchema.safeParse({
     email: formData.get("email"),
     next: formData.get("next") ?? undefined,
+    source: formData.get("source") ?? undefined,
   });
   if (!parsed.success) {
     return {
@@ -46,13 +53,15 @@ export async function sendMagicLink(
     };
   }
 
-  const { email, next } = parsed.data;
+  const { email, next, source } = parsed.data;
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithOtp({
     email,
     options: {
       emailRedirectTo: callbackUrl(await getOrigin(), next ?? routes.dashboard),
       shouldCreateUser: true,
+      // Only applied when the account is created.
+      data: source ? { signup_source: source } : undefined,
     },
   });
 

@@ -1,20 +1,19 @@
 import { SectionHeading } from "@/components/marketing/section-heading";
+import { OSHA_PENALTIES } from "@/config/compliance";
 
-/**
- * Figures are deliberately floors ("$16,000+") so they stay true after OSHA's
- * yearly inflation adjustment. Re-check osha.gov/penalties before launch.
- */
+const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
+
 const STATS = [
   {
     value: "Top 10",
     label: "Hazard Communication ranks among OSHA's most-cited standards year after year.",
   },
   {
-    value: "$16,000+",
-    label: "Maximum OSHA penalty per serious violation — each missing or outdated SDS can count.",
+    value: usd(OSHA_PENALTIES.seriousMax),
+    label: `Maximum OSHA penalty per serious violation in ${OSHA_PENALTIES.effectiveYear} — each missing or outdated SDS can count.`,
   },
   {
-    value: "$165,000+",
+    value: usd(OSHA_PENALTIES.willfulOrRepeatedMax),
     label: "Maximum penalty per willful or repeated violation.",
   },
 ];

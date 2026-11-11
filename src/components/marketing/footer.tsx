@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Logo } from "@/components/brand/logo";
 import { routes, siteConfig } from "@/config/site";
+import { SOLUTIONS } from "@/features/solutions/data";
 
 export function Footer() {
   return (
@@ -13,6 +14,14 @@ export function Footer() {
             SDS management and HazCom compliance for US dental, veterinary and medical practices.
           </p>
         </div>
+        <nav aria-label="Solutions" className="space-y-2 text-sm">
+          <p className="font-semibold text-slate-900">Solutions</p>
+          {SOLUTIONS.map((s) => (
+            <Link key={s.slug} href={routes.solution(s.slug)} className="block text-muted-foreground hover:text-foreground">
+              {s.name}
+            </Link>
+          ))}
+        </nav>
         <nav aria-label="Footer" className="grid grid-cols-2 gap-x-16 gap-y-2 text-sm">
           {siteConfig.nav.map((item) => (
             <a key={item.href} href={item.href} className="text-muted-foreground hover:text-foreground">

@@ -67,5 +67,6 @@ export async function createClinic(
     };
   }
 
-  redirect(routes.dashboard);
+  // Activation path: the team QR poster is the first "aha" — print it now.
+  redirect(`${routes.teamAccess}?welcome=1`);
 }

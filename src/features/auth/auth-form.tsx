@@ -44,6 +44,8 @@ export function AuthForm({ mode }: { mode: Mode }) {
   const searchParams = useSearchParams();
   const next = searchParams.get("next") ?? routes.dashboard;
   const urlError = URL_ERRORS[searchParams.get("error") ?? ""];
+  const prefillEmail = searchParams.get("email") ?? undefined;
+  const source = searchParams.get("source") ?? undefined;
 
   return (
     <EmailFlow
@@ -51,6 +53,8 @@ export function AuthForm({ mode }: { mode: Mode }) {
       mode={mode}
       next={next}
       urlError={urlError}
+      prefillEmail={prefillEmail}
+      source={source}
       onReset={() => setFormKey((k) => k + 1)}
     />
   );
@@ -60,11 +64,15 @@ function EmailFlow({
   mode,
   next,
   urlError,
+  prefillEmail,
+  source,
   onReset,
 }: {
   mode: Mode;
   next: string;
   urlError?: string;
+  prefillEmail?: string;
+  source?: string;
   onReset: () => void;
 }) {
   const [state, formAction] = useActionState<MagicLinkState, FormData>(
@@ -107,6 +115,7 @@ function EmailFlow({
 
       <form action={formAction} className="space-y-5" noValidate>
         <input type="hidden" name="next" value={next} />
+        {source ? <input type="hidden" name="source" value={source} /> : null}
         <div className="space-y-1.5">
           <Label htmlFor="email" className="text-slate-700">Work email</Label>
           <Input
@@ -116,7 +125,7 @@ function EmailFlow({
             autoComplete="email"
             inputMode="email"
             placeholder="you@yourclinic.com"
-            defaultValue={state.status === "error" ? state.email : undefined}
+            defaultValue={state.status === "error" ? state.email : prefillEmail}
             aria-invalid={state.status === "error" || undefined}
             className="h-12 rounded-xl border-slate-200 bg-white px-4 text-[15px] shadow-xs placeholder:text-slate-400 focus-visible:border-primary focus-visible:ring-sky-100"
             required

@@ -38,6 +38,31 @@ async function TeamAccess({ searchParams }: { searchParams: PageProps<"/dashboar
 
   return (
     <>
+      {params.welcome === "1" ? (
+        <div className="mt-6 overflow-hidden rounded-2xl border border-sky-100 bg-gradient-to-r from-sky-50 via-white to-emerald-50 p-6 shadow-lg shadow-slate-200/50">
+          <p className="flex items-center gap-2 text-sm font-semibold text-emerald-700">
+            <CheckCircle2 className="size-4" />
+            {clinic.name} is set up
+          </p>
+          <h2 className="mt-2 text-xl font-semibold text-slate-900">Last step: print your team QR poster.</h2>
+          <p className="mt-1 max-w-2xl text-[15px] text-slate-600">
+            Hang it in the sterilization area or break room. You print it once — every SDS you scan and confirm
+            appears on it automatically.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <Button asChild size="xl">
+              <Link href={routes.teamAccessPrint}>
+                <Printer data-icon="inline-start" />
+                Print my poster
+              </Link>
+            </Button>
+            <Button asChild size="xl" variant="outline" className="border-slate-200 bg-white text-slate-700">
+              <Link href={routes.sdsScan}>Scan my first SDS</Link>
+            </Button>
+          </div>
+        </div>
+      ) : null}
+
       {params.rotated === "1" ? (
         <div role="status" className="mt-6 flex items-center gap-2 rounded-xl border border-emerald-100 bg-success-soft px-4 py-3 text-sm font-medium text-emerald-800">
           <CheckCircle2 className="size-4" />

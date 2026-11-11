@@ -56,6 +56,7 @@ export type Database = {
           public_access_enabled: boolean
           public_access_rotated_at: string | null
           public_access_token: string
+          qr_poster_printed_at: string | null
           state: string
           updated_at: string
         }
@@ -68,6 +69,7 @@ export type Database = {
           public_access_enabled?: boolean
           public_access_rotated_at?: string | null
           public_access_token?: string
+          qr_poster_printed_at?: string | null
           state: string
           updated_at?: string
         }
@@ -80,6 +82,7 @@ export type Database = {
           public_access_enabled?: boolean
           public_access_rotated_at?: string | null
           public_access_token?: string
+          qr_poster_printed_at?: string | null
           state?: string
           updated_at?: string
         }

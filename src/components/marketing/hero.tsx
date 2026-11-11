@@ -1,16 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, ScanLine, ShieldCheck } from "lucide-react";
+import { ArrowRight, CheckCircle2, Landmark, LockKeyhole, ScanLine, ShieldCheck, Stethoscope } from "lucide-react";
 
 import operatoryPhoto from "@/assets/images/clinic-dental-operatory.webp";
 import { Eyebrow } from "@/components/marketing/section-heading";
 import { Button } from "@/components/ui/button";
+import { OSHA_PENALTIES } from "@/config/compliance";
 import { siteConfig } from "@/config/site";
 
-const REASSURANCE = [
-  "No credit card required",
-  "We digitize your existing binder",
-  "Cancel anytime",
+const REASSURANCE = ["No credit card required", "Set up in minutes", "Cancel anytime"];
+
+/** Every badge must stay literally true — see README "Claims policy". */
+const BADGES = [
+  { icon: ShieldCheck, label: "Built for OSHA HazCom", detail: "29 CFR 1910.1200" },
+  { icon: LockKeyhole, label: "256-bit encryption", detail: "AES-256 at rest · TLS in transit" },
+  { icon: Landmark, label: "US data hosting", detail: "Built for US healthcare" },
 ];
 
 export function Hero() {
@@ -22,27 +26,26 @@ export function Hero() {
       />
       <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-4 pt-14 pb-20 sm:px-6 sm:pt-20 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:pb-28">
         <div>
-          <Eyebrow tone="success">
-            <ShieldCheck className="size-3.5" />
-            OSHA HazCom · 29 CFR 1910.1200
+          <Eyebrow>
+            <Stethoscope className="size-3.5" />
+            For US dental, veterinary &amp; medical practices
           </Eyebrow>
 
           <h1 className="mt-6 text-[2.5rem] leading-[1.08] font-semibold text-slate-900 sm:text-[3.4rem]">
-            OSHA compliance for your practice.{" "}
-            <span className="text-primary">Without the binder.</span>
+            OSHA Compliance Isn&apos;t Optional.{" "}
+            <span className="text-primary">Stay Inspection-Ready, Every Day.</span>
           </h1>
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600">
-            {siteConfig.name} scans and organizes every Safety Data Sheet in your
-            dental, veterinary or dermatology practice — so your team can pull
-            up the right SDS from any phone, and you&apos;re ready the day OSHA
-            walks in.
+            A single serious HazCom citation can reach ${OSHA_PENALTIES.seriousMax.toLocaleString("en-US")}. {siteConfig.name} keeps
+            every Safety Data Sheet in your practice current, reviewed and one QR
+            scan away for your team — so you have the answer the day OSHA walks in.
           </p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Button asChild size="xl" className="w-full sm:w-auto">
               <Link href={siteConfig.links.startTrial}>
-                Start your {siteConfig.trialDays}-day free trial
+                Start {siteConfig.trialDays}-Day Clinic Trial — Instant Access
                 <ArrowRight data-icon="inline-end" />
               </Link>
             </Button>
@@ -56,11 +59,25 @@ export function Hero() {
             </Button>
           </div>
 
-          <ul className="mt-6 flex flex-col gap-x-6 gap-y-2 text-sm text-slate-600 sm:flex-row sm:flex-wrap">
+          <ul className="mt-5 flex flex-col gap-x-6 gap-y-2 text-sm text-slate-600 sm:flex-row sm:flex-wrap">
             {REASSURANCE.map((item) => (
               <li key={item} className="flex items-center gap-1.5">
                 <CheckCircle2 className="size-4 text-success" />
                 {item}
+              </li>
+            ))}
+          </ul>
+
+          <ul aria-label="Compliance and security" className="mt-8 grid gap-2.5 border-t border-slate-200/70 pt-6 sm:grid-cols-3">
+            {BADGES.map(({ icon: Icon, label, detail }) => (
+              <li key={label} className="flex items-center gap-2.5 rounded-xl bg-white/80 px-3 py-2.5 ring-1 ring-slate-200/70">
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-success-soft text-success">
+                  <Icon className="size-4" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-xs font-semibold text-slate-900">{label}</span>
+                  <span className="block text-[11px] leading-snug text-slate-500">{detail}</span>
+                </span>
               </li>
             ))}
           </ul>

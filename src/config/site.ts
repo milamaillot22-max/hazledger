@@ -13,6 +13,7 @@ export const routes = {
   sdsScan: "/dashboard/sds/scan",
   teamAccess: "/dashboard/team-access",
   teamAccessPrint: "/dashboard/team-access/print",
+  solution: (slug: string) => `/solutions/${slug}`,
 } as const;
 
 /** Login-free employee view opened by the team QR code. */
@@ -30,18 +31,27 @@ export const siteConfig = {
   contactEmail: "sales@hazledger.com",
   links: {
     // Swap for a Cal.com / Calendly link once sales booking is live.
-    bookDemo: "#demo",
+    bookDemo: "/#demo",
     startTrial: routes.signup,
     signIn: routes.login,
   },
   nav: [
-    { label: "Product", href: "#product" },
-    { label: "Specialties", href: "#specialties" },
-    { label: "How it works", href: "#how-it-works" },
-    { label: "Compare", href: "#compare" },
-    { label: "FAQ", href: "#faq" },
+    { label: "Product", href: "/#product" },
+    { label: "Specialties", href: "/#specialties" },
+    { label: "How it works", href: "/#how-it-works" },
+    { label: "Compare", href: "/#compare" },
+    { label: "FAQ", href: "/#faq" },
   ],
   trialDays: 14,
+  /**
+   * List price used by the ROI calculator and structured data.
+   * Placeholder until pricing is final — change it here only.
+   */
+  pricing: {
+    planName: "Clinic",
+    monthlyPerLocation: 49,
+    currency: "USD",
+  },
 } as const;
 
 export type SiteConfig = typeof siteConfig;

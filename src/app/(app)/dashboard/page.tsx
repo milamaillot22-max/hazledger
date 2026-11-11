@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Check, QrCode, ScanLine, UserPlus } from "lucide-react";
+import { Check, CheckCircle2, ChevronRight, Printer, ScanLine } from "lucide-react";
 
 import Link from "next/link";
 
@@ -25,19 +25,29 @@ export default function DashboardPage() {
   );
 }
 
-const BASE_STEPS = [
-  { title: "Create your clinic", body: "Done — you're the owner.", icon: Check, done: true },
-  { title: "Scan your first SDS", body: "Photo, PDF or supplier email.", icon: ScanLine, done: false },
-  { title: "Post a QR code", body: "One per operatory, lab or supply room.", icon: QrCode, done: false },
-  { title: "Invite your team", body: "Office manager, hygienists, techs.", icon: UserPlus, done: false },
-];
-
 async function DashboardContent() {
   const { clinic } = await requireClinic();
   const docs = await listSdsDocuments(clinic.id);
   const current = docs.filter((d) => d.status === "current").length;
   const toReview = docs.filter((d) => d.status === "needs_review").length;
-  const SETUP_STEPS = BASE_STEPS.map((step, i) => (i === 1 ? { ...step, done: current > 0 } : step));
+  const SETUP_STEPS = [
+    { title: "Create your clinic", body: "Done — you're the owner.", icon: Check, done: true, href: null },
+    {
+      title: "Print your team QR poster",
+      body: "Staff scan it for SDSs and emergency steps.",
+      icon: Printer,
+      done: Boolean(clinic.qrPosterPrintedAt),
+      href: routes.teamAccessPrint,
+    },
+    { title: "Scan your first SDS", body: "Photo of a label or the PDF.", icon: ScanLine, done: docs.length > 0, href: routes.sdsScan },
+    {
+      title: "Confirm it for your team",
+      body: "Reviewed SDSs go live on the poster.",
+      icon: CheckCircle2,
+      done: current > 0,
+      href: toReview > 0 ? routes.sdsLibrary : routes.sdsScan,
+    },
+  ];
   const done = SETUP_STEPS.filter((s) => s.done).length;
 
   return (
@@ -65,8 +75,8 @@ async function DashboardContent() {
           </div>
         </div>
         <ol className="grid divide-y divide-border sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
-          {SETUP_STEPS.map(({ title, body, icon: Icon, done: isDone }) => (
-            <li key={title} className="flex gap-3 p-5">
+          {SETUP_STEPS.map(({ title, body, icon: Icon, done: isDone, href }) => (
+            <li key={title} className="group relative flex gap-3 p-5 transition-colors has-[a]:hover:bg-slate-50/80">
               <span
                 className={
                   isDone
@@ -81,6 +91,12 @@ async function DashboardContent() {
                   {title}
                 </p>
                 <p className="mt-0.5 text-xs text-muted-foreground">{body}</p>
+                {href && !isDone ? (
+                  <Link href={href} className="mt-2 inline-flex items-center gap-0.5 text-xs font-semibold text-primary after:absolute after:inset-0">
+                    Start
+                    <ChevronRight className="size-3.5" />
+                  </Link>
+                ) : null}
               </div>
             </li>
           ))}

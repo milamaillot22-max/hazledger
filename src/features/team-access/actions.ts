@@ -6,6 +6,18 @@ import { routes } from "@/config/site";
 import { requireClinic } from "@/lib/auth/dal";
 import { createClient } from "@/lib/supabase/server";
 
+/** Records the activation milestone the first time a poster is printed. */
+export async function markPosterPrinted() {
+  const { clinic } = await requireClinic();
+  if (clinic.qrPosterPrintedAt) return;
+  const supabase = await createClient();
+  await supabase
+    .from("clinics")
+    .update({ qr_poster_printed_at: new Date().toISOString() })
+    .eq("id", clinic.id)
+    .is("qr_poster_printed_at", null);
+}
+
 /** Invalidates every printed poster and issues a new team QR code. */
 export async function rotateTeamAccessToken() {
   const { clinic } = await requireClinic();

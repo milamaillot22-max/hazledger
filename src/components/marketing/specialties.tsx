@@ -1,5 +1,6 @@
 import Image, { type StaticImageData } from "next/image";
-import { Hand, MapPin, PawPrint } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Hand, MapPin, PawPrint } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
 
 import dentalPhoto from "@/assets/images/specialty-dental.webp";
@@ -7,6 +8,7 @@ import dermatologyPhoto from "@/assets/images/specialty-dermatology.webp";
 import veterinaryPhoto from "@/assets/images/specialty-veterinary.webp";
 import { Tooth } from "@/components/icons/tooth";
 import { SectionHeading } from "@/components/marketing/section-heading";
+import { routes } from "@/config/site";
 
 type Specialty = {
   icon: ComponentType<SVGProps<SVGSVGElement>>;
@@ -17,6 +19,7 @@ type Specialty = {
   location: string;
   body: string;
   chemicals: string[];
+  slug: string;
 };
 
 const SPECIALTIES: Specialty[] = [
@@ -29,6 +32,7 @@ const SPECIALTIES: Specialty[] = [
     location: "San Diego, CA",
     body: "Operatories, sterilization and lab — every product mapped to the room where it's used.",
     chemicals: ["Etchants", "Bonding agents", "Glutaraldehyde", "Surface disinfectants"],
+    slug: "dental-compliance",
   },
   {
     icon: PawPrint,
@@ -39,6 +43,7 @@ const SPECIALTIES: Specialty[] = [
     location: "Austin, TX",
     body: "Surgery suite, kennels and in-house lab covered, including anesthetic gases.",
     chemicals: ["Isoflurane", "Formalin", "Kennel disinfectants", "Lab reagents"],
+    slug: "veterinary-safety",
   },
   {
     icon: Hand,
@@ -49,6 +54,7 @@ const SPECIALTIES: Specialty[] = [
     location: "Miami, FL",
     body: "Procedure rooms and biopsy prep, with peel and cryotherapy products tracked.",
     chemicals: ["Liquid nitrogen", "Formalin", "TCA peels", "Hand antiseptics"],
+    slug: "medical-clinics",
   },
 ];
 
@@ -64,7 +70,7 @@ export function Specialties() {
         {SPECIALTIES.map(({ icon: Icon, ...s }) => (
           <article
             key={s.title}
-            className="group overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-lg shadow-slate-200/50 transition-shadow hover:shadow-xl hover:shadow-slate-200/70"
+            className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-lg shadow-slate-200/50 transition-shadow hover:shadow-xl hover:shadow-slate-200/70"
           >
             <div className="relative aspect-[4/3] overflow-hidden">
               <Image
@@ -96,6 +102,13 @@ export function Specialties() {
                   </li>
                 ))}
               </ul>
+              <Link
+                href={routes.solution(s.slug)}
+                className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary after:absolute after:inset-0 hover:underline"
+              >
+                See how it works for {s.title.toLowerCase()}
+                <ArrowRight className="size-4" />
+              </Link>
             </div>
           </article>
         ))}

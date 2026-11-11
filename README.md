@@ -71,6 +71,24 @@ served only through `get_public_safety_library()`. Owners can regenerate the cod
 which disables old posters. Set `NEXT_PUBLIC_SITE_URL` to the production domain before
 printing; "Open the full SDS" links appear once `SUPABASE_SERVICE_ROLE_KEY` is set.
 
+## Growth surfaces
+
+- **Risk & ROI calculator** (`src/features/roi/calculator.ts`, tested): published OSHA
+  maximums + size reduction from `src/config/compliance.ts`, editable time assumptions,
+  price from `siteConfig.pricing`. ROI counts staff time only — never risk avoided.
+- **Solution pages** `/solutions/{dental-compliance,veterinary-safety,medical-clinics}`:
+  content in `src/features/solutions/data.ts`, OG image, SoftwareApplication + FAQ +
+  Breadcrumb JSON-LD, `sitemap.xml`, `robots.txt`. The trial form prefills `/signup` and
+  stores `signup_source` on the new account.
+- **Activation**: onboarding → `/dashboard/team-access?welcome=1` → print poster
+  (`clinics.qr_poster_printed_at`) → scan → confirm.
+
+## Claims policy
+
+Marketing copy must stay literally true: no "OSHA certified/compliant" (OSHA certifies no
+software), no ratings or testimonials until real ones exist, no fixed ROI claims. Update
+`src/config/compliance.ts` every January from osha.gov/penalties.
+
 ## Push to GitHub
 
 ```bash
