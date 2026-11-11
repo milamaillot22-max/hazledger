@@ -119,7 +119,7 @@ software), no ratings or testimonials until real ones exist, no fixed ROI claims
 `src/config/compliance.ts` every January from osha.gov/penalties.
 
 - **Logo badge** reads "HazCom 2024 Ready" (the standard), never "OSHA … Ready" (OSHA endorses no software).
-- **Top bar** (`announcement-bar.tsx`, institutional blue) shows the HCS 2024 *employer* deadline for substances from
+- **Top photo banner** (`announcement-bar.tsx`, apothecary still life, title on the photo) shows the HCS 2024 *employer* deadline for substances from
   `HAZCOM_2024.milestones[1]`; the day countdown is computed in the browser and switches to
   "now in effect" after the date. Update the milestone once it passes (next: May 19, 2028, mixtures).
 - **No chat / support widget** until a staffed support tool exists. Never imply live support.

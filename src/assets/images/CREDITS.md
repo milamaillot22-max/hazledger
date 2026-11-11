@@ -6,6 +6,7 @@ attribution not required). Resized/cropped and converted to WebP (1600–1800 px
 
 | File | Source | Used on |
 | --- | --- | --- |
+| banner-apothecary.webp | https://www.pexels.com/photo/assorted-vintage-bottles-on-a-wooden-shelf-7472646/ | Top photo banner (all marketing pages) |
 | clinic-dental-operatory.webp | https://www.pexels.com/photo/white-dental-equipment-near-wall-305567/ | Home hero |
 | clinic-dental-chair.webp | https://www.pexels.com/photo/view-of-clinic-305568/ | Sign-in panel, product gallery, dental page |
 | clinic-hygiene.webp | https://www.pexels.com/photo/woman-washing-her-hands-3884109/ | How it works, blog |

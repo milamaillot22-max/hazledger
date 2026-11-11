@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Inter } from "next/font/google";
+import { Geist, Instrument_Serif, Inter } from "next/font/google";
 
 import { siteConfig } from "@/config/site";
 import { env } from "@/lib/env";
@@ -15,6 +15,14 @@ const inter = Inter({
 const geist = Geist({
   variable: "--font-geist",
   subsets: ["latin"],
+  display: "swap",
+});
+
+/** Editorial serif, used sparingly for the photo banner title. */
+const serif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  weight: "400",
   display: "swap",
 });
 
@@ -47,7 +55,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en-US"
-      className={`${inter.variable} ${geist.variable} h-full antialiased`}
+      className={`${inter.variable} ${geist.variable} ${serif.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
