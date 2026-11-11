@@ -75,7 +75,12 @@ printing; "Open the full SDS" links appear once `SUPABASE_SERVICE_ROLE_KEY` is s
 
 - **Risk & ROI calculator** (`src/features/roi/calculator.ts`, tested): published OSHA
   maximums + size reduction from `src/config/compliance.ts`, editable time assumptions,
-  price from `siteConfig.pricing`. ROI counts staff time only — never risk avoided.
+  plan prices from `src/config/pricing.ts`. ROI counts staff time only — never risk avoided.
+- **Pricing** (`src/config/pricing.ts`, tested): Starter $79, Pro $149 (featured), annual =
+  2 months free. Plan limits are commercial terms, enforced once billing (Stripe) ships.
+  The chosen plan/billing is stored on new accounts (`selected_plan`, `selected_billing`).
+- **Domain**: `NEXT_PUBLIC_SITE_URL` defaults to `https://gethazledger.com` (canonical URLs,
+  Open Graph, sitemap, QR posters). Set `http://localhost:3000` locally only to test QR links.
 - **Solution pages** `/solutions/{dental-compliance,veterinary-safety,medical-clinics}`:
   content in `src/features/solutions/data.ts`, OG image, SoftwareApplication + FAQ +
   Breadcrumb JSON-LD, `sitemap.xml`, `robots.txt`. The trial form prefills `/signup` and

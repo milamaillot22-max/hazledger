@@ -86,7 +86,7 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
               <Image src={s.photo} alt={s.photoAlt} fill priority placeholder="blur" sizes="(min-width: 1024px) 448px, 100vw" className="object-cover" />
             </div>
             <div className="absolute -bottom-6 left-4 right-4 rounded-2xl bg-white p-4 shadow-xl ring-1 shadow-slate-300/40 ring-slate-200/70 sm:left-auto sm:-left-6 sm:right-auto sm:w-72">
-              <p className="text-xs font-semibold text-slate-500">QR posters for</p>
+              <p className="text-xs font-semibold text-slate-500">One team QR poster, posted in</p>
               <ul className="mt-2 flex flex-wrap gap-1.5">
                 {s.rooms.map((r) => (
                   <li key={r} className="rounded-full bg-brand-soft px-2.5 py-1 text-xs font-medium text-sky-800 ring-1 ring-sky-100">{r}</li>

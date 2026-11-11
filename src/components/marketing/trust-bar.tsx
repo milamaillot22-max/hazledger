@@ -12,7 +12,7 @@ const BADGES: { icon: LucideIcon; title: string; detail: string }[] = [
   { icon: Tags, title: "GHS-formatted", detail: "Labels & 16-section SDS" },
   { icon: Landmark, title: "US data residency", detail: "Hosted in US data centers" },
   { icon: LockKeyhole, title: "Encrypted", detail: "In transit & at rest" },
-  { icon: FileCheck2, title: "Audit trail", detail: "Every change, timestamped" },
+  { icon: FileCheck2, title: "Review trail", detail: "Who confirmed each SDS, and when" },
 ];
 
 const SPECIALTIES = [

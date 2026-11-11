@@ -1,3 +1,4 @@
+import { CURRENCY, PLANS } from "@/config/pricing";
 import { routes, siteConfig } from "@/config/site";
 import type { Solution } from "@/features/solutions/data";
 import { env } from "@/lib/env";
@@ -33,11 +34,19 @@ export function solutionStructuredData(s: Solution) {
         "Human review before records go live",
       ],
       offers: {
-        "@type": "Offer",
-        price: siteConfig.pricing.monthlyPerLocation.toFixed(2),
-        priceCurrency: siteConfig.pricing.currency,
-        url: absoluteUrl(routes.signup),
-        description: `${siteConfig.pricing.planName} plan, per location per month, ${siteConfig.trialDays}-day free trial, no credit card required.`,
+        "@type": "AggregateOffer",
+        priceCurrency: CURRENCY,
+        lowPrice: Math.min(...PLANS.map((p) => p.monthly)).toFixed(2),
+        highPrice: Math.max(...PLANS.map((p) => p.monthly)).toFixed(2),
+        offerCount: PLANS.length,
+        offers: PLANS.map((p) => ({
+          "@type": "Offer",
+          name: `${siteConfig.name} ${p.name}`,
+          price: p.monthly.toFixed(2),
+          priceCurrency: CURRENCY,
+          url: absoluteUrl(`${routes.signup}?plan=${p.id}`),
+          description: `${p.name} plan, per location per month. ${siteConfig.trialDays}-day free trial, no credit card required.`,
+        })),
       },
     },
     {

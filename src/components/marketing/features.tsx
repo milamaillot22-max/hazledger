@@ -1,45 +1,48 @@
 import {
+  BadgeCheck,
   BellRing,
-  Boxes,
-  ClipboardCheck,
   FileSearch,
-  Printer,
-  Users,
+  LockKeyhole,
+  QrCode,
+  Siren,
   type LucideIcon,
 } from "lucide-react";
 
+import { SpotlightCard } from "@/components/fx/spotlight-card";
 import { SectionHeading } from "@/components/marketing/section-heading";
 
-const FEATURES: { icon: LucideIcon; title: string; body: string }[] = [
+/** Shipped capabilities only; anything unreleased carries `soon`. */
+const FEATURES: { icon: LucideIcon; title: string; body: string; soon?: boolean }[] = [
   {
     icon: FileSearch,
     title: "AI SDS scanner",
-    body: "Turns any SDS or product label — photographed, scanned or PDF — into a searchable, structured record.",
+    body: "Turns any SDS or product label — photographed or PDF — into a searchable record with all 16 sections.",
+  },
+  {
+    icon: BadgeCheck,
+    title: "Human review, built in",
+    body: "Nothing goes live until you confirm it. Invalid CAS numbers, old revisions and low-confidence fields are flagged.",
+  },
+  {
+    icon: QrCode,
+    title: "Team QR poster",
+    body: "One printed code gives every employee login-free access to your SDSs — and it updates itself.",
+  },
+  {
+    icon: Siren,
+    title: "Emergency-first staff view",
+    body: "First aid, spill response and PPE come first, with one-tap calls to 911 and Poison Help.",
+  },
+  {
+    icon: LockKeyhole,
+    title: "Private by design",
+    body: "Files stored per clinic, hosted in the US, encrypted in transit and at rest. Staff only see confirmed SDSs.",
   },
   {
     icon: BellRing,
-    title: "Revision alerts",
-    body: "Know when a dental or veterinary supplier publishes a newer SDS — before an inspector does."
-  },
-  {
-    icon: Boxes,
-    title: "Inventory by room",
-    body: "Map every product to the operatory, sterilization area, lab or surgery suite where it's used.",
-  },
-  {
-    icon: Printer,
-    title: "GHS secondary labels",
-    body: "Print compliant labels for decanted disinfectants and spray bottles in one click.",
-  },
-  {
-    icon: ClipboardCheck,
-    title: "Inspector mode",
-    body: "Export your written HazCom program, chemical list and SDS index as one PDF.",
-  },
-  {
-    icon: Users,
-    title: "Roles & multi-site",
-    body: "Owners and office managers edit, staff view. One account for every location of your practice.",
+    title: "Supplier revision alerts",
+    body: "Get notified when a manufacturer publishes a newer SDS for a product you stock.",
+    soon: true,
   },
 ];
 
@@ -49,17 +52,27 @@ export function Features() {
       <SectionHeading
         eyebrow="Platform"
         title="Everything HazCom asks of you. Nothing it doesn't."
-        description="One focused tool for your SDS library and chemical inventory — built for busy practices, not for factories or EHS departments."
+        description="One focused tool for your SDS library and staff access — built for busy practices, not for factories or EHS departments."
       />
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {FEATURES.map(({ icon: Icon, title, body }) => (
-          <div key={title} className="rounded-2xl border border-slate-200/80 bg-white p-6 transition-shadow hover:shadow-lg hover:shadow-slate-200/50">
-            <span className="flex size-11 items-center justify-center rounded-xl bg-brand-soft">
-              <Icon className="size-5 text-primary" />
-            </span>
-            <h3 className="mt-4 text-base font-semibold text-foreground">{title}</h3>
-            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{body}</p>
-          </div>
+        {FEATURES.map(({ icon: Icon, title, body, soon }) => (
+          <SpotlightCard
+            key={title}
+            className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-lg hover:shadow-slate-200/60"
+          >
+            <div className="flex items-center justify-between">
+              <span className="flex size-11 items-center justify-center rounded-xl bg-brand-soft text-primary ring-1 ring-sky-100">
+                <Icon className="size-5" />
+              </span>
+              {soon ? (
+                <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-slate-500 uppercase">
+                  Coming soon
+                </span>
+              ) : null}
+            </div>
+            <h3 className="mt-4 text-base font-semibold text-slate-900">{title}</h3>
+            <p className="mt-1.5 text-sm leading-relaxed text-slate-600">{body}</p>
+          </SpotlightCard>
         ))}
       </div>
     </section>

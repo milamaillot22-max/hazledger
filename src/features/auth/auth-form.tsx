@@ -46,6 +46,8 @@ export function AuthForm({ mode }: { mode: Mode }) {
   const urlError = URL_ERRORS[searchParams.get("error") ?? ""];
   const prefillEmail = searchParams.get("email") ?? undefined;
   const source = searchParams.get("source") ?? undefined;
+  const plan = searchParams.get("plan") ?? undefined;
+  const billing = searchParams.get("billing") ?? undefined;
 
   return (
     <EmailFlow
@@ -55,6 +57,8 @@ export function AuthForm({ mode }: { mode: Mode }) {
       urlError={urlError}
       prefillEmail={prefillEmail}
       source={source}
+      plan={plan}
+      billing={billing}
       onReset={() => setFormKey((k) => k + 1)}
     />
   );
@@ -66,6 +70,8 @@ function EmailFlow({
   urlError,
   prefillEmail,
   source,
+  plan,
+  billing,
   onReset,
 }: {
   mode: Mode;
@@ -73,6 +79,8 @@ function EmailFlow({
   urlError?: string;
   prefillEmail?: string;
   source?: string;
+  plan?: string;
+  billing?: string;
   onReset: () => void;
 }) {
   const [state, formAction] = useActionState<MagicLinkState, FormData>(
@@ -116,6 +124,8 @@ function EmailFlow({
       <form action={formAction} className="space-y-5" noValidate>
         <input type="hidden" name="next" value={next} />
         {source ? <input type="hidden" name="source" value={source} /> : null}
+        {plan ? <input type="hidden" name="plan" value={plan} /> : null}
+        {billing ? <input type="hidden" name="billing" value={billing} /> : null}
         <div className="space-y-1.5">
           <Label htmlFor="email" className="text-slate-700">Work email</Label>
           <Input

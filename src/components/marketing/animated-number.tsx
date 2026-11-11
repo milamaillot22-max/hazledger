@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 export function AnimatedNumber({
   value,
   format,
-  duration = 450,
+  duration = 220,
 }: {
   value: number;
   format: (n: number) => string;

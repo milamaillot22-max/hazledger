@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, CalendarClock } from "lucide-react";
 
+import { Magnetic } from "@/components/fx/magnetic";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 
@@ -20,19 +21,23 @@ export function FinalCta() {
             </p>
           </div>
           <div className="flex flex-col gap-3">
-            <Button asChild size="xl">
-              <Link href={siteConfig.links.startTrial}>
-                Start {siteConfig.trialDays}-day free trial
-                <ArrowRight data-icon="inline-end" />
-              </Link>
-            </Button>
+            <Magnetic className="w-full">
+              <Button asChild size="xl" className="w-full">
+                <Link href={siteConfig.links.startTrial}>
+                  Start {siteConfig.trialDays}-Day Clinic Trial
+                  <ArrowRight data-icon="inline-end" />
+                </Link>
+              </Button>
+            </Magnetic>
             <Button
               asChild
               size="xl"
               variant="outline"
               className="border-slate-200 bg-white text-slate-700 shadow-xs hover:bg-slate-50"
             >
-              <a href={`mailto:${siteConfig.contactEmail}?subject=Demo%20request`}>
+              <a
+                href={`mailto:${siteConfig.contactEmail}?subject=Demo%20request`}
+              >
                 <CalendarClock data-icon="inline-start" />
                 Talk to a compliance specialist
               </a>

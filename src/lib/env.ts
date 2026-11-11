@@ -7,7 +7,8 @@ import { z } from "zod";
  * Server-only secrets live in `getServerEnv()` — call it only from server code.
  */
 const publicSchema = z.object({
-  NEXT_PUBLIC_SITE_URL: z.url().default("http://localhost:3000"),
+  /** Production domain by default; set http://localhost:3000 locally to test QR links. */
+  NEXT_PUBLIC_SITE_URL: z.url().default("https://gethazledger.com"),
   NEXT_PUBLIC_SUPABASE_URL: z.url(),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
 });

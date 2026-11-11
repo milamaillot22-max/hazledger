@@ -64,7 +64,7 @@ export function Specialties() {
       <SectionHeading
         eyebrow="Built for your specialty"
         title="Made for the chemicals your practice actually uses."
-        description="Start from a template for your specialty — then scan what's on your shelves."
+        description="Built around the products your specialty actually stocks — scan what's on your shelves and you're covered."
       />
       <div className="mt-14 grid gap-6 md:grid-cols-3">
         {SPECIALTIES.map(({ icon: Icon, ...s }) => (

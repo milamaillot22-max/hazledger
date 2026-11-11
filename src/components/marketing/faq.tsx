@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { SectionHeading } from "@/components/marketing/section-heading";
+import { ANNUAL_DISCOUNT_PERCENT, getPlan } from "@/config/pricing";
 import { siteConfig } from "@/config/site";
 
 const FAQ = [
@@ -14,7 +15,7 @@ const FAQ = [
   },
   {
     q: "What does the HazCom 2024 update change for us?",
-    a: "OSHA's updated Hazard Communication Standard aligns with a newer revision of the GHS, so manufacturers and distributors are reissuing SDSs and labels on a phased schedule. As updated sheets arrive, employers need to keep their library, labels and training current — revision alerts flag every product that needs attention.",
+    a: "OSHA's updated Hazard Communication Standard aligns with a newer revision of the GHS, so manufacturers and distributors are reissuing SDSs and labels on a phased schedule. As updated sheets arrive, employers need to keep their library, labels and training current. HazLedger flags SDSs older than five years when you scan them; automatic supplier revision alerts are on the roadmap.",
   },
   {
     q: "Do my hygienists, assistants and vet techs need an account?",
@@ -22,7 +23,7 @@ const FAQ = [
   },
   {
     q: "What happens to our existing binders?",
-    a: "Snap the pages or send us your PDFs and supplier invoices. We bulk-import and extract them for you during onboarding, free of charge.",
+    a: "On the Pro plan, we import your existing binder for you. On Starter, snap each SDS or upload the PDF — each takes about 30 seconds to extract.",
   },
   {
     q: "How is our data protected?",
@@ -30,7 +31,7 @@ const FAQ = [
   },
   {
     q: "How long is the trial, and what happens after?",
-    a: `${siteConfig.trialDays} days with every feature, no credit card. Keep going on a flat per-location plan, month to month — or export everything and leave.`,
+    a: `${siteConfig.trialDays} days with every feature, no credit card. Then choose Starter ($${getPlan("starter").monthly}) or Pro ($${getPlan("pro").monthly}) per location per month, or save ${ANNUAL_DISCOUNT_PERCENT}% with annual billing. Cancel anytime.`,
   },
 ];
 

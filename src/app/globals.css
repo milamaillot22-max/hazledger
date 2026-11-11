@@ -204,3 +204,85 @@
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Next-gen surface effects (decorative, motion-safe)
+   ───────────────────────────────────────────────────────────── */
+@layer components {
+  /* Deep, barely-there light fields behind key sections. */
+  .bg-aurora {
+    background:
+      radial-gradient(60% 50% at 15% 0%, rgb(2 132 199 / 0.09), transparent 70%),
+      radial-gradient(45% 40% at 90% 10%, rgb(5 150 105 / 0.07), transparent 70%),
+      radial-gradient(50% 50% at 50% 100%, rgb(15 23 42 / 0.04), transparent 70%);
+  }
+  .bg-grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  /* Spotlight border glow: a 1px ring lit around the cursor. */
+  .spotlight-card {
+    --spot-x: 50%;
+    --spot-y: 0%;
+    --spot-color: rgb(2 132 199 / 0.55);
+    --spot-sheen: rgb(2 132 199 / 0.06);
+  }
+  .spotlight-card[data-glow="emerald"] {
+    --spot-color: rgb(5 150 105 / 0.55);
+    --spot-sheen: rgb(5 150 105 / 0.06);
+  }
+  .spotlight-card::before,
+  .spotlight-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 300ms ease;
+  }
+  .spotlight-card::before {
+    z-index: 1;
+    padding: 1px;
+    background: radial-gradient(260px circle at var(--spot-x) var(--spot-y), var(--spot-color), transparent 65%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  }
+  .spotlight-card::after {
+    z-index: -1;
+    background: radial-gradient(420px circle at var(--spot-x) var(--spot-y), var(--spot-sheen), transparent 70%);
+  }
+  .spotlight-card:hover::before,
+  .spotlight-card:hover::after,
+  .spotlight-card:focus-within::before {
+    opacity: 1;
+  }
+
+  /* Magnetic CTA wrapper */
+  .magnetic {
+    --mx: 0px;
+    --my: 0px;
+    transform: translate3d(var(--mx), var(--my), 0);
+    transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .magnetic { transform: none !important; }
+}
+
+/* Crisper type: Inter alternates (single-storey a off, disambiguated l/1). */
+html {
+  font-feature-settings: "cv11", "ss03", "cv05";
+}
+h1, h2 {
+  letter-spacing: -0.025em;
+}

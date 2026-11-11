@@ -28,7 +28,7 @@ export const siteConfig = {
   description:
     "Scan and organize every Safety Data Sheet in your dental, veterinary or dermatology practice. HazLedger keeps your SDS library current and your team inspection-ready for OSHA 29 CFR 1910.1200.",
   copyrightYear: 2026,
-  contactEmail: "sales@hazledger.com",
+  contactEmail: "sales@gethazledger.com",
   links: {
     // Swap for a Cal.com / Calendly link once sales booking is live.
     bookDemo: "/#demo",
@@ -40,18 +40,10 @@ export const siteConfig = {
     { label: "Specialties", href: "/#specialties" },
     { label: "How it works", href: "/#how-it-works" },
     { label: "Compare", href: "/#compare" },
+    { label: "Pricing", href: "/#pricing" },
     { label: "FAQ", href: "/#faq" },
   ],
   trialDays: 14,
-  /**
-   * List price used by the ROI calculator and structured data.
-   * Placeholder until pricing is final — change it here only.
-   */
-  pricing: {
-    planName: "Clinic",
-    monthlyPerLocation: 49,
-    currency: "USD",
-  },
 } as const;
 
 export type SiteConfig = typeof siteConfig;

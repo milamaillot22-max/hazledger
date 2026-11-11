@@ -9,8 +9,8 @@ const STEPS: { icon: LucideIcon; title: string; body: string; meta: string }[] =
   {
     icon: Camera,
     title: "Snap the label or the SDS",
-    body: "Photograph a disinfectant bottle, drop in a PDF, or forward the supplier email. Bulk import handles your whole binder at once.",
-    meta: "Photo · PDF · email",
+    body: "Photograph a disinfectant bottle or drop in the manufacturer's PDF. On Pro, we import your existing binder for you.",
+    meta: "Photo · PDF",
   },
   {
     icon: Sparkles,

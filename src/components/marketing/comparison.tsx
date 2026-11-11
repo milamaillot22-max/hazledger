@@ -28,16 +28,16 @@ const ROWS: { label: string; cells: [Cell, Cell, Cell] }[] = [
     cells: [{ kind: "yes" }, { kind: "no" }, { kind: "partial", text: "Manual entry" }],
   },
   {
-    label: "Outdated-revision alerts",
-    cells: [{ kind: "yes" }, { kind: "no" }, { kind: "partial", text: "Paid add-on" }],
+    label: "Outdated-revision detection",
+    cells: [{ kind: "yes", text: "Flagged at scan" }, { kind: "no" }, { kind: "partial", text: "Paid add-on" }],
   },
   {
-    label: "GHS secondary labels",
-    cells: [{ kind: "yes", text: "One click" }, { kind: "no", text: "Handwritten" }, { kind: "yes" }],
+    label: "Human review before records go live",
+    cells: [{ kind: "yes" }, { kind: "no" }, { kind: "partial", text: "Varies" }],
   },
   {
-    label: "Inspector-ready export",
-    cells: [{ kind: "yes", text: "One PDF" }, { kind: "no" }, { kind: "yes" }],
+    label: "Emergency-first view for staff",
+    cells: [{ kind: "yes", text: "First aid first" }, { kind: "no" }, { kind: "partial", text: "Full SDS only" }],
   },
   {
     label: "Pricing",

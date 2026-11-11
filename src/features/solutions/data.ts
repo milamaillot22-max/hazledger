@@ -108,7 +108,7 @@ export const SOLUTIONS: Solution[] = [
     audience: "Veterinary practices",
     metaTitle: "Veterinary OSHA Compliance Software — SDS & Chemical Safety for Vet Clinics",
     metaDescription:
-      "SDS management built for veterinary clinics: anesthetic gases, formalin, radiology chemicals and kennel disinfectants, organized by room and one QR scan away for every tech.",
+      "SDS management built for veterinary clinics: anesthetic gases, formalin, radiology chemicals and kennel disinfectants, reviewed and one QR scan away for every tech.",
     keywords: [
       "veterinary OSHA compliance",
       "veterinary SDS management",
@@ -120,7 +120,7 @@ export const SOLUTIONS: Solution[] = [
     title: "Chemical safety for veterinary teams,",
     titleAccent: "from the surgery suite to the kennels.",
     intro:
-      "Anesthetic gases, formalin, radiology chemicals, lab reagents and the disinfectants used in every run — veterinary clinics handle more hazardous products than most medical offices. HazLedger keeps every SDS current and mapped to the room where it's used.",
+      "Anesthetic gases, formalin, radiology chemicals, lab reagents and the disinfectants used in every run — veterinary clinics handle more hazardous products than most medical offices. HazLedger keeps every SDS reviewed and one QR scan away for every tech.",
     photo: veterinaryPhoto,
     photoAlt: "Veterinarian examining a dog during a checkup",
     pains: [
@@ -157,8 +157,8 @@ export const SOLUTIONS: Solution[] = [
         a: "OSHA permits electronic access when there are no barriers to immediate employee access in each workplace (1910.1200(g)(8)). HazLedger's staff view requires no app and no login.",
       },
       {
-        q: "Can we organize SDSs by room?",
-        a: "Yes. Map each product to the surgery suite, lab, imaging or kennels so staff see what's used where they work.",
+        q: "Can staff find SDSs quickly in each area?",
+        a: "Yes. Post the team QR poster in the surgery suite, lab, imaging and kennels; staff search by product name and see first aid first. Per-room product mapping is on our roadmap.",
       },
       {
         q: "What if we only have the label, not the SDS?",
@@ -174,7 +174,7 @@ export const SOLUTIONS: Solution[] = [
     audience: "Medical clinics, laboratories and ambulatory surgery centers",
     metaTitle: "OSHA HazCom Software for Medical Clinics, Labs & Ambulatory Surgery Centers",
     metaDescription:
-      "SDS management for medical clinics, physician-office labs and ambulatory surgery centers. Track sterilants, fixatives, lab reagents and cryogens, room by room, inspection-ready.",
+      "SDS management for medical clinics, physician-office labs and ambulatory surgery centers. Keep sterilants, fixatives, lab reagents and cryogens documented and inspection-ready.",
     keywords: [
       "medical clinic OSHA compliance",
       "ambulatory surgery center OSHA",
@@ -199,8 +199,8 @@ export const SOLUTIONS: Solution[] = [
         body: "Glutaraldehyde, OPA and formalin are among the most hazardous products in a clinic — their SDSs need to be current and easy to reach.",
       },
       {
-        title: "Multi-location oversight",
-        body: "Practice administrators need to see which site is missing an SDS before an inspector does, without visiting every location.",
+        title: "Every location, its own library",
+        body: "Each site stocks different products. A separate, current library per location keeps every site's poster accurate.",
       },
     ],
     chemicalsIntro: "What clinics and ASCs scan first",
@@ -220,7 +220,7 @@ export const SOLUTIONS: Solution[] = [
       },
       {
         q: "Does HazLedger work for multiple locations?",
-        a: "Yes. Each location keeps its own library and QR poster, and owners and administrators can review them from one account.",
+        a: "Each location is set up as its own clinic with its own library and QR poster, priced per location. A multi-location dashboard is on our roadmap — contact us for groups and DSOs.",
       },
       {
         q: "How do staff access SDSs during an exposure?",

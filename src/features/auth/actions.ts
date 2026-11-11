@@ -23,6 +23,8 @@ const emailSchema = z.object({
     .regex(/^[a-z0-9-]{1,48}$/)
     .optional()
     .catch(undefined),
+  plan: z.enum(["starter", "pro"]).optional().catch(undefined),
+  billing: z.enum(["monthly", "annual"]).optional().catch(undefined),
 });
 
 async function getOrigin() {
@@ -44,6 +46,8 @@ export async function sendMagicLink(
     email: formData.get("email"),
     next: formData.get("next") ?? undefined,
     source: formData.get("source") ?? undefined,
+    plan: formData.get("plan") ?? undefined,
+    billing: formData.get("billing") ?? undefined,
   });
   if (!parsed.success) {
     return {
@@ -53,7 +57,10 @@ export async function sendMagicLink(
     };
   }
 
-  const { email, next, source } = parsed.data;
+  const { email, next, source, plan, billing } = parsed.data;
+  const signupData = Object.fromEntries(
+    Object.entries({ signup_source: source, selected_plan: plan, selected_billing: billing }).filter(([, v]) => v)
+  );
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithOtp({
     email,
@@ -61,7 +68,7 @@ export async function sendMagicLink(
       emailRedirectTo: callbackUrl(await getOrigin(), next ?? routes.dashboard),
       shouldCreateUser: true,
       // Only applied when the account is created.
-      data: source ? { signup_source: source } : undefined,
+      data: Object.keys(signupData).length ? signupData : undefined,
     },
   });
 

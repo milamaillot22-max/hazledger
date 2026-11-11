@@ -6,7 +6,7 @@ import { siteConfig } from "@/config/site";
 
 export function Navbar() {
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/75">
+    <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-white/90 backdrop-blur-xl backdrop-saturate-150 supports-[backdrop-filter]:bg-white/70">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4 sm:px-6">
         <div className="flex items-center gap-10">
           <Logo />

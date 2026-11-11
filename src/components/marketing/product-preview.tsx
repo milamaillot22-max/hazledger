@@ -107,7 +107,7 @@ export function ProductPreview() {
             <span className="size-2.5 rounded-full bg-slate-200" />
           </div>
           <div className="rounded-md bg-white px-3 py-0.5 text-[11px] text-slate-400 ring-1 ring-slate-200">
-            app.hazledger.com/sds-library
+            gethazledger.com/dashboard/sds
           </div>
           <div className="w-10" />
         </div>
@@ -239,8 +239,8 @@ export function ProductPreview() {
                 <QrCode className="size-5 text-primary" />
               </div>
               <div>
-                <p className="text-xs font-medium text-slate-900">Operatory 2</p>
-                <p className="text-[11px] text-slate-500">QR poster · 14 SDSs</p>
+                <p className="text-xs font-medium text-slate-900">Team QR poster</p>
+                <p className="text-[11px] text-slate-500">Live for staff · 82 SDSs</p>
               </div>
             </div>
           </aside>
