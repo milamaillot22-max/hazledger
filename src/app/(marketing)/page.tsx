@@ -8,6 +8,7 @@ import { HowItWorks } from "@/components/marketing/how-it-works";
 import { Pricing } from "@/components/marketing/pricing";
 import { RiskCalculator } from "@/components/marketing/risk-calculator";
 import { Specialties } from "@/components/marketing/specialties";
+import { StatsBand } from "@/components/marketing/stats-band";
 
 // Open Graph (incl. the share image from app/opengraph-image.tsx) is inherited
 // from the root layout; redefining `openGraph` here would drop that image.
@@ -22,6 +23,7 @@ export default function LandingPage() {
       <Hero />
       <AhaDemo />
       <HowItWorks />
+      <StatsBand />
       <RiskCalculator />
       <Specialties />
       <Pricing showDetailsLink />

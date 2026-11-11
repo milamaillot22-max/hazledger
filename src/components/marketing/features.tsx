@@ -8,6 +8,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import { Icon3D } from "@/components/fx/icon-3d";
 import { SpotlightCard } from "@/components/fx/spotlight-card";
 import { SectionHeading } from "@/components/marketing/section-heading";
 
@@ -54,15 +55,13 @@ export function Features() {
         description="One focused tool for your SDS library and staff access — built for busy practices, not for factories or EHS departments."
       />
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {FEATURES.map(({ icon: Icon, title, body, soon }) => (
+        {FEATURES.map(({ icon: Icon, title, body, soon }, i) => (
           <SpotlightCard
             key={title}
             className="card-soft lift rounded-3xl p-7"
           >
             <div className="flex items-center justify-between">
-              <span className="flex size-11 items-center justify-center rounded-xl bg-brand-soft text-primary ring-1 ring-sky-100">
-                <Icon className="size-5" />
-              </span>
+              <Icon3D icon={Icon} tone={i % 2 ? "emerald" : "sky"} />
               {soon ? (
                 <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-slate-500 uppercase">
                   Coming soon

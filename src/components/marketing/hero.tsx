@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Landmark, LockKeyhole, ScanLine, ShieldCheck } from "lucide-react";
 
-import operatoryPhoto from "@/assets/images/clinic-dental-operatory.webp";
+import heroPhoto from "@/assets/images/fullbleed-clinic.webp";
 import { Magnetic } from "@/components/fx/magnetic";
 import { OSHA_PENALTIES } from "@/config/compliance";
 import { routes, siteConfig } from "@/config/site";
@@ -18,27 +18,38 @@ const BADGES = [
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-white">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-b from-sky-50/70 via-white to-white" />
-      <div aria-hidden="true" className="bg-aurora pointer-events-none absolute inset-0" />
-      <div aria-hidden="true" className="hero-fluid pointer-events-none absolute -inset-[10%]" />
-      <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-4 pt-14 pb-20 sm:px-6 sm:pt-20 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-12 lg:pb-28">
+    <section className="relative isolate overflow-hidden bg-slate-950">
+      <Image
+        src={heroPhoto}
+        alt="Bright dental operatory with large windows and light wood counters"
+        fill
+        priority
+        placeholder="blur"
+        sizes="100vw"
+        className="-z-20 object-cover object-[70%_50%]"
+      />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-slate-950/90 via-slate-950/75 to-slate-950/60 lg:via-slate-950/60 lg:to-slate-950/15" />
+      <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-slate-950/50 to-transparent" />
+
+      <div className="mx-auto grid min-h-[620px] max-w-6xl items-center gap-12 px-4 py-20 sm:px-6 sm:py-24 lg:min-h-[680px] lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
         <div>
           <Link
             href={routes.blogPost("hazcom-2024-compliance-deadlines")}
-            className="group inline-flex items-center gap-2 rounded-full bg-white py-1 pr-3 pl-1 text-xs text-slate-600 shadow-sm ring-1 ring-slate-200/80 transition-colors hover:ring-slate-300"
+            className="group inline-flex items-center gap-2 rounded-full bg-white/10 py-1 pr-3 pl-1 text-xs text-white/85 ring-1 ring-white/20 backdrop-blur transition-colors hover:bg-white/15"
           >
-            <span className="rounded-full bg-success-soft px-2 py-0.5 font-semibold text-emerald-700">New</span>
+            <span className="rounded-full bg-emerald-400/20 px-2 py-0.5 font-semibold text-emerald-200">New</span>
             For US dental, veterinary &amp; medical practices
-            <ArrowRight className="size-3 text-slate-400 transition-transform group-hover:translate-x-0.5" />
+            <ArrowRight className="size-3 text-white/60 transition-transform group-hover:translate-x-0.5" />
           </Link>
 
-          <h1 className="mt-7 font-heading text-[2.5rem] leading-[1.05] font-semibold tracking-[-0.04em] text-slate-900 sm:text-[3.5rem]">
+          <h1 className="mt-7 font-heading text-[2.6rem] leading-[1.03] font-semibold tracking-[-0.04em] text-white sm:text-[4rem]">
             OSHA Compliance Isn&apos;t Optional.{" "}
-            <span className="text-gradient-brand">Stay Inspection-Ready, Every Day.</span>
+            <span className="bg-gradient-to-r from-sky-300 via-sky-200 to-emerald-300 bg-clip-text text-transparent">
+              Stay Inspection-Ready, Every Day.
+            </span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600">
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/80">
             A single serious HazCom citation can reach ${OSHA_PENALTIES.seriousMax.toLocaleString("en-US")}.{" "}
             {siteConfig.name} keeps every Safety Data Sheet in your practice current, reviewed and one QR scan away for
             your team — so you have the answer the day OSHA walks in.
@@ -48,7 +59,7 @@ export function Hero() {
             <Magnetic className="w-full sm:w-auto">
               <Link
                 href={siteConfig.links.startTrial}
-                className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 text-[15px] font-semibold text-white shadow-[0_1px_2px_rgb(2_132_199/0.2),0_8px_24px_-8px_rgb(2_132_199/0.45)] transition-all duration-200 hover:bg-primary-hover hover:shadow-[0_0_0_4px_rgb(2_132_199/0.12),0_12px_28px_-8px_rgb(2_132_199/0.5)] sm:w-auto"
+                className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 text-[15px] font-semibold text-white shadow-[0_10px_30px_-8px_rgb(2_132_199/0.7)] transition-all duration-200 hover:bg-primary-hover sm:w-auto"
               >
                 Start {siteConfig.trialDays}-Day Clinic Trial — Instant Access
                 <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
@@ -56,70 +67,47 @@ export function Hero() {
             </Magnetic>
             <Link
               href={routes.pricing}
-              className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-white px-6 text-[15px] font-medium text-slate-700 shadow-sm ring-1 ring-slate-200 transition-colors hover:bg-slate-50 hover:text-slate-900 sm:w-auto"
+              className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-white/10 px-6 text-[15px] font-medium text-white ring-1 ring-white/30 backdrop-blur transition-colors hover:bg-white/20 sm:w-auto"
             >
               Compare plans
             </Link>
           </div>
 
-          <ul className="mt-5 flex flex-col gap-x-6 gap-y-2 text-sm text-slate-600 sm:flex-row sm:flex-wrap">
+          <ul className="mt-5 flex flex-col gap-x-6 gap-y-2 text-sm text-white/80 sm:flex-row sm:flex-wrap">
             {REASSURANCE.map((item) => (
               <li key={item} className="flex items-center gap-1.5">
-                <CheckCircle2 className="size-4 text-success" />
+                <CheckCircle2 className="size-4 text-emerald-300" />
                 {item}
               </li>
             ))}
           </ul>
 
-          <ul aria-label="Compliance and security" className="mt-8 grid gap-2.5 border-t border-slate-200/70 pt-6 sm:grid-cols-3">
+          <ul aria-label="Compliance and security" className="mt-10 grid gap-2.5 border-t border-white/15 pt-6 sm:grid-cols-3">
             {BADGES.map(({ icon: Icon, label, detail }) => (
-              <li key={label} className="lift flex items-center gap-2.5 rounded-xl bg-white/80 px-3 py-2.5 ring-1 ring-slate-200/70 backdrop-blur">
-                <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-success-soft text-success">
+              <li key={label} className="lift flex items-center gap-2.5 rounded-xl bg-white/10 px-3 py-2.5 ring-1 ring-white/15 backdrop-blur">
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-emerald-400/20 text-emerald-200">
                   <Icon className="size-4" />
                 </span>
                 <span className="min-w-0">
-                  <span className="block text-xs font-semibold text-slate-900">{label}</span>
-                  <span className="block text-[11px] leading-snug text-slate-500">{detail}</span>
+                  <span className="block text-xs font-semibold text-white">{label}</span>
+                  <span className="block text-[11px] leading-snug text-white/65">{detail}</span>
                 </span>
               </li>
             ))}
           </ul>
         </div>
 
-        <HeroVisual />
+        <HeroCards />
       </div>
     </section>
   );
 }
 
-function HeroVisual() {
+/** Product proof floating over the photo (illustrative example clinic). */
+function HeroCards() {
   return (
-    <div className="relative mx-auto w-full max-w-xl pb-14 sm:pb-10 lg:pb-0">
-      {/* Geometry: echo arch, dot lattice and a fine ring — depth without noise */}
-      <div
-        aria-hidden="true"
-        className="absolute top-[-3%] left-[6%] h-[88%] w-[66%] rounded-[50%_50%_2.5rem_2.5rem/38%_38%_2.5rem_2.5rem] border border-sky-300/50 bg-gradient-to-b from-sky-100/50 via-white/10 to-emerald-100/40"
-      />
-      <div aria-hidden="true" className="bg-dots absolute top-[6%] -right-3 size-36 sm:-right-8" />
-      <div aria-hidden="true" className="absolute bottom-[14%] -left-4 size-24 rounded-full border border-emerald-300/50 sm:-left-10" />
-      <div aria-hidden="true" className="absolute -bottom-2 left-[38%] h-px w-40 bg-gradient-to-r from-transparent via-amber-300/70 to-transparent" />
-
-      {/* Main photo in an arch frame */}
-      <div className="relative ml-auto aspect-[4/4.9] w-[84%] overflow-hidden rounded-[50%_50%_2.5rem_2.5rem/41%_41%_2.5rem_2.5rem] shadow-[0_40px_80px_-40px_rgb(15_23_42/0.45)] ring-1 ring-slate-200/70">
-        <Image
-          src={operatoryPhoto}
-          alt="Bright, modern dental operatory"
-          fill
-          priority
-          placeholder="blur"
-          sizes="(min-width: 1024px) 460px, 80vw"
-          className="object-cover object-[35%_50%]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/15 via-transparent to-transparent" />
-      </div>
-
-      {/* Floating: label scan result (illustrative) */}
-      <div className="lift absolute top-[9%] right-0 flex items-center gap-3 rounded-2xl bg-white/95 px-4 py-3 shadow-lg ring-1 shadow-slate-300/40 ring-slate-200/70 backdrop-blur motion-safe:animate-[float-y_7s_ease-in-out_infinite] sm:-right-6">
+    <div className="relative hidden h-full min-h-[360px] lg:block">
+      <div className="lift absolute top-[12%] right-0 flex items-center gap-3 rounded-2xl bg-white/95 px-4 py-3 shadow-2xl ring-1 shadow-slate-950/30 ring-white/60 backdrop-blur motion-safe:animate-[float-y_7s_ease-in-out_infinite]">
         <span className="flex size-9 items-center justify-center rounded-xl bg-brand-soft text-primary">
           <ScanLine className="size-[18px]" />
         </span>
@@ -129,8 +117,7 @@ function HeroVisual() {
         </div>
       </div>
 
-      {/* Floating: compliance status (illustrative example clinic) */}
-      <div className="lift absolute right-2 -bottom-2 w-[16.5rem] rounded-2xl bg-white p-4 shadow-xl ring-1 shadow-slate-300/40 ring-slate-200/70 sm:-right-8 lg:-bottom-8">
+      <div className="lift absolute right-6 bottom-[8%] w-[17rem] rounded-2xl bg-white p-4 shadow-2xl ring-1 shadow-slate-950/30 ring-white/60">
         <div className="flex items-center justify-between">
           <p className="text-sm font-semibold text-slate-900">Sunset Family Dental</p>
           <CheckCircle2 className="size-4 text-success" />

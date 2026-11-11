@@ -5,7 +5,7 @@
 
 import type { StaticImageData } from "next/image";
 
-import hygienePhoto from "@/assets/images/clinic-hygiene.webp";
+import hygienePhoto from "@/assets/images/fullbleed-reception.webp";
 import supplyRoomPhoto from "@/assets/images/clinic-supply-room.webp";
 import waitingRoomPhoto from "@/assets/images/clinic-waiting-room.webp";
 
@@ -109,7 +109,7 @@ export const POSTS: Post[] = [
     publishedAt: "2026-11-11",
     readingMinutes: 7,
     cover: hygienePhoto,
-    coverAlt: "Clinic team member at a hand-hygiene station",
+    coverAlt: "Bright dental practice reception with light wood floors",
     keywords: ["OSHA inspection dental office", "HazCom checklist", "SDS requirements clinic", "1910.1200 checklist"],
     blocks: [
       {

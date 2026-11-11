@@ -1,5 +1,6 @@
 import { BadgeCheck, FileText, QrCode, Sparkles, type LucideIcon } from "lucide-react";
 
+import { Icon3D } from "@/components/fx/icon-3d";
 import { SpotlightCard } from "@/components/fx/spotlight-card";
 import { cn } from "@/lib/utils";
 
@@ -16,19 +17,14 @@ export function ComplianceFlow({ className }: { className?: string }) {
     <ol className={cn("relative grid gap-4 lg:grid-cols-4 lg:gap-5", className)} aria-label="How an SDS goes from document to your team">
       {NODES.map(({ icon: Icon, step, title, detail, tone }, i) => (
         <li key={title} className="relative">
-          <SpotlightCard glow={tone === "emerald" ? "emerald" : "blue"} className="card-soft h-full rounded-2xl p-5">
+          <SpotlightCard glow={tone === "emerald" ? "emerald" : "blue"} className="card-soft lift h-full rounded-3xl p-6">
             <div className="flex items-center justify-between">
-              <span
-                className={cn(
-                  "flex size-10 items-center justify-center rounded-xl ring-1",
-                  tone === "sky" ? "bg-brand-soft text-primary ring-sky-100" : "bg-success-soft text-success ring-emerald-100"
-                )}
-              >
-                <Icon className="size-[18px]" />
+              <Icon3D icon={Icon} tone={tone} />
+              <span className="font-heading text-5xl leading-none font-semibold tracking-[-0.04em] text-transparent [-webkit-text-stroke:1.2px_rgb(148_163_184/0.55)]">
+                {step}
               </span>
-              <span className="font-heading text-xs font-medium text-slate-400">{step}</span>
             </div>
-            <p className="mt-4 font-heading text-[15px] font-semibold tracking-tight text-slate-900">{title}</p>
+            <p className="mt-5 font-heading text-base font-semibold tracking-tight text-slate-900">{title}</p>
             <p className="mt-1 text-[13px] leading-relaxed text-slate-500">{detail}</p>
           </SpotlightCard>
           {i < NODES.length - 1 ? (
