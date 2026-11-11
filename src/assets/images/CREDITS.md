@@ -6,10 +6,9 @@ attribution not required). Resized/cropped and converted to WebP (1600–1800 px
 
 | File | Source | Used on |
 | --- | --- | --- |
+| fullbleed-wood.webp | https://www.pexels.com/photo/interior-of-an-aesthetic-clinic-10521230/ | Hero option B |
 | fullbleed-clinic.webp | https://www.pexels.com/photo/a-dental-equipment-in-the-clinic-6812453/ | Home hero (full-width) |
 | fullbleed-reception.webp | https://www.pexels.com/photo/modern-dental-office-reception-in-beverly-hills-38055773/ | Stats band, blog |
-| fullbleed-windows.webp | https://www.pexels.com/photo/back-view-of-a-dental-chair-in-a-clinic-4269268/ | Final call to action (full-width) |
-| banner-apothecary.webp | https://www.pexels.com/photo/assorted-vintage-bottles-on-a-wooden-shelf-7472646/ | Top photo banner (all marketing pages) |
 | clinic-dental-operatory.webp | https://www.pexels.com/photo/white-dental-equipment-near-wall-305567/ | Home hero |
 | clinic-dental-chair.webp | https://www.pexels.com/photo/view-of-clinic-305568/ | Sign-in panel, product gallery, dental page |
 | clinic-supply-room.webp | https://www.pexels.com/photo/modern-medical-office-interior-with-equipment-35645517/ | Product gallery, medical page, blog |

@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2, Landmark, LockKeyhole, ScanLine, ShieldCheck } from "lucide-react";
 
 import heroPhoto from "@/assets/images/fullbleed-clinic.webp";
+import medicalPhoto from "@/assets/images/specialty-medical.webp";
+import vetPhoto from "@/assets/images/specialty-veterinary.webp";
 import { Magnetic } from "@/components/fx/magnetic";
 import { OSHA_PENALTIES } from "@/config/compliance";
 import { routes, siteConfig } from "@/config/site";
@@ -19,15 +21,7 @@ const BADGES = [
 export function Hero() {
   return (
     <section className="relative isolate overflow-hidden bg-slate-950">
-      <Image
-        src={heroPhoto}
-        alt="Bright dental operatory with large windows and light wood counters"
-        fill
-        priority
-        placeholder="blur"
-        sizes="100vw"
-        className="-z-20 object-cover object-[70%_50%]"
-      />
+      <HeroBackdrop />
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-slate-950/90 via-slate-950/75 to-slate-950/60 lg:via-slate-950/60 lg:to-slate-950/15" />
       <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-slate-950/50 to-transparent" />
 
@@ -135,5 +129,37 @@ function HeroCards() {
         <p className="mt-2 text-[11px] text-slate-500">86 SDSs current · 6 rooms with QR access</p>
       </div>
     </div>
+  );
+}
+
+/** "single": one full-width clinic photo. "triptych": dental · veterinary · medical side by side. */
+const BACKDROP: "single" | "triptych" = "single";
+
+function HeroBackdrop() {
+  if (BACKDROP === "triptych") {
+    return (
+      <div aria-hidden="true" className="absolute inset-0 -z-20 grid grid-cols-1 lg:grid-cols-3">
+        {[
+          { src: heroPhoto, pos: "object-[60%_50%]" },
+          { src: vetPhoto, pos: "object-[50%_35%]" },
+          { src: medicalPhoto, pos: "object-[50%_40%]" },
+        ].map((p, i) => (
+          <div key={i} className={i === 0 ? "relative" : "relative hidden lg:block"}>
+            <Image src={p.src} alt="" fill priority placeholder="blur" sizes="(min-width: 1024px) 34vw, 100vw" className={`object-cover ${p.pos}`} />
+          </div>
+        ))}
+      </div>
+    );
+  }
+  return (
+    <Image
+      src={heroPhoto}
+      alt=""
+      fill
+      priority
+      placeholder="blur"
+      sizes="100vw"
+      className="-z-20 object-cover object-[70%_50%]"
+    />
   );
 }
