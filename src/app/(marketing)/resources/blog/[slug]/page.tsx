@@ -9,6 +9,7 @@ import { TrialForm } from "@/components/marketing/trial-form";
 import { routes, siteConfig } from "@/config/site";
 import { getPost, POSTS, type Block } from "@/features/blog/posts";
 import { articleStructuredData, jsonLd } from "@/lib/seo";
+import { PageBackdrop } from "@/components/marketing/page-backdrop";
 
 export function generateStaticParams() {
   return POSTS.map((p) => ({ slug: p.slug }));
@@ -119,7 +120,7 @@ export default async function BlogPostPage({ params }: PageProps<"/resources/blo
 
       <article>
         <header className="relative overflow-hidden bg-white">
-          <div aria-hidden="true" className="bg-aurora pointer-events-none absolute inset-0" />
+          <PageBackdrop />
           <div className="relative mx-auto max-w-3xl px-4 pt-12 pb-14 sm:px-6 sm:pt-16">
             <Link href={routes.blog} className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-900">
               <ArrowLeft className="size-4" />
@@ -144,7 +145,7 @@ export default async function BlogPostPage({ params }: PageProps<"/resources/blo
         <div className="mx-auto max-w-3xl space-y-6 px-4 py-14 sm:px-6">
           {post.blocks.map(renderBlock)}
 
-          <section aria-labelledby="sources" className="mt-10 rounded-2xl border border-slate-200/80 bg-white p-6">
+          <section aria-labelledby="sources" className="card-soft mt-10 rounded-3xl p-7">
             <h2 id="sources" className="text-sm font-semibold text-slate-900">
               Sources
             </h2>
@@ -177,7 +178,7 @@ export default async function BlogPostPage({ params }: PageProps<"/resources/blo
         <ul className="mt-3 grid gap-3 sm:grid-cols-2">
           {related.map((p) => (
             <li key={p.slug}>
-              <Link href={routes.blogPost(p.slug)} className="block h-full rounded-2xl border border-slate-200/80 bg-white p-5 text-[15px] font-semibold leading-snug text-slate-900 hover:border-sky-200 hover:text-primary">
+              <Link href={routes.blogPost(p.slug)} className="card-soft lift block h-full rounded-2xl p-5 text-[15px] font-semibold leading-snug text-slate-900 hover:border-sky-200 hover:text-primary">
                 {p.title}
               </Link>
             </li>

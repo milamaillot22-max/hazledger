@@ -1,10 +1,10 @@
 import type { StaticImageData } from "next/image";
 
+import dentalChairPhoto from "@/assets/images/clinic-dental-chair.webp";
 import supplyRoomPhoto from "@/assets/images/clinic-supply-room.webp";
 import dentalPhoto from "@/assets/images/specialty-dental.webp";
 import medicalPhoto from "@/assets/images/specialty-medical.webp";
 import veterinaryPhoto from "@/assets/images/specialty-veterinary.webp";
-import dentalTeamPhoto from "@/assets/images/team-dental-xray.webp";
 import vetUltrasoundPhoto from "@/assets/images/vet-ultrasound.webp";
 import type { Sector } from "@/features/roi/calculator";
 
@@ -58,8 +58,8 @@ export const SOLUTIONS: Solution[] = [
       "Etchants, bonding resins, amalgam, sterilants and surface disinfectants — every product in your operatories needs a current Safety Data Sheet your team can reach on every shift. HazLedger scans them, keeps them current and puts them one QR scan away.",
     photo: dentalPhoto,
     photoAlt: "Dentist and dental assistant treating a patient in a modern operatory",
-    scenePhoto: dentalTeamPhoto,
-    sceneAlt: "Dental hygienist reviewing an X-ray on a tablet with a patient",
+    scenePhoto: dentalChairPhoto,
+    sceneAlt: "Bright, modern dental treatment room",
     pains: [
       {
         title: "Dozens of products, constant reorders",

@@ -36,7 +36,7 @@ const FAQ = [
   },
   {
     q: "What counts as an AI scan?",
-    a: "Each document you upload for extraction — an SDS PDF or a label photo — counts as one scan. Reviewing, editing and sharing records never counts.",
+    a: "Each document you upload for extraction — an SDS PDF or a label photo — counts as one scan. Reviewing, editing and sharing records never counts. Starter includes 25 scans a month; Pro is unlimited under a fair-use policy covering your location's own documents.",
   },
   {
     q: "What does “we import your binder” mean on Pro?",
@@ -53,9 +53,6 @@ const FAQ = [
 ];
 
 function Cell({ value }: { value: MatrixValue }) {
-  if (value === "soon") {
-    return <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold tracking-wide text-slate-500 uppercase">Soon</span>;
-  }
   if (value === true) {
     return (
       <span className="inline-flex size-5 items-center justify-center rounded-full bg-success-soft text-success" aria-label="Included">
@@ -85,7 +82,7 @@ export default function PricingPage() {
         <h2 id="matrix-title" className="font-heading text-2xl font-semibold tracking-[-0.02em] text-slate-900 sm:text-3xl">
           Compare plans
         </h2>
-        <div className="relative mt-8 overflow-x-auto rounded-2xl border border-slate-200/80 bg-white shadow-sm">
+        <div className="card-soft relative mt-8 overflow-x-auto rounded-3xl">
           <table className="w-full min-w-[560px] text-left">
             <thead>
               <tr className="border-b border-slate-100">
@@ -144,7 +141,7 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <FinalCta title="Start your trial on Pro. Downgrade anytime." />
+      <FinalCta title="Start your trial on Pro. Downgrade anytime." calculatorHref="#calculator" />
     </>
   );
 }

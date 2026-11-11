@@ -3,7 +3,6 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2, Landmark, LockKeyhole, ScanLine, ShieldCheck } from "lucide-react";
 
 import operatoryPhoto from "@/assets/images/clinic-dental-operatory.webp";
-import dentalTeamPhoto from "@/assets/images/team-dental-xray.webp";
 import { Magnetic } from "@/components/fx/magnetic";
 import { OSHA_PENALTIES } from "@/config/compliance";
 import { routes, siteConfig } from "@/config/site";
@@ -106,7 +105,7 @@ function HeroVisual() {
       <div aria-hidden="true" className="absolute -bottom-2 left-[38%] h-px w-40 bg-gradient-to-r from-transparent via-amber-300/70 to-transparent" />
 
       {/* Main photo in an arch frame */}
-      <div className="relative ml-auto aspect-[4/4.9] w-[80%] overflow-hidden rounded-[50%_50%_2.5rem_2.5rem/41%_41%_2.5rem_2.5rem] shadow-[0_40px_80px_-40px_rgb(15_23_42/0.45)] ring-1 ring-slate-200/70">
+      <div className="relative ml-auto aspect-[4/4.9] w-[84%] overflow-hidden rounded-[50%_50%_2.5rem_2.5rem/41%_41%_2.5rem_2.5rem] shadow-[0_40px_80px_-40px_rgb(15_23_42/0.45)] ring-1 ring-slate-200/70">
         <Image
           src={operatoryPhoto}
           alt="Bright, modern dental operatory"
@@ -117,18 +116,6 @@ function HeroVisual() {
           className="object-cover object-[35%_50%]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/15 via-transparent to-transparent" />
-      </div>
-
-      {/* Secondary photo, layered asymmetrically over the arch */}
-      <div className="lift absolute top-[30%] left-0 aspect-[4/5] w-[34%] overflow-hidden rounded-[1.75rem] shadow-[0_24px_48px_-24px_rgb(15_23_42/0.45)] ring-4 ring-white">
-        <Image
-          src={dentalTeamPhoto}
-          alt="Dental team member reviewing an X-ray on a tablet with a patient"
-          fill
-          placeholder="blur"
-          sizes="(min-width: 1024px) 200px, 34vw"
-          className="object-cover object-[40%_50%]"
-        />
       </div>
 
       {/* Floating: label scan result (illustrative) */}

@@ -10,7 +10,7 @@ import { siteConfig } from "@/config/site";
 
 const FAQ = [
   {
-    q: "Is electronic SDS access OSHA-compliant?",
+    q: "Does OSHA allow electronic SDS access instead of a paper binder?",
     a: "Yes. 29 CFR 1910.1200(g)(8) permits electronic access instead of paper copies, as long as it creates no barriers to immediate employee access in each workplace. QR codes posted in each operatory, lab or supply room, with no login required to view, are designed for exactly that.",
   },
   {

@@ -1,7 +1,7 @@
 import Image, { type StaticImageData } from "next/image";
 
 import supplyRoomPhoto from "@/assets/images/clinic-supply-room.webp";
-import dentalTeamPhoto from "@/assets/images/team-dental-xray.webp";
+import dentalChairPhoto from "@/assets/images/clinic-dental-chair.webp";
 import vetUltrasoundPhoto from "@/assets/images/vet-ultrasound.webp";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { cn } from "@/lib/utils";
@@ -18,8 +18,8 @@ const TILES: Tile[] = [
     sizes: "(min-width: 768px) 760px, 100vw",
   },
   {
-    photo: dentalTeamPhoto,
-    alt: "Dental hygienist reviewing an X-ray on a tablet with a patient",
+    photo: dentalChairPhoto,
+    alt: "Bright, modern dental treatment room",
     room: "Operatory",
     caption: "Etchants, bonding agents and disinfectants mapped to the chair.",
     className: "aspect-[4/3]",

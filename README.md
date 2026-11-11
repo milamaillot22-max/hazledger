@@ -96,7 +96,12 @@ printing; "Open the full SDS" links appear once `SUPABASE_SERVICE_ROLE_KEY` is s
   maximums + size reduction from `src/config/compliance.ts`, editable time assumptions,
   plan prices from `src/config/pricing.ts`. ROI counts staff time only — never risk avoided.
 - **Pricing** (`src/config/pricing.ts`, tested): Starter $79, Pro $149 (featured), annual =
-  2 months free. Plan limits are commercial terms, enforced once billing (Stripe) ships.
+  2 months free; prices show monthly by default with the annual price as a subtitle. Plan
+  limits are commercial terms, enforced once billing (Stripe) ships. Pro = unlimited AI scans
+  (fair use), binder import, inspection report, priority support — **shipped features only**
+  (a test fails if a Pro feature or matrix cell is marked "soon").
+- **Inspection report** `/dashboard/sds/report`: dated SDS index (CAS, signal word, revision,
+  items to check) printed or saved as PDF from the browser; logic in `src/features/sds/report.ts`.
   The chosen plan/billing is stored on new accounts (`selected_plan`, `selected_billing`).
 - **Domain**: `NEXT_PUBLIC_SITE_URL` defaults to `https://gethazledger.com` (canonical URLs,
   Open Graph, sitemap, QR posters). Set `http://localhost:3000` locally only to test QR links.
@@ -114,7 +119,7 @@ software), no ratings or testimonials until real ones exist, no fixed ROI claims
 `src/config/compliance.ts` every January from osha.gov/penalties.
 
 - **Logo badge** reads "HazCom 2024 Ready" (the standard), never "OSHA … Ready" (OSHA endorses no software).
-- **Top bar** (`announcement-bar.tsx`) shows the HCS 2024 *employer* deadline for substances from
+- **Top bar** (`announcement-bar.tsx`, institutional blue) shows the HCS 2024 *employer* deadline for substances from
   `HAZCOM_2024.milestones[1]`; the day countdown is computed in the browser and switches to
   "now in effect" after the date. Update the milestone once it passes (next: May 19, 2028, mixtures).
 - **Support widget** (`support-widget.tsx`) is not a live chat: it links to real answers and to

@@ -15,7 +15,7 @@ export function DeadlineCountdown({ date }: { date: string }) {
   if (days === null) return null;
   const label = days > 1 ? `${days} days left` : days === 1 ? "1 day left" : days === 0 ? "today" : "now in effect";
   return (
-    <span className="ml-1.5 inline-flex items-center rounded-full bg-amber-100/80 px-1.5 py-px align-[1px] text-[11px] font-semibold text-amber-800 ring-1 ring-amber-200/70 tabular">
+    <span className="ml-2 inline-flex items-center rounded-full bg-amber-300 px-2 py-px align-[1px] text-[11px] font-bold text-amber-950 tabular">
       {label}
     </span>
   );

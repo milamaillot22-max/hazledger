@@ -1,6 +1,6 @@
 import {
   BadgeCheck,
-  BellRing,
+  ClipboardList,
   FileSearch,
   LockKeyhole,
   QrCode,
@@ -39,10 +39,9 @@ const FEATURES: { icon: LucideIcon; title: string; body: string; soon?: boolean 
     body: "Files stored per clinic, hosted in the US, encrypted in transit and at rest. Staff only see confirmed SDSs.",
   },
   {
-    icon: BellRing,
-    title: "Supplier revision alerts",
-    body: "Get notified when a manufacturer publishes a newer SDS for a product you stock.",
-    soon: true,
+    icon: ClipboardList,
+    title: "Inspection-ready report",
+    body: "Print or save as PDF a dated SDS index — CAS numbers, revisions and items to check — for the day an inspector asks.",
   },
 ];
 
@@ -58,7 +57,7 @@ export function Features() {
         {FEATURES.map(({ icon: Icon, title, body, soon }) => (
           <SpotlightCard
             key={title}
-            className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-lg hover:shadow-slate-200/60"
+            className="card-soft lift rounded-3xl p-7"
           >
             <div className="flex items-center justify-between">
               <span className="flex size-11 items-center justify-center rounded-xl bg-brand-soft text-primary ring-1 ring-sky-100">

@@ -11,6 +11,7 @@ export const routes = {
   authCallback: "/auth/callback",
   sdsLibrary: "/dashboard/sds",
   sdsScan: "/dashboard/sds/scan",
+  sdsReport: "/dashboard/sds/report",
   teamAccess: "/dashboard/team-access",
   teamAccessPrint: "/dashboard/team-access/print",
   solution: (slug: string) => `/solutions/${slug}`,
@@ -30,7 +31,7 @@ export const siteConfig = {
   name: "HazLedger",
   tagline: "OSHA compliance for dental, veterinary & medical practices",
   description:
-    "Scan and organize every Safety Data Sheet in your dental, veterinary or dermatology practice. HazLedger keeps your SDS library current and your team inspection-ready for OSHA 29 CFR 1910.1200.",
+    "Scan and organize every Safety Data Sheet in your dental, veterinary or medical practice. HazLedger keeps your SDS library current, reviewed and one QR scan away for your team — built for OSHA HazCom (29 CFR 1910.1200) and HazCom 2024.",
   copyrightYear: 2026,
   contactEmail: "sales@gethazledger.com",
   links: {

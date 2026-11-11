@@ -3,7 +3,8 @@
  * calculator and schema.org offers. No framework imports (unit-tested).
  *
  * Plan limits are commercial terms; they are enforced once billing ships.
- * Features marked `comingSoon` must stay labelled until they are released.
+ * Plans list shipped features only. `comingSoon` exists for Starter-side
+ * teasers, but the Pro plan must never carry one (see tests/pricing.test.ts).
  */
 
 export type BillingCycle = "monthly" | "annual";
@@ -48,14 +49,13 @@ export const PLANS: Plan[] = [
     monthly: 149,
     featured: true,
     tagline: "For clinics that want their binder done for them.",
-    limits: ["1 location", "Unlimited SDSs", "100 AI scans / month"],
+    limits: ["1 location", "Unlimited SDSs", "Unlimited AI scans"],
     features: [
       { label: "Everything in Starter" },
+      { label: "Unlimited AI scans (fair use)" },
       { label: "We import your existing binder for you" },
+      { label: "Inspection-ready SDS report — print or PDF" },
       { label: "Priority support, same business day" },
-      { label: "Supplier revision alerts", comingSoon: true },
-      { label: "GHS secondary label printing", comingSoon: true },
-      { label: "Inspector-ready PDF export", comingSoon: true },
     ],
   },
 ];
@@ -82,15 +82,15 @@ export function priceFor(plan: Plan, cycle: BillingCycle) {
 
 export const ANNUAL_DISCOUNT_PERCENT = Math.round((ANNUAL_FREE_MONTHS / 12) * 100);
 
-/** Plan comparison matrix for /pricing. `true` = included, string = value, "soon" = coming soon. */
-export type MatrixValue = boolean | string | "soon";
+/** Plan comparison matrix for /pricing. `true` = included, `false` = not included, string = value. */
+export type MatrixValue = boolean | string;
 export const PLAN_MATRIX: { group: string; rows: { label: string; starter: MatrixValue; pro: MatrixValue }[] }[] = [
   {
     group: "Library",
     rows: [
       { label: "Locations", starter: "1", pro: "1" },
       { label: "SDSs in your library", starter: "Up to 150", pro: "Unlimited" },
-      { label: "AI scans per month", starter: "25", pro: "100" },
+      { label: "AI scans per month", starter: "25", pro: "Unlimited (fair use)" },
     ],
   },
   {
@@ -100,9 +100,7 @@ export const PLAN_MATRIX: { group: string; rows: { label: string; starter: Matri
       { label: "Human review with CAS-number validation", starter: true, pro: true },
       { label: "Team QR poster & login-free staff view", starter: true, pro: true },
       { label: "Emergency-first view: first aid, spills, PPE", starter: true, pro: true },
-      { label: "Supplier revision alerts", starter: false, pro: "soon" },
-      { label: "GHS secondary label printing", starter: false, pro: "soon" },
-      { label: "Inspector-ready PDF export", starter: false, pro: "soon" },
+      { label: "Inspection-ready SDS report (print or PDF)", starter: false, pro: true },
     ],
   },
   {

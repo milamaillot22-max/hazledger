@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ShieldCheck } from "lucide-react";
+import { ArrowRight, Calculator, ShieldCheck } from "lucide-react";
 
 import waitingRoomPhoto from "@/assets/images/clinic-waiting-room.webp";
 import { Magnetic } from "@/components/fx/magnetic";
@@ -10,7 +10,7 @@ import { routes, siteConfig } from "@/config/site";
 
 const pro = getPlan("pro");
 
-export function FinalCta({ title }: { title?: string }) {
+export function FinalCta({ title, calculatorHref = "/#calculator" }: { title?: string; calculatorHref?: string }) {
   return (
     <section id="demo" className="scroll-mt-20 px-4 py-20 sm:px-6 sm:py-24">
       <div className="card-soft relative mx-auto grid max-w-6xl overflow-hidden rounded-[2rem] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
@@ -43,7 +43,15 @@ export function FinalCta({ title }: { title?: string }) {
               Compare plans
             </Link>
           </div>
-          <p className="mt-5 text-xs text-slate-400">No credit card · Cancel anytime · ${pro.monthly}/month per location after the trial</p>
+          <p className="mt-5 text-xs text-slate-500">No credit card required · Cancel anytime · ${pro.monthly}/month per location after the trial</p>
+          <Link
+            href={calculatorHref}
+            className="group mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-hover"
+          >
+            <Calculator className="size-4" />
+            Not sure yet? Estimate your clinic&apos;s OSHA fine exposure
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+          </Link>
         </div>
         <div className="relative hidden min-h-[22rem] [mask-image:linear-gradient(to_right,transparent,black_28%)] lg:block">
           <Image

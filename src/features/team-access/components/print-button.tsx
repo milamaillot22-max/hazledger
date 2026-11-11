@@ -5,7 +5,7 @@ import { Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { markPosterPrinted } from "@/features/team-access/actions";
 
-export function PrintButton({ track = true }: { track?: boolean }) {
+export function PrintButton({ track = true, label = "Print poster" }: { track?: boolean; label?: string }) {
   return (
     <Button
       type="button"
@@ -17,7 +17,7 @@ export function PrintButton({ track = true }: { track?: boolean }) {
       }}
     >
       <Printer data-icon="inline-start" />
-      Print poster
+      {label}
     </Button>
   );
 }

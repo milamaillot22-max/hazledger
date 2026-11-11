@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { ANNUAL_DISCOUNT_PERCENT, getPlan, PLANS, priceFor } from "../src/config/pricing.ts";
+import { ANNUAL_DISCOUNT_PERCENT, getPlan, PLAN_MATRIX, PLANS, priceFor } from "../src/config/pricing.ts";
 
 test("validated price grid", () => {
   assert.equal(getPlan("starter").monthly, 79);
@@ -17,7 +17,7 @@ test("annual billing is 2 months free", () => {
 });
 
 test("unreleased features are always labelled", () => {
-  const unreleased = ["revision alerts", "label printing", "PDF export"];
+  const unreleased = ["revision alerts", "label printing"];
   for (const plan of PLANS) {
     for (const f of plan.features) {
       if (unreleased.some((u) => f.label.toLowerCase().includes(u.toLowerCase()))) {
@@ -25,4 +25,11 @@ test("unreleased features are always labelled", () => {
       }
     }
   }
+});
+
+test("Pro lists shipped features only", () => {
+  const pro = getPlan("pro");
+  assert.equal(pro.features.some((f) => f.comingSoon), false);
+  assert.equal(PLAN_MATRIX.flatMap((g) => g.rows).some((r) => typeof r.pro === "string" && /soon/i.test(r.pro)), false);
+  assert.ok(pro.limits.includes("Unlimited AI scans"));
 });

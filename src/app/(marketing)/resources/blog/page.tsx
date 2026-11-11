@@ -7,6 +7,7 @@ import { SpotlightCard } from "@/components/fx/spotlight-card";
 import { FinalCta } from "@/components/marketing/final-cta";
 import { routes, siteConfig } from "@/config/site";
 import { POSTS } from "@/features/blog/posts";
+import { PageBackdrop } from "@/components/marketing/page-backdrop";
 
 const DESCRIPTION =
   "Practical guidance on OSHA Hazard Communication for dental, veterinary and medical practices: HazCom 2024 deadlines, inspection checklists and 2026 penalties.";
@@ -27,7 +28,7 @@ export default function BlogIndexPage() {
   return (
     <>
       <section className="relative overflow-hidden bg-white">
-        <div aria-hidden="true" className="bg-aurora pointer-events-none absolute inset-0" />
+        <PageBackdrop />
         <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-16 sm:px-6 sm:pt-20">
           <p className="text-sm font-semibold text-primary">Resources</p>
           <h1 className="mt-3 max-w-3xl font-heading text-4xl leading-tight font-semibold tracking-[-0.04em] text-slate-900 sm:text-5xl">
@@ -37,7 +38,7 @@ export default function BlogIndexPage() {
 
           <Link
             href={routes.blogPost(featured.slug)}
-            className="card-soft group mt-12 grid overflow-hidden rounded-3xl transition-shadow duration-300 hover:shadow-[0_1px_2px_rgb(15_23_42/0.04),0_24px_48px_-20px_rgb(15_23_42/0.18)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]"
+            className="card-soft lift group mt-12 grid overflow-hidden rounded-3xl lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]"
           >
             <div className="relative aspect-[16/9] overflow-hidden lg:aspect-auto lg:min-h-[22rem]">
               <Image
@@ -71,7 +72,7 @@ export default function BlogIndexPage() {
         <ul className="grid gap-5 md:grid-cols-2">
           {rest.map((p) => (
             <li key={p.slug}>
-              <SpotlightCard className="group h-full overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm transition-shadow hover:shadow-lg hover:shadow-slate-200/60">
+              <SpotlightCard className="card-soft lift group h-full overflow-hidden rounded-3xl">
                 <div className="relative aspect-[16/8] overflow-hidden">
                   <Image
                     src={p.cover}

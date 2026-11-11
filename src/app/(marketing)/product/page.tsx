@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Database, KeyRound, Landmark, LockKeyhole, RefreshCw, type LucideIcon } from "lucide-react";
+import { ArrowRight, CheckCircle2, Database, KeyRound, Landmark, LockKeyhole, RefreshCw, type LucideIcon } from "lucide-react";
 
 import { Magnetic } from "@/components/fx/magnetic";
 import { SpotlightCard } from "@/components/fx/spotlight-card";
@@ -14,6 +14,7 @@ import { SectionHeading } from "@/components/marketing/section-heading";
 import { AppMockup } from "@/components/product/app-mockup";
 import { routes, siteConfig } from "@/config/site";
 import { jsonLd, productStructuredData } from "@/lib/seo";
+import { PageBackdrop } from "@/components/marketing/page-backdrop";
 
 const DESCRIPTION =
   "How HazLedger works: AI extraction of Safety Data Sheets, human review with CAS validation, a login-free team QR poster, and US-hosted, encrypted storage.";
@@ -36,7 +37,6 @@ const SECURITY: { icon: LucideIcon; title: string; body: string }[] = [
 const ROADMAP = [
   "Supplier revision alerts",
   "GHS secondary label printing",
-  "Inspector-ready PDF export",
   "Per-room product mapping",
   "Multi-location dashboard",
 ];
@@ -49,7 +49,7 @@ export default function ProductPage() {
       ))}
 
       <section className="relative overflow-hidden bg-white">
-        <div aria-hidden="true" className="bg-aurora pointer-events-none absolute inset-0" />
+        <PageBackdrop />
         <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-24 sm:px-6 sm:pt-24">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold text-primary">Product</p>
@@ -75,6 +75,14 @@ export default function ProductPage() {
               </Link>
             </div>
           </div>
+          <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-slate-500">
+            {["No credit card required", "Set up in minutes", "Cancel anytime"].map((t) => (
+              <li key={t} className="flex items-center gap-1.5">
+                <CheckCircle2 className="size-4 text-success" />
+                {t}
+              </li>
+            ))}
+          </ul>
           <AppMockup className="mx-auto mt-16 max-w-5xl" />
         </div>
       </section>
@@ -94,7 +102,7 @@ export default function ProductPage() {
           <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {SECURITY.map(({ icon: Icon, title, body }) => (
               <li key={title}>
-                <SpotlightCard glow="emerald" className="h-full rounded-2xl border border-slate-200/80 bg-white p-6">
+                <SpotlightCard glow="emerald" className="card-soft lift h-full rounded-3xl p-7">
                   <span className="flex size-10 items-center justify-center rounded-xl bg-success-soft text-success ring-1 ring-emerald-100">
                     <Icon className="size-[18px]" />
                   </span>
@@ -110,7 +118,7 @@ export default function ProductPage() {
       <Comparison />
 
       <section aria-labelledby="roadmap-title" className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-        <div className="grid gap-10 rounded-3xl border border-slate-200/80 bg-white p-8 sm:p-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+        <div className="card-soft grid gap-10 rounded-3xl p-8 sm:p-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
           <div>
             <p className="inline-flex items-center gap-2 text-sm font-semibold text-primary">
               <RefreshCw className="size-4" />
@@ -120,14 +128,14 @@ export default function ProductPage() {
               What we&apos;re building next
             </h2>
             <p className="mt-3 text-[15px] leading-relaxed text-slate-600">
-              Not available yet — listed so you can plan. Pro customers get each one as soon as it ships.
+              Not part of any plan yet — listed so you can plan ahead. Everything on our pricing page is available today.
             </p>
           </div>
           <ul className="grid gap-2.5 sm:grid-cols-2">
             {ROADMAP.map((r) => (
               <li key={r} className="flex items-center justify-between gap-3 rounded-xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 ring-1 ring-slate-200/70">
                 {r}
-                <span className="rounded-full bg-white px-2 py-0.5 text-[10px] font-semibold tracking-wide text-slate-500 uppercase ring-1 ring-slate-200">Soon</span>
+                <span className="rounded-full bg-white px-2 py-0.5 text-[10px] font-semibold tracking-wide text-slate-500 uppercase ring-1 ring-slate-200">Planned</span>
               </li>
             ))}
           </ul>

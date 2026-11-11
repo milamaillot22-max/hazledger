@@ -18,6 +18,7 @@ import {
 } from "@/config/pricing";
 import { routes, siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
+import { PageBackdrop } from "@/components/marketing/page-backdrop";
 
 const usd = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
 
@@ -31,11 +32,11 @@ export function Pricing({
   headingLevel?: "h1" | "h2";
 }) {
   const Heading = headingLevel;
-  const [cycle, setCycle] = useState<BillingCycle>("annual");
+  const [cycle, setCycle] = useState<BillingCycle>("monthly");
 
   return (
     <section id="pricing" aria-labelledby="pricing-title" className="relative scroll-mt-20 overflow-hidden border-t border-slate-200/70 bg-white">
-      <div aria-hidden="true" className="bg-aurora pointer-events-none absolute inset-0" />
+      <PageBackdrop arch={false} />
       <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
         <div className="mx-auto max-w-2xl text-center">
           <Eyebrow>Pricing</Eyebrow>
@@ -119,6 +120,7 @@ function BillingToggle({ cycle, onChange }: { cycle: BillingCycle; onChange: (c:
 
 function PlanCard({ plan, cycle }: { plan: Plan; cycle: BillingCycle }) {
   const price = priceFor(plan, cycle);
+  const annual = priceFor(plan, "annual");
   const href = `${routes.signup}?plan=${plan.id}&billing=${cycle}`;
   const featured = plan.featured;
 
@@ -145,20 +147,24 @@ function PlanCard({ plan, cycle }: { plan: Plan; cycle: BillingCycle }) {
         ) : null}
       </div>
 
-      <div className="mt-7 flex items-end gap-1.5">
-        <span className="font-heading text-5xl font-semibold tracking-tight text-slate-900">
+      <div className="mt-7 flex items-baseline gap-1.5">
+        <span className="font-heading text-5xl font-semibold tracking-tight text-slate-900 tabular">
           <AnimatedNumber value={price.perMonth} format={usd} duration={350} />
         </span>
-        <span className="mb-1.5 text-sm text-slate-500">/ month per location</span>
+        <span className="text-base font-medium text-slate-700">/ month</span>
+        <span className="text-sm text-slate-500">per location</span>
       </div>
-      <p className="mt-1.5 h-5 text-xs text-slate-500">
+      <p className="mt-2 min-h-5 text-[13px] text-slate-500">
         {cycle === "annual" ? (
           <>
             Billed {usd(price.billedAmount)} yearly ·{" "}
-            <span className="font-semibold text-emerald-700">save {usd(price.savings)}</span>
+            <span className="font-semibold text-emerald-700">save {usd(price.savings)}</span> vs. {usd(plan.monthly)}/month
           </>
         ) : (
-          "Billed monthly"
+          <>
+            or {usd(annual.perMonth)}/month billed annually ({usd(annual.billedAmount)}/year) ·{" "}
+            <span className="font-semibold text-emerald-700">{ANNUAL_DISCOUNT_PERCENT}% off</span>
+          </>
         )}
       </p>
 
@@ -187,23 +193,11 @@ function PlanCard({ plan, cycle }: { plan: Plan; cycle: BillingCycle }) {
 
       <ul className="mt-6 space-y-3 border-t border-slate-100 pt-6">
         {plan.features.map((f) => (
-          <li key={f.label} className={cn("flex items-start gap-2.5 text-sm", f.comingSoon ? "text-slate-500" : "text-slate-700")}>
-            <span
-              className={cn(
-                "mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full",
-                f.comingSoon ? "bg-slate-100 text-slate-400" : "bg-success-soft text-success"
-              )}
-            >
+          <li key={f.label} className="flex items-start gap-2.5 text-sm text-slate-700">
+            <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-success-soft text-success">
               <Check className="size-3" strokeWidth={3} />
             </span>
-            <span>
-              {f.label}
-              {f.comingSoon ? (
-                <span className="ml-2 rounded-full bg-slate-100 px-1.5 py-0.5 align-middle text-[10px] font-semibold tracking-wide text-slate-500 uppercase">
-                  Soon
-                </span>
-              ) : null}
-            </span>
+            <span className={cn(featured && f.label !== "Everything in Starter" && "font-medium text-slate-800")}>{f.label}</span>
           </li>
         ))}
       </ul>

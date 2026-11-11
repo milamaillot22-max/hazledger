@@ -17,6 +17,7 @@ import {
 import { routes, siteConfig } from "@/config/site";
 import { getSolution, SOLUTIONS } from "@/features/solutions/data";
 import { jsonLd, solutionStructuredData } from "@/lib/seo";
+import { PageBackdrop } from "@/components/marketing/page-backdrop";
 
 export function generateStaticParams() {
   return SOLUTIONS.map((s) => ({ slug: s.slug }));
@@ -64,7 +65,7 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-white">
-        <div aria-hidden="true" className="bg-aurora pointer-events-none absolute inset-0" />
+        <PageBackdrop arch={false} />
         <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-4 pt-12 pb-20 sm:px-6 sm:pt-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:pb-28">
           <div>
             <nav aria-label="Breadcrumb" className="flex items-center gap-1 text-xs font-medium text-slate-500">
@@ -103,10 +104,10 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
       {/* Pains */}
       <section className="border-y border-slate-200/70 bg-white">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
-          <h2 className="max-w-2xl text-3xl leading-tight font-semibold text-slate-900">Why SDS binders fail {s.name.toLowerCase()}</h2>
+          <h2 className="max-w-2xl text-3xl leading-tight font-semibold text-slate-900 font-heading tracking-[-0.03em] sm:text-4xl">Why SDS binders fail {s.name.toLowerCase()}</h2>
           <div className="mt-10 grid gap-5 md:grid-cols-3">
             {s.pains.map((p) => (
-              <div key={p.title} className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-lg shadow-slate-200/50">
+              <div key={p.title} className="card-soft lift rounded-3xl p-7">
                 <h3 className="text-lg font-semibold text-slate-900">{p.title}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed text-slate-600">{p.body}</p>
               </div>
@@ -123,7 +124,7 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
               <FlaskConical className="size-3.5" />
               {s.chemicalsIntro}
             </Eyebrow>
-            <h2 className="mt-4 text-3xl leading-tight font-semibold text-slate-900">The products inspectors expect an SDS for.</h2>
+            <h2 className="mt-4 text-3xl leading-tight font-semibold text-slate-900 font-heading tracking-[-0.03em] sm:text-4xl">The products inspectors expect an SDS for.</h2>
             <p className="mt-4 text-[15px] leading-relaxed text-slate-600">
               Every hazardous chemical your employees can be exposed to needs a current Safety Data Sheet — not just the obvious
               ones. These are the products most practices like yours start with.
@@ -135,7 +136,7 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
           </div>
           <ul className="grid gap-3 sm:grid-cols-2">
             {s.chemicals.map((c) => (
-              <li key={c.name} className="rounded-2xl border border-slate-200/80 bg-white p-4">
+              <li key={c.name} className="card-soft lift rounded-2xl p-4">
                 <p className="text-[15px] font-semibold text-slate-900">{c.name}</p>
                 <p className="mt-1 text-sm leading-relaxed text-slate-600">{c.note}</p>
               </li>
@@ -146,12 +147,12 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
       </section>
 
       {/* How it works */}
-      <section className="border-y border-slate-200/70 bg-white">
+      <section className="band-pearl border-y border-slate-200/70">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
-          <h2 className="text-3xl leading-tight font-semibold text-slate-900">Inspection-ready in an afternoon</h2>
+          <h2 className="text-3xl leading-tight font-semibold text-slate-900 font-heading tracking-[-0.03em] sm:text-4xl">Inspection-ready in an afternoon</h2>
           <ol className="mt-10 grid gap-5 md:grid-cols-3">
             {STEPS.map(({ icon: Icon, title, body }, i) => (
-              <li key={title} className="rounded-2xl border border-slate-200/80 bg-white p-6">
+              <li key={title} className="card-soft lift rounded-3xl p-7">
                 <div className="flex items-center justify-between">
                   <span className="flex size-11 items-center justify-center rounded-xl bg-brand-soft text-primary"><Icon className="size-5" /></span>
                   <span className="flex size-7 items-center justify-center rounded-full bg-slate-100 text-xs font-semibold text-slate-500">{i + 1}</span>
@@ -169,7 +170,7 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
       {/* FAQ */}
       <section className="border-t border-slate-200/70 bg-white">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
-          <h2 className="text-3xl leading-tight font-semibold text-slate-900">Questions from {s.name.toLowerCase()}</h2>
+          <h2 className="text-3xl leading-tight font-semibold text-slate-900 font-heading tracking-[-0.03em] sm:text-4xl">Questions from {s.name.toLowerCase()}</h2>
           <Accordion type="single" collapsible className="border-t border-slate-200">
             {s.faq.map((f, i) => (
               <AccordionItem key={f.q} value={`q-${i}`} className="border-b border-slate-200">
@@ -183,11 +184,18 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
 
       {/* Final CTA */}
       <section className="px-4 py-16 sm:px-6 sm:py-20">
-        <div className="mx-auto max-w-6xl rounded-3xl border border-slate-200/80 bg-gradient-to-br from-sky-50 via-white to-emerald-50 p-8 shadow-lg shadow-slate-200/50 sm:p-12">
-          <h2 className="max-w-2xl text-3xl leading-tight font-semibold text-slate-900">
-            Start your {siteConfig.trialDays}-day trial today. Print your team QR poster in minutes.
-          </h2>
-          <TrialForm source={`${s.slug}-footer`} className="mt-8" />
+        <div className="card-soft relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] p-8 sm:p-12">
+          <PageBackdrop arch={false} />
+          <div className="relative">
+            <h2 className="max-w-2xl text-3xl leading-tight font-semibold text-slate-900 font-heading tracking-[-0.03em] sm:text-4xl">
+              Start your {siteConfig.trialDays}-day trial today. Print your team QR poster in minutes.
+            </h2>
+            <TrialForm source={`${s.slug}-footer`} className="mt-8" />
+            <Link href="#calculator" className="group mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:text-primary-hover">
+              Or estimate your clinic&apos;s fine exposure first
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+          </div>
         </div>
         <nav aria-label="Other solutions" className="mx-auto mt-10 flex max-w-6xl flex-wrap items-center gap-3 text-sm">
           <span className="flex items-center gap-1.5 text-slate-500"><Building2 className="size-4" />Also built for</span>

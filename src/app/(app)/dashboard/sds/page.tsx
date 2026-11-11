@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { CheckCircle2, ChevronRight, FileSearch, ScanLine } from "lucide-react";
+import { CheckCircle2, ChevronRight, ClipboardList, FileSearch, ScanLine } from "lucide-react";
 
 import { GhsDiamond } from "@/components/marketing/ghs-pictogram";
 import { Button } from "@/components/ui/button";
@@ -21,12 +21,20 @@ export default function SdsLibraryPage({ searchParams }: PageProps<"/dashboard/s
           <h1 className="text-2xl font-semibold text-slate-900 sm:text-3xl">SDS library</h1>
           <p className="mt-1 text-[15px] text-slate-600">Every Safety Data Sheet on file for this location.</p>
         </div>
-        <Button asChild size="xl">
-          <Link href={routes.sdsScan}>
-            <ScanLine data-icon="inline-start" />
-            Scan an SDS
-          </Link>
-        </Button>
+        <div className="flex flex-wrap items-center gap-2">
+          <Button asChild size="xl" variant="outline" className="border-slate-200 bg-white text-slate-800">
+            <Link href={routes.sdsReport}>
+              <ClipboardList data-icon="inline-start" />
+              Inspection report
+            </Link>
+          </Button>
+          <Button asChild size="xl">
+            <Link href={routes.sdsScan}>
+              <ScanLine data-icon="inline-start" />
+              Scan an SDS
+            </Link>
+          </Button>
+        </div>
       </div>
       <Suspense fallback={<LibrarySkeleton />}>
         <Library searchParams={searchParams} />
