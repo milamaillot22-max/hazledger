@@ -10,6 +10,7 @@ const ITEMS = [
   { href: routes.dashboard, label: "Overview", exact: true },
   { href: routes.sdsLibrary, label: "SDS library", exact: false },
   { href: routes.teamAccess, label: "Team QR", exact: false },
+  { href: routes.billing, label: "Billing", exact: false },
 ];
 
 export function AppNav() {

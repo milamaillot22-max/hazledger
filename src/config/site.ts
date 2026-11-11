@@ -12,6 +12,7 @@ export const routes = {
   sdsLibrary: "/dashboard/sds",
   sdsScan: "/dashboard/sds/scan",
   sdsReport: "/dashboard/sds/report",
+  billing: "/dashboard/billing",
   teamAccess: "/dashboard/team-access",
   teamAccessPrint: "/dashboard/team-access/print",
   solution: (slug: string) => `/solutions/${slug}`,

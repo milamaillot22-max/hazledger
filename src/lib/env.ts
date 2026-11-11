@@ -13,9 +13,18 @@ const publicSchema = z.object({
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
 });
 
+/** Empty strings (e.g. `KEY=` in .env files or dashboards) count as "not set". */
+const optionalSecret = () => z.preprocess((v) => (v === "" ? undefined : v), z.string().min(1).optional());
+
 const serverSchema = z.object({
-  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1).optional(),
-  ANTHROPIC_API_KEY: z.string().min(1).optional(),
+  SUPABASE_SERVICE_ROLE_KEY: optionalSecret(),
+  ANTHROPIC_API_KEY: optionalSecret(),
+  /** Stripe secret key (sk_test_… or sk_live_…). Billing is disabled when unset. */
+  STRIPE_SECRET_KEY: optionalSecret(),
+  /** Signing secret of the /api/stripe/webhook endpoint (whsec_…). */
+  STRIPE_WEBHOOK_SECRET: optionalSecret(),
+  /** "true" once tax registrations exist in Stripe Tax. */
+  STRIPE_AUTOMATIC_TAX: z.preprocess((v) => (v === "" ? undefined : v), z.enum(["true", "false"]).optional()),
 });
 
 // Next.js inlines NEXT_PUBLIC_* only when referenced explicitly.

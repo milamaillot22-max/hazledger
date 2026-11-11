@@ -4,6 +4,8 @@ import { Suspense } from "react";
 import { ArrowLeft, Camera, FileText, Tag } from "lucide-react";
 
 import { routes } from "@/config/site";
+import { canAddSds } from "@/features/billing/entitlement";
+import { getBillingState } from "@/features/billing/server";
 import { SdsUploader } from "@/features/sds/components/sds-uploader";
 import { requireClinic } from "@/lib/auth/dal";
 
@@ -62,6 +64,22 @@ async function UploaderGate() {
     return (
       <div className="rounded-2xl border border-slate-200/80 bg-white p-8 text-sm text-slate-600">
         Only clinic owners and admins can add SDSs. Ask your practice manager for access.
+      </div>
+    );
+  }
+  const billing = await getBillingState(clinic.id);
+  const check = canAddSds(billing.entitlement, billing.usage);
+  if (!check.allowed) {
+    return (
+      <div className="rounded-2xl border border-amber-200 bg-amber-50/70 p-8">
+        <p className="text-[15px] font-semibold text-amber-900">New scans are paused</p>
+        <p className="mt-1.5 text-sm leading-relaxed text-amber-900/80">{check.message}</p>
+        <Link
+          href={routes.billing}
+          className="mt-5 inline-flex h-10 items-center rounded-xl bg-primary px-4 text-sm font-semibold text-white hover:bg-primary-hover"
+        >
+          See plans
+        </Link>
       </div>
     );
   }

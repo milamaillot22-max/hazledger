@@ -112,6 +112,23 @@ printing; "Open the full SDS" links appear once `SUPABASE_SERVICE_ROLE_KEY` is s
 - **Activation**: onboarding → `/dashboard/team-access?welcome=1` → print poster
   (`clinics.qr_poster_printed_at`) → scan → confirm.
 
+## Billing (Stripe)
+
+- **Products** in the HazLedger Stripe account: `HazLedger Starter` / `HazLedger Pro`, prices with
+  lookup keys `hazledger_{starter|pro}_{monthly|annual}` ($79/$790, $149/$1,490), tax code
+  `txcd_10103001` (SaaS, business use). Missing prices are created on first checkout (fresh/test accounts).
+- **Flow**: 14-day trial from clinic creation, no card → `/dashboard/billing` → Stripe Checkout
+  (remaining trial days carry over) → webhook mirrors the subscription into `clinic_billing`
+  → customer portal for plan changes, card, invoices, cancellation (at period end).
+- **Gates** (`src/features/billing/entitlement.ts`, tested): expired trial or Starter limits
+  (150 SDSs, 25 scans/month) block **new scans only**. Team QR access is never blocked for billing.
+- **Environment (Vercel → Settings → Environment Variables, never in the repo or chat)**:
+  `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `SUPABASE_SERVICE_ROLE_KEY` (webhook writes),
+  optional `STRIPE_AUTOMATIC_TAX=true` once Stripe Tax registrations exist.
+- **Webhook**: Stripe Dashboard → Developers → Webhooks → endpoint `https://<domain>/api/stripe/webhook`,
+  events `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`,
+  `customer.subscription.deleted`.
+
 ## Claims policy
 
 Marketing copy must stay literally true: no "OSHA certified/compliant" (OSHA certifies no

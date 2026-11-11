@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 
 import { routes } from "@/config/site";
+import { canAddSds } from "@/features/billing/entitlement";
+import { getBillingState } from "@/features/billing/server";
 import { extractSds, ScannerError, SDS_EXTRACTION_MODEL } from "@/features/sds/extract";
 import { normalizeExtraction } from "@/features/sds/normalize";
 import { ACCEPTED_MIME_TYPES, GHS_CODES, MAX_UPLOAD_BYTES } from "@/features/sds/schema";
@@ -39,6 +41,11 @@ export async function processSdsUpload(input: z.input<typeof uploadSchema>): Pro
   const parsed = uploadSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "This file can't be scanned. Use a PDF, JPEG, PNG or WebP under 20 MB." };
   const { path, name, size, mime } = parsed.data;
+
+  // Plan gate (trial expired, Starter limits). Team QR access is never gated.
+  const billing = await getBillingState(clinic.id);
+  const check = canAddSds(billing.entitlement, billing.usage);
+  if (!check.allowed) return { ok: false, error: check.message };
 
   // The path must live in the active clinic's folder (storage RLS enforces it too).
   if (!path.startsWith(`${clinic.id}/`) || path.includes("..")) {

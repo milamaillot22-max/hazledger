@@ -17,6 +17,56 @@ export type Database = {
   }
   public: {
     Tables: {
+      clinic_billing: {
+        Row: {
+          billing_cycle: string | null
+          cancel_at_period_end: boolean
+          clinic_id: string
+          created_at: string
+          current_period_end: string | null
+          plan: string | null
+          status: string | null
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          trial_ends_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          billing_cycle?: string | null
+          cancel_at_period_end?: boolean
+          clinic_id: string
+          created_at?: string
+          current_period_end?: string | null
+          plan?: string | null
+          status?: string | null
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          trial_ends_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          billing_cycle?: string | null
+          cancel_at_period_end?: boolean
+          clinic_id?: string
+          created_at?: string
+          current_period_end?: string | null
+          plan?: string | null
+          status?: string | null
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          trial_ends_at?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clinic_billing_clinic_id_fkey"
+            columns: ["clinic_id"]
+            isOneToOne: true
+            referencedRelation: "clinics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       clinic_members: {
         Row: {
           clinic_id: string

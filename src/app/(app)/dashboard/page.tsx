@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { routes } from "@/config/site";
+import { getBillingState } from "@/features/billing/server";
 import { listSdsDocuments } from "@/features/sds/queries";
 import {
   practiceTypeLabel,
@@ -27,7 +28,8 @@ export default function DashboardPage() {
 
 async function DashboardContent() {
   const { clinic } = await requireClinic();
-  const docs = await listSdsDocuments(clinic.id);
+  const [docs, billing] = await Promise.all([listSdsDocuments(clinic.id), getBillingState(clinic.id)]);
+  const e = billing.entitlement;
   const current = docs.filter((d) => d.status === "current").length;
   const toReview = docs.filter((d) => d.status === "needs_review").length;
   const SETUP_STEPS = [
@@ -58,6 +60,24 @@ async function DashboardContent() {
         </p>
         <h1 className="text-2xl font-semibold text-slate-900 sm:text-3xl">{clinic.name}</h1>
       </div>
+      {e.kind === "trial" || e.kind === "expired" || e.kind === "past_due" ? (
+        <div
+          className={`mt-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border px-5 py-4 text-sm ${
+            e.kind === "trial" ? "border-sky-100 bg-brand-soft text-sky-900" : "border-amber-200 bg-amber-50 text-amber-900"
+          }`}
+        >
+          <p className="font-medium">
+            {e.kind === "trial"
+              ? `Free trial: ${e.daysLeft} ${e.daysLeft === 1 ? "day" : "days"} left — everything included, no card needed yet.`
+              : e.kind === "expired"
+                ? "Your free trial has ended. Choose a plan to keep adding SDSs — team QR access stays on."
+                : "Your last payment didn't go through. Update your card to keep adding SDSs."}
+          </p>
+          <Link href={routes.billing} className="font-semibold underline underline-offset-2">
+            {e.kind === "past_due" ? "Update payment" : "See plans"}
+          </Link>
+        </div>
+      ) : null}
 
       <section className="mt-8 rounded-2xl border border-slate-200/80 bg-white shadow-lg shadow-slate-200/50">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-5 py-4">
