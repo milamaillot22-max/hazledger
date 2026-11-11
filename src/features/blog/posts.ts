@@ -5,9 +5,9 @@
 
 import type { StaticImageData } from "next/image";
 
-import hygienePhoto from "@/assets/images/clinic-hygiene.webp";
-import supplyRoomPhoto from "@/assets/images/clinic-supply-room.webp";
-import waitingRoomPhoto from "@/assets/images/clinic-waiting-room.webp";
+import procedureRoomPhoto from "@/assets/images/clinic-procedure-room.webp";
+import receptionPhoto from "@/assets/images/clinic-reception.webp";
+import waitingRoomPhoto from "@/assets/images/clinic-window-room.webp";
 
 export type Block =
   | { type: "p"; text: string }
@@ -39,8 +39,8 @@ export const POSTS: Post[] = [
     category: "Regulation",
     publishedAt: "2026-11-11",
     readingMinutes: 6,
-    cover: supplyRoomPhoto,
-    coverAlt: "Organized clinic supply room with labeled chemical storage",
+    cover: procedureRoomPhoto,
+    coverAlt: "Bright procedure room with light wood floor and built-in storage",
     keywords: ["HazCom 2024", "OSHA hazard communication deadline", "HCS 2024 compliance dates", "GHS Revision 7"],
     blocks: [
       {
@@ -108,8 +108,8 @@ export const POSTS: Post[] = [
     category: "Inspections",
     publishedAt: "2026-11-11",
     readingMinutes: 7,
-    cover: hygienePhoto,
-    coverAlt: "Clinic team member at a hand-hygiene station",
+    cover: receptionPhoto,
+    coverAlt: "Bright dental practice reception with light wood floors",
     keywords: ["OSHA inspection dental office", "HazCom checklist", "SDS requirements clinic", "1910.1200 checklist"],
     blocks: [
       {
@@ -172,7 +172,7 @@ export const POSTS: Post[] = [
     publishedAt: "2026-11-11",
     readingMinutes: 5,
     cover: waitingRoomPhoto,
-    coverAlt: "Modern clinic waiting room",
+    coverAlt: "Calm treatment room with light wood cabinetry and a large window",
     keywords: ["OSHA penalties 2026", "OSHA fine dental office", "HazCom citation cost", "OSHA small business penalty reduction"],
     blocks: [
       {

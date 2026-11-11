@@ -16,7 +16,7 @@ export function ComplianceFlow({ className }: { className?: string }) {
     <ol className={cn("relative grid gap-4 lg:grid-cols-4 lg:gap-5", className)} aria-label="How an SDS goes from document to your team">
       {NODES.map(({ icon: Icon, step, title, detail, tone }, i) => (
         <li key={title} className="relative">
-          <SpotlightCard glow={tone === "emerald" ? "emerald" : "blue"} className="card-soft h-full rounded-2xl p-5">
+          <SpotlightCard glow={tone === "emerald" ? "emerald" : "blue"} className="glass-capsule lift h-full rounded-[1.6rem] p-5">
             <div className="flex items-center justify-between">
               <span
                 className={cn(

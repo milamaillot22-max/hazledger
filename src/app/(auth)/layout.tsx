@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { ClipboardCheck, Clock3, QrCode, ShieldCheck } from "lucide-react";
 
-import chairPhoto from "@/assets/images/clinic-dental-chair.webp";
+import chairPhoto from "@/assets/images/clinic-dental-operatory.webp";
 import { Logo } from "@/components/brand/logo";
 import { SectorMockup } from "@/components/product/sector-mockup";
 import { SOLUTIONS } from "@/features/solutions/data";
@@ -51,10 +51,11 @@ export default function AuthLayout({ children }: LayoutProps<"/">) {
           </p>
 
           <div className="relative mt-10 mb-14 pb-32">
-            <div className="relative aspect-[16/10] overflow-hidden rounded-3xl shadow-[0_30px_60px_-30px_rgb(15_23_42/0.3)] ring-1 ring-slate-200/70">
+            <div aria-hidden="true" className="glass-shell absolute -inset-3 bottom-auto aspect-[16/10] rounded-[2.2rem]" />
+            <div className="relative aspect-[16/10] overflow-hidden rounded-3xl ring-1 ring-white/70">
               <Image
                 src={chairPhoto}
-                alt="Bright, modern dental treatment room"
+                alt="Dental operatory with large windows and light wood counters"
                 fill
                 priority
                 placeholder="blur"

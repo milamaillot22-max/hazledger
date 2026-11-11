@@ -1,7 +1,7 @@
 import Image, { type StaticImageData } from "next/image";
 
-import supplyRoomPhoto from "@/assets/images/clinic-supply-room.webp";
-import dentalChairPhoto from "@/assets/images/clinic-dental-chair.webp";
+import procedureRoomPhoto from "@/assets/images/clinic-procedure-room.webp";
+import dentalChairPhoto from "@/assets/images/clinic-dental-operatory.webp";
 import vetUltrasoundPhoto from "@/assets/images/vet-ultrasound.webp";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { cn } from "@/lib/utils";
@@ -10,16 +10,16 @@ type Tile = { photo: StaticImageData; alt: string; room: string; caption: string
 
 const TILES: Tile[] = [
   {
-    photo: supplyRoomPhoto,
-    alt: "Organized clinic supply and procedure room with labeled storage",
-    room: "Supply & lab",
+    photo: procedureRoomPhoto,
+    alt: "Bright procedure room with light wood floor and built-in storage",
+    room: "Procedure room",
     caption: "Reagents, sterilants and cleaners, each with a current SDS.",
     className: "md:col-span-2 md:row-span-2 aspect-[4/3] md:aspect-auto",
     sizes: "(min-width: 768px) 760px, 100vw",
   },
   {
     photo: dentalChairPhoto,
-    alt: "Bright, modern dental treatment room",
+    alt: "Dental operatory with large windows and light wood counters",
     room: "Operatory",
     caption: "Etchants, bonding agents and disinfectants mapped to the chair.",
     className: "aspect-[4/3]",
@@ -58,7 +58,7 @@ export function ClinicGallery({ className }: { className?: string }) {
             />
             <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-slate-950/55 via-slate-950/5 to-transparent" />
             <figcaption className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-              <span className="inline-flex rounded-full bg-white/90 px-2.5 py-0.5 text-[11px] font-semibold text-slate-800 backdrop-blur">
+              <span className="glass-capsule inline-flex rounded-full px-3 py-0.5 text-[11px] font-semibold text-slate-800">
                 {t.room}
               </span>
               <p className="mt-2 max-w-sm text-[14px] leading-snug font-medium text-white">{t.caption}</p>

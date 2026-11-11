@@ -1,8 +1,8 @@
 import type { StaticImageData } from "next/image";
 
-import dentalChairPhoto from "@/assets/images/clinic-dental-chair.webp";
-import supplyRoomPhoto from "@/assets/images/clinic-supply-room.webp";
-import dentalPhoto from "@/assets/images/specialty-dental.webp";
+import dentalChairPhoto from "@/assets/images/clinic-dental-operatory.webp";
+import procedureRoomPhoto from "@/assets/images/clinic-procedure-room.webp";
+import dentalPhoto from "@/assets/images/clinic-dental-chair.webp";
 import medicalPhoto from "@/assets/images/specialty-medical.webp";
 import veterinaryPhoto from "@/assets/images/specialty-veterinary.webp";
 import vetUltrasoundPhoto from "@/assets/images/vet-ultrasound.webp";
@@ -57,9 +57,9 @@ export const SOLUTIONS: Solution[] = [
     intro:
       "Etchants, bonding resins, amalgam, sterilants and surface disinfectants — every product in your operatories needs a current Safety Data Sheet your team can reach on every shift. HazLedger scans them, keeps them current and puts them one QR scan away.",
     photo: dentalPhoto,
-    photoAlt: "Dentist and dental assistant treating a patient in a modern operatory",
+    photoAlt: "Dental chair in a bright treatment room with floor-to-ceiling windows",
     scenePhoto: dentalChairPhoto,
-    sceneAlt: "Bright, modern dental treatment room",
+    sceneAlt: "Dental operatory with large windows and light wood counters",
     pains: [
       {
         title: "Dozens of products, constant reorders",
@@ -199,8 +199,8 @@ export const SOLUTIONS: Solution[] = [
       "Sterilants, fixatives, lab reagents, cryogens and hand antiseptics move through procedure rooms, labs and reprocessing areas every day. HazLedger gives every location one current SDS library and every employee instant access.",
     photo: medicalPhoto,
     photoAlt: "Two clinicians reviewing information on a tablet",
-    scenePhoto: supplyRoomPhoto,
-    sceneAlt: "Organized clinic supply and procedure room with labeled storage",
+    scenePhoto: procedureRoomPhoto,
+    sceneAlt: "Bright procedure room with light wood floor and built-in storage",
     pains: [
       {
         title: "Multiple departments, one standard",

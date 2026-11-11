@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Calculator, ShieldCheck } from "lucide-react";
 
-import waitingRoomPhoto from "@/assets/images/clinic-waiting-room.webp";
+import waitingRoomPhoto from "@/assets/images/clinic-window-room.webp";
 import { Magnetic } from "@/components/fx/magnetic";
 import { OSHA_PENALTIES } from "@/config/compliance";
 import { getPlan } from "@/config/pricing";
@@ -56,7 +56,7 @@ export function FinalCta({ title, calculatorHref = "/#calculator" }: { title?: s
         <div className="relative hidden min-h-[22rem] [mask-image:linear-gradient(to_right,transparent,black_28%)] lg:block">
           <Image
             src={waitingRoomPhoto}
-            alt="Calm, modern clinic waiting room"
+            alt="Calm treatment room with light wood cabinetry and a large window"
             fill
             placeholder="blur"
             sizes="(min-width: 1024px) 480px, 0px"

@@ -53,11 +53,13 @@ src/
 
 **Light only** — no dark bands or night surfaces anywhere on the site.
 Type: Geist (headings, wordmark) + Inter (body). Logo: `src/components/brand/logo.tsx` is a
-plain typographic wordmark; `LogoMark` (neutral hairline frame) is kept for favicons/app chrome. **Photography** — curated
-Pexels photos of modern dental, veterinary and medical clinics (`src/assets/images`, sources and
-license in `CREDITS.md`), always paired with code-rendered product overlays
-(`src/components/product/*`): home hero, specialty cards, solution pages, product gallery,
-blog covers, final CTA and the sign-in panel. Review identifiable people before paid ads. Effects (`SpotlightCard`, `Magnetic`) are
+shield + ledger symbol (`LogoMark`, also `src/app/icon.svg`) with a two-tone wordmark and an optional "HazCom 2024 Ready" badge. **Photography** — curated Pexels photos (sources and license in
+`src/assets/images/CREDITS.md`). Art direction: bright interiors, light wood, large windows,
+no masked staff, no generic stock. **Glass** — `.glass-capsule` (frosted cards and pills over
+photos/gradients) and `.glass-shell` (clear casing around photos and the app mockup).
+**HUD** — `src/components/product/hero-hud.tsx`: rings, connection lines and compliance
+nodes over the hero photo; decorative, every label maps to a shipped capability, motion off
+under reduced motion. **Top header** — night-blue over a muted clinic photo with grain. Effects (`SpotlightCard`, `Magnetic`) are
 decorative and disabled under reduced motion / touch.
 
 ## Site map
@@ -122,8 +124,7 @@ software), no ratings or testimonials until real ones exist, no fixed ROI claims
 - **Top bar** (`announcement-bar.tsx`, institutional blue) shows the HCS 2024 *employer* deadline for substances from
   `HAZCOM_2024.milestones[1]`; the day countdown is computed in the browser and switches to
   "now in effect" after the date. Update the milestone once it passes (next: May 19, 2028, mixtures).
-- **Support widget** (`support-widget.tsx`) is not a live chat: it links to real answers and to
-  `siteConfig.contactEmail`. Only say "online" / "live" once a staffed chat tool replaces the email action.
+- **No chat / support widget** until a staffed support tool exists. Never imply live support.
 
 ## Push to GitHub
 

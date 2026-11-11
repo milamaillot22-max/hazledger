@@ -33,7 +33,7 @@ export function Specialties() {
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                 />
                 <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-slate-900/25 via-transparent to-transparent" />
-                <span className="absolute top-4 left-4 flex size-10 items-center justify-center rounded-xl bg-white/95 text-primary shadow-sm backdrop-blur">
+                <span className="glass-capsule absolute top-4 left-4 flex size-11 items-center justify-center rounded-full text-primary">
                   <Icon className="size-5" />
                 </span>
               </div>
