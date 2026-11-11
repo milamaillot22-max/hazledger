@@ -6,10 +6,10 @@ attribution not required). Resized/cropped and converted to WebP (1600–1800 px
 
 | File | Source | Used on |
 | --- | --- | --- |
-| banner-apothecary.webp | https://www.pexels.com/photo/assorted-vintage-bottles-on-a-wooden-shelf-7472646/ | Top photo banner (all marketing pages) |
+| fullbleed-clinic.webp | https://www.pexels.com/photo/a-dental-equipment-in-the-clinic-6812453/ | Home hero (full-width) |
+| fullbleed-reception.webp | https://www.pexels.com/photo/modern-dental-office-reception-in-beverly-hills-38055773/ | Blog cover |
 | clinic-dental-operatory.webp | https://www.pexels.com/photo/white-dental-equipment-near-wall-305567/ | Home hero |
 | clinic-dental-chair.webp | https://www.pexels.com/photo/view-of-clinic-305568/ | Sign-in panel, product gallery, dental page |
-| clinic-hygiene.webp | https://www.pexels.com/photo/woman-washing-her-hands-3884109/ | How it works, blog |
 | clinic-supply-room.webp | https://www.pexels.com/photo/modern-medical-office-interior-with-equipment-35645517/ | Product gallery, medical page, blog |
 | clinic-waiting-room.webp | https://www.pexels.com/photo/waiting-room-in-a-hospital-8459996/ | Final CTA, blog |
 | specialty-dental.webp | https://www.pexels.com/photo/man-in-a-dentist-office-6812529/ | Dental cards and page |
