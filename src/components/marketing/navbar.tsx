@@ -29,7 +29,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/80 backdrop-blur-xl backdrop-saturate-150">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4 sm:px-6">
         <div className="flex items-center gap-6">
-          <Logo />
+          <Logo badge />
           <NavigationMenu viewport={false} className="hidden md:flex">
             <NavigationMenuList className="gap-0.5">
               <NavigationMenuItem>

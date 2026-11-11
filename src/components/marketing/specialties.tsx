@@ -21,7 +21,7 @@ export function Specialties() {
           return (
             <article
               key={s.slug}
-              className="card-soft group relative flex flex-col overflow-hidden rounded-3xl transition-shadow duration-300 hover:shadow-[0_1px_2px_rgb(15_23_42/0.04),0_28px_56px_-24px_rgb(15_23_42/0.25)]"
+              className="card-soft lift group relative flex flex-col overflow-hidden rounded-3xl"
             >
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image

@@ -322,3 +322,50 @@ h1, h2 {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Micro-elevation on key blocks. Unlayered on purpose so it wins
+   over shadow utilities; uses `translate` (not `transform`) so it
+   composes with float animations. Pointer devices only.
+   ───────────────────────────────────────────────────────────── */
+.lift {
+  transition:
+    translate 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .lift:hover {
+    translate: 0 -3px;
+    box-shadow:
+      0 1px 2px rgb(15 23 42 / 0.05),
+      0 22px 44px -20px rgb(15 23 42 / 0.28);
+  }
+}
+
+/* Hero backdrop: slow, fluid colour fields (sky, emerald, warm sand). */
+.hero-fluid {
+  background:
+    radial-gradient(38% 42% at 72% 30%, rgb(56 189 248 / 0.20), transparent 70%),
+    radial-gradient(34% 38% at 92% 78%, rgb(16 185 129 / 0.16), transparent 70%),
+    radial-gradient(30% 34% at 40% 88%, rgb(234 179 8 / 0.10), transparent 70%);
+  filter: blur(8px);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-fluid { animation: fluid-drift 18s ease-in-out infinite alternate; }
+}
+@keyframes fluid-drift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(-2.5%, 2%, 0) scale(1.06); }
+}
+
+/* Fine dot lattice used as a geometric accent. */
+.bg-dots {
+  background-image: radial-gradient(rgb(2 132 199 / 0.28) 1.1px, transparent 1.2px);
+  background-size: 14px 14px;
+  mask-image: radial-gradient(closest-side, #000 55%, transparent);
+}
+
+@keyframes widget-in {
+  from { opacity: 0; translate: 0 8px; scale: 0.98; }
+  to { opacity: 1; translate: 0 0; scale: 1; }
+}

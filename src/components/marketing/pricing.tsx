@@ -126,7 +126,7 @@ function PlanCard({ plan, cycle }: { plan: Plan; cycle: BillingCycle }) {
     <SpotlightCard
       glow={featured ? "emerald" : "blue"}
       className={cn(
-        "flex h-full flex-col rounded-3xl p-7 sm:p-8",
+        "lift flex h-full flex-col rounded-3xl p-7 sm:p-8",
         featured
           ? "bg-white/85 shadow-2xl shadow-sky-900/10 backdrop-blur-xl"
           : "border border-slate-200/80 bg-white shadow-lg shadow-slate-200/50"

@@ -31,7 +31,7 @@ export function Footer() {
     <footer className="border-t border-slate-200/70 bg-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-[1.3fr_repeat(3,1fr)]">
         <div className="max-w-xs">
-          <Logo />
+          <Logo badge />
           <p className="mt-4 text-sm leading-relaxed text-slate-500">
             SDS management and OSHA HazCom compliance for US dental, veterinary and medical practices.
           </p>

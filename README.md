@@ -113,6 +113,13 @@ Marketing copy must stay literally true: no "OSHA certified/compliant" (OSHA cer
 software), no ratings or testimonials until real ones exist, no fixed ROI claims. Update
 `src/config/compliance.ts` every January from osha.gov/penalties.
 
+- **Logo badge** reads "HazCom 2024 Ready" (the standard), never "OSHA … Ready" (OSHA endorses no software).
+- **Top bar** (`announcement-bar.tsx`) shows the HCS 2024 *employer* deadline for substances from
+  `HAZCOM_2024.milestones[1]`; the day countdown is computed in the browser and switches to
+  "now in effect" after the date. Update the milestone once it passes (next: May 19, 2028, mixtures).
+- **Support widget** (`support-widget.tsx`) is not a live chat: it links to real answers and to
+  `siteConfig.contactEmail`. Only say "online" / "live" once a staffed chat tool replaces the email action.
+
 ## Push to GitHub
 
 ```bash

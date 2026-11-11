@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2, Landmark, LockKeyhole, ScanLine, ShieldCheck } from "lucide-react";
 
 import operatoryPhoto from "@/assets/images/clinic-dental-operatory.webp";
+import dentalTeamPhoto from "@/assets/images/team-dental-xray.webp";
 import { Magnetic } from "@/components/fx/magnetic";
 import { OSHA_PENALTIES } from "@/config/compliance";
 import { routes, siteConfig } from "@/config/site";
@@ -21,6 +22,7 @@ export function Hero() {
     <section className="relative overflow-hidden bg-white">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-b from-sky-50/70 via-white to-white" />
       <div aria-hidden="true" className="bg-aurora pointer-events-none absolute inset-0" />
+      <div aria-hidden="true" className="hero-fluid pointer-events-none absolute -inset-[10%]" />
       <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-4 pt-14 pb-20 sm:px-6 sm:pt-20 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-12 lg:pb-28">
         <div>
           <Link
@@ -72,7 +74,7 @@ export function Hero() {
 
           <ul aria-label="Compliance and security" className="mt-8 grid gap-2.5 border-t border-slate-200/70 pt-6 sm:grid-cols-3">
             {BADGES.map(({ icon: Icon, label, detail }) => (
-              <li key={label} className="flex items-center gap-2.5 rounded-xl bg-white/80 px-3 py-2.5 ring-1 ring-slate-200/70">
+              <li key={label} className="lift flex items-center gap-2.5 rounded-xl bg-white/80 px-3 py-2.5 ring-1 ring-slate-200/70 backdrop-blur">
                 <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-success-soft text-success">
                   <Icon className="size-4" />
                 </span>
@@ -93,22 +95,44 @@ export function Hero() {
 
 function HeroVisual() {
   return (
-    <div className="relative mx-auto w-full max-w-xl pb-10 lg:pb-0">
-      <div className="relative aspect-[4/3.6] overflow-hidden rounded-[2rem] shadow-[0_30px_60px_-30px_rgb(15_23_42/0.35)] ring-1 ring-slate-200/70">
+    <div className="relative mx-auto w-full max-w-xl pb-14 sm:pb-10 lg:pb-0">
+      {/* Geometry: echo arch, dot lattice and a fine ring — depth without noise */}
+      <div
+        aria-hidden="true"
+        className="absolute top-[-3%] left-[6%] h-[88%] w-[66%] rounded-[50%_50%_2.5rem_2.5rem/38%_38%_2.5rem_2.5rem] border border-sky-300/50 bg-gradient-to-b from-sky-100/50 via-white/10 to-emerald-100/40"
+      />
+      <div aria-hidden="true" className="bg-dots absolute top-[6%] -right-3 size-36 sm:-right-8" />
+      <div aria-hidden="true" className="absolute bottom-[14%] -left-4 size-24 rounded-full border border-emerald-300/50 sm:-left-10" />
+      <div aria-hidden="true" className="absolute -bottom-2 left-[38%] h-px w-40 bg-gradient-to-r from-transparent via-amber-300/70 to-transparent" />
+
+      {/* Main photo in an arch frame */}
+      <div className="relative ml-auto aspect-[4/4.9] w-[80%] overflow-hidden rounded-[50%_50%_2.5rem_2.5rem/41%_41%_2.5rem_2.5rem] shadow-[0_40px_80px_-40px_rgb(15_23_42/0.45)] ring-1 ring-slate-200/70">
         <Image
           src={operatoryPhoto}
           alt="Bright, modern dental operatory"
           fill
           priority
           placeholder="blur"
-          sizes="(min-width: 1024px) 560px, 100vw"
-          className="object-cover"
+          sizes="(min-width: 1024px) 460px, 80vw"
+          className="object-cover object-[35%_50%]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/15 via-transparent to-transparent" />
       </div>
 
+      {/* Secondary photo, layered asymmetrically over the arch */}
+      <div className="lift absolute top-[30%] left-0 aspect-[4/5] w-[34%] overflow-hidden rounded-[1.75rem] shadow-[0_24px_48px_-24px_rgb(15_23_42/0.45)] ring-4 ring-white">
+        <Image
+          src={dentalTeamPhoto}
+          alt="Dental team member reviewing an X-ray on a tablet with a patient"
+          fill
+          placeholder="blur"
+          sizes="(min-width: 1024px) 200px, 34vw"
+          className="object-cover object-[40%_50%]"
+        />
+      </div>
+
       {/* Floating: label scan result (illustrative) */}
-      <div className="absolute top-6 right-3 flex items-center gap-3 rounded-2xl bg-white/95 px-4 py-3 shadow-lg ring-1 shadow-slate-300/40 ring-slate-200/70 backdrop-blur motion-safe:animate-[float-y_7s_ease-in-out_infinite] sm:-right-6">
+      <div className="lift absolute top-[9%] right-0 flex items-center gap-3 rounded-2xl bg-white/95 px-4 py-3 shadow-lg ring-1 shadow-slate-300/40 ring-slate-200/70 backdrop-blur motion-safe:animate-[float-y_7s_ease-in-out_infinite] sm:-right-6">
         <span className="flex size-9 items-center justify-center rounded-xl bg-brand-soft text-primary">
           <ScanLine className="size-[18px]" />
         </span>
@@ -119,7 +143,7 @@ function HeroVisual() {
       </div>
 
       {/* Floating: compliance status (illustrative example clinic) */}
-      <div className="absolute bottom-0 left-3 w-[17rem] rounded-2xl bg-white p-4 shadow-xl ring-1 shadow-slate-300/40 ring-slate-200/70 sm:-left-8 lg:-bottom-8">
+      <div className="lift absolute right-2 -bottom-2 w-[16.5rem] rounded-2xl bg-white p-4 shadow-xl ring-1 shadow-slate-300/40 ring-slate-200/70 sm:-right-8 lg:-bottom-8">
         <div className="flex items-center justify-between">
           <p className="text-sm font-semibold text-slate-900">Sunset Family Dental</p>
           <CheckCircle2 className="size-4 text-success" />

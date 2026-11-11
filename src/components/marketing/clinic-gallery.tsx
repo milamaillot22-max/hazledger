@@ -47,7 +47,7 @@ export function ClinicGallery({ className }: { className?: string }) {
       />
       <div className="mt-12 grid gap-4 md:grid-cols-3 md:grid-rows-2">
         {TILES.map((t) => (
-          <figure key={t.room} className={cn("group relative overflow-hidden rounded-3xl ring-1 ring-slate-200/70", t.className)}>
+          <figure key={t.room} className={cn("lift group relative overflow-hidden rounded-3xl ring-1 ring-slate-200/70", t.className)}>
             <Image
               src={t.photo}
               alt={t.alt}
