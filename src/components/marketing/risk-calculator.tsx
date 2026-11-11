@@ -21,9 +21,10 @@ import {
 } from "@/features/roi/calculator";
 import { cn } from "@/lib/utils";
 
-/** Bar colors validated for the #0b1220 surface (dataviz validator): emphasis vs de-emphasis. */
-const BAR_HAZLEDGER = "#1d9bd6";
-const BAR_BINDER = "#526077";
+/** Bar colors validated for a white surface (dataviz validator): emphasis vs de-emphasis.
+ *  The gray is below 3:1 contrast, relieved by direct value labels and the table view. */
+const BAR_HAZLEDGER = "#0284c7";
+const BAR_BINDER = "#a3adbd";
 
 const usd = (n: number) =>
   new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
@@ -69,7 +70,7 @@ export function RiskCalculator({ defaultSector = "dental" }: { defaultSector?: S
           </p>
         </div>
 
-        <div className="mt-12 grid overflow-hidden rounded-[1.75rem] bg-white shadow-2xl ring-1 shadow-slate-300/40 ring-slate-200/80 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+        <div className="card-soft mt-12 grid overflow-hidden rounded-[1.75rem] lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
           {/* ── Controls ─────────────────────────────── */}
           <div className="p-6 sm:p-8">
             <fieldset>
@@ -154,34 +155,34 @@ export function RiskCalculator({ defaultSector = "dental" }: { defaultSector?: S
           </div>
 
           {/* ── Dashboard ────────────────────────────── */}
-          <div className="surface-night bg-grain p-6 sm:p-8" aria-live="polite">
+          <div className="border-t border-slate-100 bg-slate-50/70 p-6 sm:p-8 lg:border-t-0 lg:border-l" aria-live="polite">
             <div className="relative">
               <div className="flex items-center justify-between gap-3">
-                <p className="text-xs font-semibold tracking-wider text-slate-400 uppercase">Penalty exposure · per serious citation</p>
-                <span className="rounded-full bg-rose-400/10 px-2 py-0.5 text-[11px] font-medium text-rose-300 ring-1 ring-rose-400/20">
+                <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">Penalty exposure · per serious citation</p>
+                <span className="rounded-full bg-rose-50 px-2 py-0.5 text-[11px] font-medium text-rose-700 ring-1 ring-rose-100">
                   {reductionPct > 0 ? `−${reductionPct}% size reduction` : "No size reduction"}
                 </span>
               </div>
               {/* Hero figure — one per view */}
-              <p className="mt-3 font-heading text-[2.6rem] leading-none font-semibold tracking-[-0.03em] text-white sm:text-5xl">
+              <p className="mt-3 font-heading text-[2.6rem] leading-none font-semibold tracking-[-0.03em] text-slate-900 sm:text-5xl">
                 {usd(r.risk.seriousAfterSizeReduction)}
-                <span className="mx-2 text-slate-600">–</span>
+                <span className="mx-2 text-slate-300">–</span>
                 {usd(r.risk.seriousMax)}
               </p>
               <dl className="mt-5 grid gap-2 text-sm sm:grid-cols-2">
-                <div className="rounded-xl bg-white/[0.04] px-3.5 py-2.5 ring-1 ring-white/[0.07]">
-                  <dt className="text-xs text-slate-400">Cited on all {r.risk.coreRequirements} core requirements</dt>
-                  <dd className="mt-0.5 font-semibold text-white">up to {usd(r.risk.allCoreMax)}</dd>
+                <div className="rounded-xl bg-white px-3.5 py-2.5 shadow-sm ring-1 ring-slate-200/70">
+                  <dt className="text-xs text-slate-500">Cited on all {r.risk.coreRequirements} core requirements</dt>
+                  <dd className="mt-0.5 font-semibold text-slate-900">up to {usd(r.risk.allCoreMax)}</dd>
                 </div>
-                <div className="rounded-xl bg-white/[0.04] px-3.5 py-2.5 ring-1 ring-white/[0.07]">
-                  <dt className="text-xs text-slate-400">Willful or repeated, per violation</dt>
-                  <dd className="mt-0.5 font-semibold text-white">up to {usd(r.risk.willfulOrRepeatedMax)}</dd>
+                <div className="rounded-xl bg-white px-3.5 py-2.5 shadow-sm ring-1 ring-slate-200/70">
+                  <dt className="text-xs text-slate-500">Willful or repeated, per violation</dt>
+                  <dd className="mt-0.5 font-semibold text-rose-700">up to {usd(r.risk.willfulOrRepeatedMax)}</dd>
                 </div>
               </dl>
 
               {/* Hours comparison — emphasis bar vs de-emphasized gray, direct labels */}
               <div className="mt-8">
-                <p className="text-xs font-semibold tracking-wider text-slate-400 uppercase">Staff hours on SDS paperwork · per year</p>
+                <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">Staff hours on SDS paperwork · per year</p>
                 <div className="mt-3 space-y-3">
                   <Bar label="Paper binder" value={r.time.manualHours} max={maxHours} color={BAR_BINDER} />
                   <Bar label={siteConfig.name} value={r.time.hazledgerHours} max={maxHours} color={BAR_HAZLEDGER} />
@@ -190,8 +191,8 @@ export function RiskCalculator({ defaultSector = "dental" }: { defaultSector?: S
 
               {/* KPI tiles */}
               <div className="mt-8 flex items-center justify-between gap-3">
-                <p className="text-xs font-semibold tracking-wider text-slate-400 uppercase">Return</p>
-                <div role="radiogroup" aria-label="Plan" className="flex rounded-lg bg-white/[0.06] p-0.5 text-xs font-semibold ring-1 ring-white/10">
+                <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">Return</p>
+                <div role="radiogroup" aria-label="Plan" className="flex rounded-lg bg-slate-200/60 p-0.5 text-xs font-semibold">
                   {PLANS.map((p) => (
                     <button
                       key={p.id}
@@ -201,7 +202,7 @@ export function RiskCalculator({ defaultSector = "dental" }: { defaultSector?: S
                       onClick={() => setPlanId(p.id)}
                       className={cn(
                         "rounded-md px-2.5 py-1 transition-colors duration-150",
-                        p.id === planId ? "bg-white text-night" : "text-slate-400 hover:text-white"
+                        p.id === planId ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-900"
                       )}
                     >
                       {p.name} · ${p.monthly}
@@ -220,18 +221,18 @@ export function RiskCalculator({ defaultSector = "dental" }: { defaultSector?: S
                 />
               </dl>
 
-              <p className="mt-5 rounded-xl bg-emerald-400/[0.07] px-4 py-3 text-sm leading-relaxed text-emerald-100/90 ring-1 ring-emerald-400/15">
+              <p className="mt-5 rounded-xl bg-success-soft px-4 py-3 text-sm leading-relaxed text-emerald-900 ring-1 ring-emerald-100">
                 {r.yearsCoveredByOneCitation !== null ? (
                   <>
                     One serious citation at your size ({usd(r.risk.seriousAfterSizeReduction)}) equals{" "}
-                    <span className="font-semibold text-white">{r.yearsCoveredByOneCitation} years</span> of {siteConfig.name} {plan.name}.
+                    <span className="font-semibold text-emerald-950">{r.yearsCoveredByOneCitation} years</span> of {siteConfig.name} {plan.name}.
                   </>
                 ) : null}
                 {r.roiPercent !== null && r.roiPercent < 0 ? " Time savings alone don't cover the plan at this size — the case is compliance risk." : null}
               </p>
 
-              <details className="mt-4 text-xs text-slate-400">
-                <summary className="cursor-pointer hover:text-slate-200">Show the numbers as a table</summary>
+              <details className="mt-4 text-xs text-slate-500">
+                <summary className="cursor-pointer hover:text-slate-900">Show the numbers as a table</summary>
                 <table className="mt-3 w-full text-left">
                   <tbody className="tabular">
                     {[
@@ -243,9 +244,9 @@ export function RiskCalculator({ defaultSector = "dental" }: { defaultSector?: S
                       [`${plan.name} plan / year`, usd(r.subscriptionAnnual)],
                       ["Payback", r.paybackDays === null ? "—" : `${r.paybackDays} days`],
                     ].map(([k, v]) => (
-                      <tr key={k} className="border-t border-white/[0.06]">
+                      <tr key={k} className="border-t border-slate-200/70">
                         <th scope="row" className="py-1.5 pr-3 font-normal">{k}</th>
-                        <td className="py-1.5 text-right text-slate-200">{v}</td>
+                        <td className="py-1.5 text-right font-medium text-slate-800">{v}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -255,7 +256,7 @@ export function RiskCalculator({ defaultSector = "dental" }: { defaultSector?: S
               <Magnetic className="mt-6 w-full">
                 <Link
                   href={`${siteConfig.links.startTrial}?plan=${plan.id}&source=calculator`}
-                  className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white px-6 text-[15px] font-semibold text-night transition-all duration-200 hover:bg-sky-50 hover:shadow-[0_0_0_4px_rgb(56_189_248/0.18)]"
+                  className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 text-[15px] font-semibold text-white shadow-[0_8px_24px_-8px_rgb(2_132_199/0.45)] transition-all duration-200 hover:bg-primary-hover hover:shadow-[0_0_0_4px_rgb(2_132_199/0.12)]"
                 >
                   Start {siteConfig.trialDays}-Day {plan.name} Trial
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
@@ -283,23 +284,23 @@ function Bar({ label, value, max, color }: { label: string; value: number; max: 
   const pct = Math.max(2, (value / max) * 100);
   return (
     <div className="grid grid-cols-[96px_minmax(0,1fr)_64px] items-center gap-3 text-sm">
-      <span className="truncate text-slate-300">{label}</span>
-      <span className="h-3 overflow-hidden rounded-r bg-white/[0.04]" role="img" aria-label={`${label}: ${hrs(value)} per year`}>
+      <span className="truncate text-slate-600">{label}</span>
+      <span className="h-3 overflow-hidden rounded-r bg-slate-200/50" role="img" aria-label={`${label}: ${hrs(value)} per year`}>
         <span
           className="block h-full origin-left rounded-r motion-safe:transition-transform motion-safe:duration-150 motion-safe:ease-out"
           style={{ width: "100%", transform: `scaleX(${pct / 100})`, backgroundColor: color }}
         />
       </span>
-      <span className="text-right font-semibold text-white">{hrs(value)}</span>
+      <span className="text-right font-semibold text-slate-900">{hrs(value)}</span>
     </div>
   );
 }
 
 function Kpi({ label, value, tone = "neutral" }: { label: string; value: string; tone?: "good" | "neutral" }) {
   return (
-    <div className="rounded-xl bg-white/[0.04] px-3 py-3 ring-1 ring-white/[0.07]">
-      <dt className="text-[11px] leading-tight text-slate-400">{label}</dt>
-      <dd className={cn("mt-1 text-lg font-semibold", tone === "good" ? "text-emerald-300" : "text-white")}>{value}</dd>
+    <div className="rounded-xl bg-white px-3 py-3 shadow-sm ring-1 ring-slate-200/70">
+      <dt className="text-[11px] leading-tight text-slate-500">{label}</dt>
+      <dd className={cn("mt-1 text-lg font-semibold", tone === "good" ? "text-emerald-700" : "text-slate-900")}>{value}</dd>
     </div>
   );
 }

@@ -47,15 +47,15 @@ export default function ProductPage() {
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={jsonLd(d)} />
       ))}
 
-      <section className="surface-night bg-grain overflow-hidden">
-        <div aria-hidden="true" className="grid-night pointer-events-none absolute inset-0" />
+      <section className="relative overflow-hidden bg-white">
+        <div aria-hidden="true" className="bg-aurora pointer-events-none absolute inset-0" />
         <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-24 sm:px-6 sm:pt-24">
           <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-semibold text-sky-300">Product</p>
-            <h1 className="mt-4 font-heading text-[2.5rem] leading-[1.05] font-semibold tracking-[-0.04em] text-white sm:text-6xl">
+            <p className="text-sm font-semibold text-primary">Product</p>
+            <h1 className="mt-4 font-heading text-[2.5rem] leading-[1.05] font-semibold tracking-[-0.04em] text-slate-900 sm:text-6xl">
               The SDS system built for clinics, <span className="text-gradient-brand">not factories.</span>
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-400">
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-500">
               Scan a label or a PDF, review what the AI extracted, and give your whole team instant, login-free access to
               every Safety Data Sheet — in one focused tool.
             </p>
@@ -63,13 +63,13 @@ export default function ProductPage() {
               <Magnetic className="w-full sm:w-auto">
                 <Link
                   href={siteConfig.links.startTrial}
-                  className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white px-6 text-[15px] font-semibold text-night transition-all duration-200 hover:bg-sky-50 hover:shadow-[0_0_0_4px_rgb(56_189_248/0.18)] sm:w-auto"
+                  className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 text-[15px] font-semibold text-white shadow-[0_8px_24px_-8px_rgb(2_132_199/0.45)] transition-all duration-200 hover:bg-primary-hover hover:shadow-[0_0_0_4px_rgb(2_132_199/0.12)] sm:w-auto"
                 >
                   Start {siteConfig.trialDays}-Day Clinic Trial
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                 </Link>
               </Magnetic>
-              <Link href={routes.pricing} className="inline-flex h-12 w-full items-center justify-center rounded-xl px-6 text-[15px] font-medium text-slate-200 ring-1 ring-white/15 hover:bg-white/[0.05] sm:w-auto">
+              <Link href={routes.pricing} className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-white px-6 text-[15px] font-medium text-slate-700 shadow-sm ring-1 ring-slate-200 hover:bg-slate-50 sm:w-auto">
                 See pricing
               </Link>
             </div>

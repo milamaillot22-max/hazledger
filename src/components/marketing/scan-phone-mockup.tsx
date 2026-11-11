@@ -13,12 +13,12 @@ export function ScanPhoneMockup({ className }: { className?: string }) {
       role="img"
       aria-label="Phone scanning the label of a surface disinfectant spray and detecting its product name, manufacturer and hazards"
     >
-      <div className="rounded-[2.2rem] bg-slate-900 p-2 shadow-2xl shadow-slate-900/30">
+      <div className="rounded-[2.2rem] bg-gradient-to-b from-slate-100 to-slate-200 p-2 shadow-[0_1px_2px_rgb(15_23_42/0.06),0_30px_60px_-24px_rgb(15_23_42/0.25)] ring-1 ring-slate-300/60">
         <div className="overflow-hidden rounded-[1.8rem] bg-white">
           {/* status + header */}
           <div className="flex items-center justify-between px-4 pt-3 pb-2 text-[10px] font-semibold text-slate-900">
             <span>9:41</span>
-            <span className="h-4 w-16 rounded-full bg-slate-900" />
+            <span className="h-4 w-16 rounded-full bg-slate-200" />
             <span>5G</span>
           </div>
           <div className="flex items-center justify-between px-4 pb-2">

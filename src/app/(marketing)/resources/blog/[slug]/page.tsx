@@ -116,18 +116,18 @@ export default async function BlogPostPage({ params }: PageProps<"/resources/blo
       ))}
 
       <article>
-        <header className="surface-night bg-grain overflow-hidden">
-          <div aria-hidden="true" className="grid-night pointer-events-none absolute inset-0" />
+        <header className="relative overflow-hidden bg-white">
+          <div aria-hidden="true" className="bg-aurora pointer-events-none absolute inset-0" />
           <div className="relative mx-auto max-w-3xl px-4 pt-12 pb-14 sm:px-6 sm:pt-16">
-            <Link href={routes.blog} className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-white">
+            <Link href={routes.blog} className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-900">
               <ArrowLeft className="size-4" />
               Blog
             </Link>
-            <p className="mt-6 text-xs font-semibold tracking-wider text-emerald-300 uppercase">{post.category}</p>
-            <h1 className="mt-3 font-heading text-3xl leading-tight font-semibold tracking-[-0.03em] text-white sm:text-[2.6rem]">
+            <p className="mt-6 text-xs font-semibold tracking-wider text-emerald-700 uppercase">{post.category}</p>
+            <h1 className="mt-3 font-heading text-3xl leading-tight font-semibold tracking-[-0.03em] text-slate-900 sm:text-[2.6rem]">
               {post.title}
             </h1>
-            <p className="mt-4 text-lg leading-relaxed text-slate-400">{post.description}</p>
+            <p className="mt-4 text-lg leading-relaxed text-slate-500">{post.description}</p>
             <p className="mt-6 text-sm text-slate-500">
               {siteConfig.name} Editorial · {formatDate(post.publishedAt)} · {post.readingMinutes} min read
             </p>
@@ -157,10 +157,10 @@ export default async function BlogPostPage({ params }: PageProps<"/resources/blo
             </p>
           </section>
 
-          <aside className="surface-night mt-10 overflow-hidden rounded-3xl p-7 ring-1 ring-white/10 sm:p-9">
-            <p className="font-heading text-xl font-semibold tracking-tight text-white">Get your SDS library inspection-ready</p>
-            <p className="mt-2 text-[15px] text-slate-400">Scan your binder, review it, and post one QR code for your whole team.</p>
-            <TrialForm source={`blog-${post.slug}`} tone="night" className="mt-6" />
+          <aside className="card-soft relative mt-10 overflow-hidden rounded-3xl p-7 sm:p-9">
+            <p className="font-heading text-xl font-semibold tracking-tight text-slate-900">Get your SDS library inspection-ready</p>
+            <p className="mt-2 text-[15px] text-slate-500">Scan your binder, review it, and post one QR code for your whole team.</p>
+            <TrialForm source={`blog-${post.slug}`} className="mt-6" />
           </aside>
         </div>
       </article>

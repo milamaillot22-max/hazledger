@@ -6,8 +6,8 @@ import type { GhsCode } from "@/features/sds/schema";
 import { cn } from "@/lib/utils";
 
 /**
- * Code-rendered product shot of the real app (dark theme). Sample data:
- * invented brands, real CAS numbers. Animations are motion-safe only.
+ * Code-rendered product shot of the real app. Sample data: invented brands,
+ * real CAS numbers. Animations are motion-safe only.
  */
 const ROWS: { name: string; maker: string; cas: string; ghs: GhsCode[]; status: "current" | "review" | "missing" }[] = [
   { name: "ClearGuard Surface Disinfectant Wipes", maker: "Northline Medical Supply", cas: "67-63-0", ghs: ["GHS02", "GHS07"], status: "current" },
@@ -18,33 +18,30 @@ const ROWS: { name: string; maker: string; cas: string; ghs: GhsCode[]; status: 
 ];
 
 const STATUS = {
-  current: { label: "Current", cls: "bg-emerald-400/10 text-emerald-300 ring-emerald-400/20", dot: "bg-emerald-400" },
-  review: { label: "New revision", cls: "bg-amber-400/10 text-amber-300 ring-amber-400/20", dot: "bg-amber-400" },
-  missing: { label: "Missing SDS", cls: "bg-rose-400/10 text-rose-300 ring-rose-400/20", dot: "bg-rose-400" },
+  current: { label: "Current", cls: "bg-emerald-50 text-emerald-700 ring-emerald-100", dot: "bg-emerald-500" },
+  review: { label: "New revision", cls: "bg-amber-50 text-amber-700 ring-amber-100", dot: "bg-amber-500" },
+  missing: { label: "Missing SDS", cls: "bg-rose-50 text-rose-700 ring-rose-100", dot: "bg-rose-500" },
 } as const;
 
 export function AppMockup({ className }: { className?: string }) {
   return (
     <div className={cn("relative", className)} role="img" aria-label="HazLedger dashboard: SDS library with 97.7% audit readiness and an SDS scan in progress">
-      {/* glow */}
-      <div aria-hidden="true" className="absolute -inset-x-10 -top-10 -bottom-6 -z-10 rounded-[3rem] bg-[radial-gradient(60%_60%_at_50%_40%,rgb(56_189_248/0.22),transparent_70%)] blur-2xl" />
-
-      <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0a1220]/90 shadow-[0_40px_120px_-30px_rgb(0_0_0/0.8)] ring-1 ring-black/40 backdrop-blur-xl">
+      <div className="card-soft overflow-hidden rounded-2xl shadow-[0_1px_2px_rgb(15_23_42/0.04),0_30px_80px_-30px_rgb(15_23_42/0.18)]">
         {/* chrome */}
-        <div className="flex items-center justify-between border-b border-white/[0.06] bg-white/[0.02] px-4 py-2.5">
+        <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/70 px-4 py-2.5">
           <div className="flex gap-1.5">
-            <span className="size-2.5 rounded-full bg-white/10" />
-            <span className="size-2.5 rounded-full bg-white/10" />
-            <span className="size-2.5 rounded-full bg-white/10" />
+            <span className="size-2.5 rounded-full bg-slate-200" />
+            <span className="size-2.5 rounded-full bg-slate-200" />
+            <span className="size-2.5 rounded-full bg-slate-200" />
           </div>
-          <span className="rounded-md bg-white/[0.04] px-3 py-0.5 text-[11px] text-slate-400 ring-1 ring-white/[0.06]">gethazledger.com/dashboard/sds</span>
+          <span className="rounded-md bg-white px-3 py-0.5 text-[11px] text-slate-400 ring-1 ring-slate-200/80">gethazledger.com/dashboard/sds</span>
           <span className="w-10" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-[180px_minmax(0,1fr)]">
           {/* sidebar */}
-          <aside className="hidden flex-col gap-1 border-r border-white/[0.06] p-3 md:flex">
-            <div className="mb-3 flex items-center gap-2 px-2 pt-1 text-white">
+          <aside className="hidden flex-col gap-1 border-r border-slate-100 bg-slate-50/50 p-3 md:flex">
+            <div className="mb-3 flex items-center gap-2 px-2 pt-1 text-slate-900">
               <LogoMark className="size-4" />
               <span className="font-heading text-[13px] font-semibold tracking-tight">HazLedger</span>
             </div>
@@ -58,32 +55,32 @@ export function AppMockup({ className }: { className?: string }) {
                 key={label}
                 className={cn(
                   "flex items-center gap-2 rounded-md px-2 py-1.5 text-[12px]",
-                  active ? "bg-sky-400/10 text-sky-200 ring-1 ring-sky-400/15" : "text-slate-400"
+                  active ? "bg-white font-medium text-slate-900 shadow-sm ring-1 ring-slate-200/80" : "text-slate-500"
                 )}
               >
-                <Icon className="size-3.5" />
+                <Icon className={cn("size-3.5", active && "text-primary")} />
                 {label}
               </span>
             ))}
-            <div className="mt-auto rounded-lg bg-white/[0.03] p-2.5 ring-1 ring-white/[0.06]">
-              <p className="text-[11px] font-medium text-slate-200">Sunset Family Dental</p>
-              <p className="text-[10px] text-slate-500">San Diego, CA</p>
+            <div className="mt-auto rounded-lg bg-white p-2.5 ring-1 ring-slate-200/80">
+              <p className="text-[11px] font-medium text-slate-800">Sunset Family Dental</p>
+              <p className="text-[10px] text-slate-400">San Diego, CA</p>
             </div>
           </aside>
 
           {/* main */}
-          <div className="min-w-0 p-4 sm:p-5">
+          <div className="min-w-0 bg-white p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="text-[11px] text-slate-500">Sunset Family Dental</p>
-                <p className="font-heading text-[17px] font-semibold tracking-tight text-white">SDS library</p>
+                <p className="text-[11px] text-slate-400">Sunset Family Dental</p>
+                <p className="font-heading text-[17px] font-semibold tracking-tight text-slate-900">SDS library</p>
               </div>
               <div className="flex items-center gap-2">
-                <span className="hidden items-center gap-1.5 rounded-md bg-white/[0.04] px-2.5 py-1.5 text-[11px] text-slate-500 ring-1 ring-white/[0.06] sm:flex">
+                <span className="hidden items-center gap-1.5 rounded-md bg-white px-2.5 py-1.5 text-[11px] text-slate-400 ring-1 ring-slate-200 sm:flex">
                   <Search className="size-3" />
                   Search product, CAS…
                 </span>
-                <span className="flex items-center gap-1.5 rounded-md bg-sky-500 px-2.5 py-1.5 text-[11px] font-semibold text-white shadow-[0_0_20px_-4px_rgb(14_165_233/0.8)]">
+                <span className="flex items-center gap-1.5 rounded-md bg-primary px-2.5 py-1.5 text-[11px] font-semibold text-white shadow-sm shadow-sky-600/20">
                   <ScanLine className="size-3" />
                   Scan SDS
                 </span>
@@ -92,19 +89,19 @@ export function AppMockup({ className }: { className?: string }) {
 
             {/* KPIs */}
             <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
-              <div className="col-span-2 flex items-center gap-3 rounded-xl bg-white/[0.03] p-3 ring-1 ring-white/[0.06] sm:col-span-1">
+              <div className="col-span-2 flex items-center gap-3 rounded-xl bg-slate-50/70 p-3 ring-1 ring-slate-200/70 sm:col-span-1">
                 <Ring value={97.7} />
                 <div>
                   <p className="text-[10px] text-slate-500">Audit readiness</p>
-                  <p className="text-[15px] font-semibold text-white">97.7%</p>
+                  <p className="text-[15px] font-semibold text-slate-900">97.7%</p>
                 </div>
               </div>
               {[
-                { label: "Current", value: "82", cls: "text-emerald-300" },
-                { label: "Needs review", value: "3", cls: "text-amber-300" },
-                { label: "Missing", value: "1", cls: "text-rose-300" },
+                { label: "Current", value: "82", cls: "text-emerald-700" },
+                { label: "Needs review", value: "3", cls: "text-amber-700" },
+                { label: "Missing", value: "1", cls: "text-rose-700" },
               ].map((k) => (
-                <div key={k.label} className="rounded-xl bg-white/[0.03] p-3 ring-1 ring-white/[0.06]">
+                <div key={k.label} className="rounded-xl bg-slate-50/70 p-3 ring-1 ring-slate-200/70">
                   <p className="text-[10px] text-slate-500">{k.label}</p>
                   <p className={cn("text-[17px] font-semibold", k.cls)}>{k.value}</p>
                 </div>
@@ -112,7 +109,7 @@ export function AppMockup({ className }: { className?: string }) {
             </div>
 
             {/* table */}
-            <div className="mt-4 overflow-hidden rounded-xl ring-1 ring-white/[0.06]">
+            <div className="mt-4 overflow-hidden rounded-xl ring-1 ring-slate-200/70">
               {ROWS.map((r, i) => {
                 const s = STATUS[r.status];
                 return (
@@ -120,15 +117,15 @@ export function AppMockup({ className }: { className?: string }) {
                     key={r.name}
                     className={cn(
                       "grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-3 py-2.5 sm:grid-cols-[minmax(0,1fr)_86px_70px_auto]",
-                      i > 0 && "border-t border-white/[0.05]",
-                      i === 1 && "bg-sky-400/[0.04]"
+                      i > 0 && "border-t border-slate-100",
+                      i === 1 && "bg-sky-50/50"
                     )}
                   >
                     <div className="min-w-0">
-                      <p className="truncate text-[12px] font-medium text-slate-100">{r.name}</p>
-                      <p className="truncate text-[10.5px] text-slate-500">{r.maker}</p>
+                      <p className="truncate text-[12px] font-medium text-slate-800">{r.name}</p>
+                      <p className="truncate text-[10.5px] text-slate-400">{r.maker}</p>
                     </div>
-                    <span className="hidden text-[11px] text-slate-400 tabular sm:block">{r.cas}</span>
+                    <span className="hidden text-[11px] text-slate-500 tabular sm:block">{r.cas}</span>
                     <span className="hidden items-center gap-0.5 sm:flex">
                       {r.ghs.map((g) => (
                         <GhsDiamond key={g} code={g} className="size-[18px]" />
@@ -147,23 +144,23 @@ export function AppMockup({ className }: { className?: string }) {
       </div>
 
       {/* floating scan card */}
-      <div className="glass-night absolute -right-3 -bottom-8 hidden w-64 rounded-2xl p-4 text-left sm:block lg:-right-10 motion-safe:animate-[float-y_6s_ease-in-out_infinite]">
+      <div className="absolute -right-3 -bottom-8 hidden w-64 rounded-2xl border border-slate-200/80 bg-white/90 p-4 text-left shadow-[0_20px_50px_-20px_rgb(15_23_42/0.25)] backdrop-blur-xl sm:block lg:-right-10 motion-safe:animate-[float-y_6s_ease-in-out_infinite]">
         <div className="flex items-center justify-between">
-          <p className="flex items-center gap-1.5 text-[11px] font-semibold text-sky-200">
+          <p className="flex items-center gap-1.5 text-[11px] font-semibold text-sky-700">
             <Sparkles className="size-3.5" />
             Claude AI · extracting
           </p>
           <span className="text-[10px] text-slate-400">≈30 s</span>
         </div>
-        <p className="mt-2 truncate text-[12.5px] font-medium text-white">Glutaraldehyde 2.5% — rev. 03/2026</p>
-        <div className="relative mt-2 h-1 overflow-hidden rounded-full bg-white/10">
-          <div className="absolute inset-y-0 left-0 w-[72%] rounded-full bg-gradient-to-r from-sky-400 to-emerald-400" />
-          <div className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-white/40 to-transparent motion-safe:animate-[shimmer_1.8s_ease-in-out_infinite]" />
+        <p className="mt-2 truncate text-[12.5px] font-medium text-slate-900">Glutaraldehyde 2.5% — rev. 03/2026</p>
+        <div className="relative mt-2 h-1 overflow-hidden rounded-full bg-slate-100">
+          <div className="absolute inset-y-0 left-0 w-[72%] rounded-full bg-gradient-to-r from-sky-500 to-emerald-500" />
+          <div className="absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-white/70 to-transparent motion-safe:animate-[shimmer_1.8s_ease-in-out_infinite]" />
         </div>
         <ul className="mt-3 space-y-1.5 text-[11px]">
           {["Hazards · H314 · H331", "PPE · nitrile, goggles", "Sections · 16 / 16"].map((t) => (
-            <li key={t} className="flex items-center gap-1.5 text-slate-300">
-              <CheckCircle2 className="size-3 text-emerald-400" />
+            <li key={t} className="flex items-center gap-1.5 text-slate-600">
+              <CheckCircle2 className="size-3 text-emerald-600" />
               {t}
             </li>
           ))}
@@ -178,8 +175,8 @@ function Ring({ value }: { value: number }) {
   const c = 2 * Math.PI * r;
   return (
     <svg viewBox="0 0 40 40" className="size-10 -rotate-90" aria-hidden="true">
-      <circle cx="20" cy="20" r={r} fill="none" stroke="rgb(255 255 255 / 0.08)" strokeWidth="4" />
-      <circle cx="20" cy="20" r={r} fill="none" stroke="#34d399" strokeWidth="4" strokeLinecap="round" strokeDasharray={c} strokeDashoffset={c * (1 - value / 100)} />
+      <circle cx="20" cy="20" r={r} fill="none" stroke="#e2e8f0" strokeWidth="4" />
+      <circle cx="20" cy="20" r={r} fill="none" stroke="#059669" strokeWidth="4" strokeLinecap="round" strokeDasharray={c} strokeDashoffset={c * (1 - value / 100)} />
     </svg>
   );
 }

@@ -62,24 +62,24 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
       ))}
 
       {/* Hero */}
-      <section className="surface-night bg-grain overflow-hidden">
-        <div aria-hidden="true" className="grid-night pointer-events-none absolute inset-0" />
+      <section className="relative overflow-hidden bg-white">
+        <div aria-hidden="true" className="bg-aurora pointer-events-none absolute inset-0" />
         <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-4 pt-12 pb-20 sm:px-6 sm:pt-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:pb-28">
           <div>
             <nav aria-label="Breadcrumb" className="flex items-center gap-1 text-xs font-medium text-slate-500">
-              <Link href="/" className="hover:text-slate-300">{siteConfig.name}</Link>
+              <Link href="/" className="hover:text-slate-900">{siteConfig.name}</Link>
               <ChevronRight className="size-3" />
-              <span className="text-slate-300">{s.name}</span>
+              <span className="text-slate-600">{s.name}</span>
             </nav>
-            <p className="mt-6 inline-flex items-center gap-2 rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300 ring-1 ring-emerald-400/20">
+            <p className="mt-6 inline-flex items-center gap-2 rounded-full bg-success-soft px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-100">
               <ShieldCheck className="size-3.5" />
               {s.eyebrow}
             </p>
-            <h1 className="mt-5 font-heading text-[2.3rem] leading-[1.06] font-semibold tracking-[-0.035em] text-white sm:text-[3.3rem]">
+            <h1 className="mt-5 font-heading text-[2.3rem] leading-[1.06] font-semibold tracking-[-0.035em] text-slate-900 sm:text-[3.3rem]">
               {s.title} <span className="text-gradient-brand">{s.titleAccent}</span>
             </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-400">{s.intro}</p>
-            <TrialForm source={s.slug} tone="night" className="mt-9" />
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-500">{s.intro}</p>
+            <TrialForm source={s.slug} className="mt-9" />
           </div>
           <SectorMockup solution={s} className="mx-auto w-full max-w-md" />
         </div>
@@ -167,7 +167,7 @@ export default async function SolutionPage({ params }: PageProps<"/solutions/[sl
           <h2 className="max-w-2xl text-3xl leading-tight font-semibold text-slate-900">
             Start your {siteConfig.trialDays}-day trial today. Print your team QR poster in minutes.
           </h2>
-          <TrialForm source={`${s.slug}-footer`} tone="card" className="mt-8" />
+          <TrialForm source={`${s.slug}-footer`} className="mt-8" />
         </div>
         <nav aria-label="Other solutions" className="mx-auto mt-10 flex max-w-6xl flex-wrap items-center gap-3 text-sm">
           <span className="flex items-center gap-1.5 text-slate-500"><Building2 className="size-4" />Also built for</span>

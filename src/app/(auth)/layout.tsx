@@ -33,17 +33,17 @@ export default function AuthLayout({ children }: LayoutProps<"/">) {
       </div>
 
       {/* Product panel */}
-      <aside className="surface-night bg-grain hidden overflow-hidden lg:flex lg:flex-col lg:justify-center">
-        <div aria-hidden="true" className="grid-night pointer-events-none absolute inset-0" />
+      <aside className="band-pearl relative hidden overflow-hidden border-l border-slate-200/70 lg:flex lg:flex-col lg:justify-center">
+        <div aria-hidden="true" className="bg-aurora pointer-events-none absolute inset-0" />
         <div className="relative mx-auto w-full max-w-lg px-12 py-14">
-          <p className="inline-flex items-center gap-2 rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300 ring-1 ring-emerald-400/20">
+          <p className="inline-flex items-center gap-2 rounded-full bg-success-soft px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-100">
             <ShieldCheck className="size-3.5" />
             OSHA HazCom · 29 CFR 1910.1200
           </p>
-          <h2 className="mt-5 font-heading text-[2.4rem] leading-[1.08] font-semibold tracking-[-0.035em] text-white">
+          <h2 className="mt-5 font-heading text-[2.4rem] leading-[1.08] font-semibold tracking-[-0.035em] text-slate-900">
             Your SDS library, <span className="text-gradient-brand">inspection-ready.</span>
           </h2>
-          <p className="mt-4 text-[15px] leading-relaxed text-slate-400">
+          <p className="mt-4 text-[15px] leading-relaxed text-slate-500">
             The simplest way for dental, veterinary and medical practices to keep Safety Data Sheets current and in
             every employee&apos;s reach.
           </p>
@@ -53,12 +53,12 @@ export default function AuthLayout({ children }: LayoutProps<"/">) {
           <ul className="space-y-5">
             {BENEFITS.map(({ icon: Icon, title, body }) => (
               <li key={title} className="flex gap-4">
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-white/[0.05] text-sky-300 ring-1 ring-white/10">
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm text-primary ring-1 ring-slate-200/80">
                   <Icon className="size-4" />
                 </span>
                 <div>
-                  <p className="text-[14px] font-semibold text-white">{title}</p>
-                  <p className="mt-0.5 text-[13px] leading-relaxed text-slate-400">{body}</p>
+                  <p className="text-[14px] font-semibold text-slate-900">{title}</p>
+                  <p className="mt-0.5 text-[13px] leading-relaxed text-slate-500">{body}</p>
                 </div>
               </li>
             ))}

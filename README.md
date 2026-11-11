@@ -47,11 +47,13 @@ src/
 | `bg-success` | `#059669` | health emerald — OSHA compliance, success |
 | `bg-brand-soft` | `#F0F9FF` | tinted icon tiles, pills |
 | `text-slate-900` / `text-slate-600` | | headings / body |
-| `bg-night` / `.surface-night` | `#050B14` | dark bands: header, hero, product flow, CTAs, footer |
-| `.glass-night`, `.grid-night`, `.bg-grain` | | frosted cards, hairline grid, noise overlay on dark |
+| `.card-soft` | white + `slate-200/80` hairline | elevated cards: one hairline border, two very soft shadows |
+| `.band-pearl` | `#F8FAFC` → `#FFFFFF` | alternating section bands |
+| `.bg-aurora` | faint sky/emerald radial wash | hero and page headers (decorative) |
 
-Type: Geist (headings, wordmark) + Inter (body). Logo: `src/components/brand/logo.tsx`
-(hairline ledger frame + emerald seal). **No stock photography** — visuals are code-rendered
+**Light only** — no dark bands or night surfaces anywhere on the site.
+Type: Geist (headings, wordmark) + Inter (body). Logo: `src/components/brand/logo.tsx` is a
+plain typographic wordmark; `LogoMark` (neutral hairline frame) is kept for favicons/app chrome. **No stock photography** — visuals are code-rendered
 product mockups (`src/components/product/*`). Effects (`SpotlightCard`, `Magnetic`) are
 decorative and disabled under reduced motion / touch.
 

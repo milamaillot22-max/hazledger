@@ -25,27 +25,27 @@ export default function BlogIndexPage() {
   const [featured, ...rest] = POSTS;
   return (
     <>
-      <section className="surface-night bg-grain overflow-hidden">
-        <div aria-hidden="true" className="grid-night pointer-events-none absolute inset-0" />
+      <section className="relative overflow-hidden bg-white">
+        <div aria-hidden="true" className="bg-aurora pointer-events-none absolute inset-0" />
         <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-16 sm:px-6 sm:pt-20">
-          <p className="text-sm font-semibold text-sky-300">Resources</p>
-          <h1 className="mt-3 max-w-3xl font-heading text-4xl leading-tight font-semibold tracking-[-0.04em] text-white sm:text-5xl">
+          <p className="text-sm font-semibold text-primary">Resources</p>
+          <h1 className="mt-3 max-w-3xl font-heading text-4xl leading-tight font-semibold tracking-[-0.04em] text-slate-900 sm:text-5xl">
             OSHA HazCom, explained for clinics.
           </h1>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-400">{DESCRIPTION}</p>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-500">{DESCRIPTION}</p>
 
           <Link
             href={routes.blogPost(featured.slug)}
-            className="glass-night group mt-12 block rounded-3xl p-7 transition-colors hover:bg-white/[0.06] sm:p-10"
+            className="card-soft group mt-12 block rounded-3xl p-7 transition-shadow duration-300 hover:shadow-[0_1px_2px_rgb(15_23_42/0.04),0_24px_48px_-20px_rgb(15_23_42/0.18)] sm:p-10"
           >
-            <span className="text-xs font-semibold tracking-wider text-emerald-300 uppercase">
+            <span className="text-xs font-semibold tracking-wider text-emerald-700 uppercase">
               Featured · {featured.category}
             </span>
-            <h2 className="mt-3 max-w-3xl font-heading text-2xl leading-snug font-semibold tracking-[-0.02em] text-white sm:text-3xl">
+            <h2 className="mt-3 max-w-3xl font-heading text-2xl leading-snug font-semibold tracking-[-0.02em] text-slate-900 sm:text-3xl">
               {featured.title}
             </h2>
-            <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-slate-400">{featured.description}</p>
-            <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-sky-300">
+            <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-slate-500">{featured.description}</p>
+            <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
               Read the article · {featured.readingMinutes} min
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
             </span>
