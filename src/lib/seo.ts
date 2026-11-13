@@ -78,6 +78,11 @@ function breadcrumbs(items: { name: string; path: string }[]) {
   };
 }
 
+/** FAQPage markup for an on-page FAQ (questions must match the visible text). */
+export function faqStructuredData(faq: { q: string; a: string }[]) {
+  return faqPage(faq);
+}
+
 export function solutionStructuredData(s: Solution) {
   const path = routes.solution(s.slug);
   return [

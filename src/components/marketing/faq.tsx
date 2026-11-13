@@ -7,11 +7,12 @@ import {
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { ANNUAL_DISCOUNT_PERCENT, getPlan } from "@/config/pricing";
 import { siteConfig } from "@/config/site";
+import { faqStructuredData, jsonLd } from "@/lib/seo";
 
 const FAQ = [
   {
-    q: "Does OSHA allow electronic SDS access instead of a paper binder?",
-    a: "Yes. 29 CFR 1910.1200(g)(8) permits electronic access instead of paper copies, as long as it creates no barriers to immediate employee access in each workplace. QR codes posted in each operatory, lab or supply room, with no login required to view, are designed for exactly that.",
+    q: "Does OSHA allow a digital SDS binder instead of paper?",
+    a: "Yes. OSHA allows electronic (digital) access to Safety Data Sheets instead of a paper binder: 29 CFR 1910.1200(g)(8) permits electronic access instead of paper copies, as long as it creates no barriers to immediate employee access in each workplace. QR codes posted in each operatory, lab or supply room, with no login required to view, are designed for exactly that.",
   },
   {
     q: "What does the HazCom 2024 update change for us?",
@@ -38,6 +39,7 @@ const FAQ = [
 export function Faq() {
   return (
     <section id="faq" className="scroll-mt-20 mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(faqStructuredData(FAQ))} />
       <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
         <SectionHeading
           eyebrow="FAQ"
