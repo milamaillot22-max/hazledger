@@ -9,7 +9,7 @@ import { listSdsDocuments } from "@/features/sds/queries";
 import { CopyLinkButton } from "@/features/team-access/components/copy-link-button";
 import { RotateTokenButton } from "@/features/team-access/components/rotate-button";
 import { getTeamAccess, renderQrSvg } from "@/features/team-access/queries";
-import { requireClinic } from "@/lib/auth/dal";
+import { requirePlan } from "@/features/billing/server";
 
 export const metadata: Metadata = { title: "Team QR access" };
 
@@ -29,15 +29,29 @@ export default function TeamAccessPage({ searchParams }: PageProps<"/dashboard/t
 }
 
 async function TeamAccess({ searchParams }: { searchParams: PageProps<"/dashboard/team-access">["searchParams"] }) {
-  const [{ clinic }, params] = await Promise.all([requireClinic(), searchParams]);
+  const [{ clinic, billing }, params] = await Promise.all([requirePlan(), searchParams]);
   const [access, docs] = await Promise.all([getTeamAccess(clinic.id), listSdsDocuments(clinic.id)]);
   const svg = await renderQrSvg(access.url);
   const visible = docs.filter((d) => d.status === "current").length;
   const pending = docs.filter((d) => d.status === "needs_review").length;
   const canManage = clinic.role === "owner" || clinic.role === "admin";
+  const e = billing.entitlement;
 
   return (
     <>
+      {e.kind === "ended" ? (
+        <div role="alert" className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-900">
+          <p className="font-medium">
+            {e.qrLive && e.qrUntil
+              ? `Your subscription has ended. This QR code stops working on ${e.qrUntil.toLocaleDateString("en-US", { month: "long", day: "numeric" })}.`
+              : "This QR code is paused: your team sees “access paused” when they scan it."}
+          </p>
+          <Link href={routes.billing} className="font-semibold underline underline-offset-2">
+            Choose a plan
+          </Link>
+        </div>
+      ) : null}
+
       {params.welcome === "1" ? (
         <div className="mt-6 overflow-hidden rounded-2xl border border-sky-100 bg-gradient-to-r from-sky-50 via-white to-emerald-50 p-6 shadow-lg shadow-slate-200/50">
           <p className="flex items-center gap-2 text-sm font-semibold text-emerald-700">

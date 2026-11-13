@@ -8,7 +8,7 @@ import { routes, siteConfig } from "@/config/site";
 import { listSdsDocuments } from "@/features/sds/queries";
 import { buildInspectionReport, FLAG_LABELS } from "@/features/sds/report";
 import { PrintButton } from "@/features/team-access/components/print-button";
-import { requireClinic } from "@/lib/auth/dal";
+import { requirePlan } from "@/features/billing/server";
 
 export const metadata: Metadata = { title: "Inspection report" };
 
@@ -39,7 +39,7 @@ function usDate(iso: string | null) {
 }
 
 async function Report() {
-  const { clinic } = await requireClinic();
+  const { clinic } = await requirePlan();
   const docs = await listSdsDocuments(clinic.id);
   const { rows, totals } = buildInspectionReport(docs);
   const generated = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });

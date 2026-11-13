@@ -51,7 +51,7 @@ function softwareApplication({ path, description, audience }: { path: string; de
         price: p.monthly.toFixed(2),
         priceCurrency: CURRENCY,
         url: absoluteUrl(`${routes.signup}?plan=${p.id}`),
-        description: `${p.name} plan, per location per month. ${siteConfig.trialDays}-day free trial, no credit card required.`,
+        description: `${p.name} plan, per location per month. ${siteConfig.trialDays}-day free trial, cancel anytime.`,
       })),
     },
   };

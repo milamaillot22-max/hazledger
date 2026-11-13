@@ -5,9 +5,8 @@ import { ArrowLeft, Camera, FileText, Tag } from "lucide-react";
 
 import { routes } from "@/config/site";
 import { canAddSds } from "@/features/billing/entitlement";
-import { getBillingState } from "@/features/billing/server";
+import { requirePlan } from "@/features/billing/server";
 import { SdsUploader } from "@/features/sds/components/sds-uploader";
-import { requireClinic } from "@/lib/auth/dal";
 
 export const metadata: Metadata = { title: "Scan an SDS" };
 
@@ -59,7 +58,7 @@ export default function ScanPage() {
 }
 
 async function UploaderGate() {
-  const { clinic } = await requireClinic();
+  const { clinic, billing } = await requirePlan();
   if (clinic.role !== "owner" && clinic.role !== "admin") {
     return (
       <div className="rounded-2xl border border-slate-200/80 bg-white p-8 text-sm text-slate-600">
@@ -67,7 +66,6 @@ async function UploaderGate() {
       </div>
     );
   }
-  const billing = await getBillingState(clinic.id);
   const check = canAddSds(billing.entitlement, billing.usage);
   if (!check.allowed) {
     return (

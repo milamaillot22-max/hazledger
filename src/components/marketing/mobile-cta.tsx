@@ -9,7 +9,7 @@ export function MobileCta() {
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 p-3 backdrop-blur md:hidden">
       <Button asChild size="xl" className="w-full">
         <Link href={siteConfig.links.startTrial}>
-          Start free trial — no card needed
+          Start free trial — $0 today
         </Link>
       </Button>
     </div>

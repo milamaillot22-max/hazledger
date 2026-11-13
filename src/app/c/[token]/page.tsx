@@ -49,6 +49,22 @@ async function Library({ params }: { params: PageProps<"/c/[token]">["params"] }
     );
   }
 
+  if (library.suspended) {
+    return (
+      <div className="mt-16 rounded-2xl border border-slate-200/80 bg-white p-8 text-center shadow-lg shadow-slate-200/50">
+        <span className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-amber-50 text-amber-600">
+          <QrCode className="size-6" />
+        </span>
+        <p className="mt-4 text-sm font-medium text-slate-500">{library.clinic.name}</p>
+        <h1 className="mt-1 text-lg font-semibold text-slate-900">Access to this SDS library is paused</h1>
+        <p className="mt-1.5 text-sm text-slate-600">
+          Ask your practice manager for the Safety Data Sheets. The manager can switch this poster back on from {siteConfig.name}.
+        </p>
+        <EmergencyCard className="mt-6 text-left" />
+      </div>
+    );
+  }
+
   return (
     <>
       <header>

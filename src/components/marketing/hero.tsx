@@ -7,7 +7,7 @@ import { Magnetic } from "@/components/fx/magnetic";
 import { OSHA_PENALTIES } from "@/config/compliance";
 import { routes, siteConfig } from "@/config/site";
 
-const REASSURANCE = ["No credit card required", "Set up in minutes", "Cancel anytime"];
+const REASSURANCE = ["$0 for 14 days", "Set up in minutes", "Cancel anytime"];
 
 /** Every badge must stay literally true — see README "Claims policy". */
 const BADGES = [

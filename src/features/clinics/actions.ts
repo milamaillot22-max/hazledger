@@ -67,6 +67,6 @@ export async function createClinic(
     };
   }
 
-  // Activation path: the team QR poster is the first "aha" — print it now.
-  redirect(`${routes.teamAccess}?welcome=1`);
+  // Card-required trial: choose a plan first, then the team QR poster.
+  redirect(`${routes.billing}?start=1`);
 }

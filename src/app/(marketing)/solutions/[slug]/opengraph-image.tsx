@@ -47,7 +47,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
         <div style={{ display: "flex", gap: 28, fontSize: 24, color: "#475569" }}>
           <span>OSHA HazCom · 29 CFR 1910.1200</span>
           <span>·</span>
-          <span>{siteConfig.trialDays}-day free trial · No credit card</span>
+          <span>{siteConfig.trialDays}-day free trial · Cancel anytime</span>
         </div>
       </div>
     ),

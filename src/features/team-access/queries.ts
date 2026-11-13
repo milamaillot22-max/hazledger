@@ -66,6 +66,8 @@ export type PublicSdsDocument = {
 
 export type PublicSafetyLibrary = {
   clinic: { name: string; state: string };
+  /** True when the clinic has no live subscription: documents are withheld. */
+  suspended?: boolean;
   documents: PublicSdsDocument[];
 };
 

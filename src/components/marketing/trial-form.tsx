@@ -34,7 +34,7 @@ export function TrialForm({ source, className }: { source: string; className?: s
         </button>
       </div>
       <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-slate-500">
-        {["No credit card required", "Instant access", "Cancel anytime"].map((t) => (
+        {["$0 today", "Instant access", "Cancel anytime"].map((t) => (
           <li key={t} className="flex items-center gap-1.5">
             <CheckCircle2 className="size-4 text-success" />
             {t}

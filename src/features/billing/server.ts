@@ -11,6 +11,10 @@ import {
   type Entitlement,
   type PlanId,
 } from "@/features/billing/entitlement";
+import { redirect } from "next/navigation";
+
+import { routes } from "@/config/site";
+import { requireClinic } from "@/lib/auth/dal";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
@@ -20,18 +24,17 @@ export type BillingState = {
   usage: { sdsCount: number; scansThisMonth: number };
 };
 
-/** Read with the member's session (RLS): billing row, trial clock and usage. */
+/** Read with the member's session (RLS): billing row and usage. */
 export async function getBillingState(clinicId: string): Promise<BillingState> {
   const supabase = await createClient();
   const monthStart = new Date();
   monthStart.setUTCDate(1);
   monthStart.setUTCHours(0, 0, 0, 0);
 
-  const [clinic, billing, total, month] = await Promise.all([
-    supabase.from("clinics").select("created_at").eq("id", clinicId).single(),
+  const [billing, total, month] = await Promise.all([
     supabase
       .from("clinic_billing")
-      .select("plan, billing_cycle, status, trial_ends_at, current_period_end, cancel_at_period_end, stripe_customer_id, stripe_subscription_id")
+      .select("plan, billing_cycle, status, trial_ends_at, current_period_end, cancel_at_period_end, ended_at, trial_used, stripe_customer_id, stripe_subscription_id")
       .eq("clinic_id", clinicId)
       .maybeSingle(),
     supabase.from("sds_documents").select("id", { count: "exact", head: true }).eq("clinic_id", clinicId).neq("status", "failed"),
@@ -41,13 +44,24 @@ export async function getBillingState(clinicId: string): Promise<BillingState> {
       .eq("clinic_id", clinicId)
       .gte("created_at", monthStart.toISOString()),
   ]);
-  if (clinic.error) throw new Error(`Failed to load clinic: ${clinic.error.message}`);
+  if (billing.error) throw new Error(`Failed to load billing: ${billing.error.message}`);
 
   return {
-    entitlement: resolveEntitlement(billing.data ?? null, clinic.data.created_at),
+    entitlement: resolveEntitlement(billing.data ?? null),
     row: billing.data ?? null,
     usage: { sdsCount: total.count ?? 0, scansThisMonth: month.count ?? 0 },
   };
+}
+
+/**
+ * For app pages: a clinic that never started its (card-required) trial is sent
+ * to Billing to choose a plan first.
+ */
+export async function requirePlan() {
+  const ctx = await requireClinic();
+  const billing = await getBillingState(ctx.clinic.id);
+  if (billing.entitlement.kind === "none") redirect(`${routes.billing}?start=1`);
+  return { ...ctx, billing };
 }
 
 /** Finds the active price for a plan by lookup key; creates it if this Stripe account has none (fresh/test accounts). */
@@ -121,6 +135,9 @@ export async function syncSubscription(subscription: Stripe.Subscription, clinic
       trial_ends_at: iso(subscription.trial_end),
       current_period_end: iso(item?.current_period_end),
       cancel_at_period_end: subscription.cancel_at_period_end,
+      ended_at: iso(subscription.ended_at),
+      // Once a subscription has had a trial (or any subscription exists), no new trial.
+      trial_used: true,
     },
     { onConflict: "clinic_id" }
   );
@@ -135,4 +152,18 @@ export async function saveCustomer(clinicId: string, customerId: string) {
     .from("clinic_billing")
     .upsert({ clinic_id: clinicId, stripe_customer_id: customerId }, { onConflict: "clinic_id" });
   if (error) throw new Error(`Failed to save Stripe customer: ${error.message}`);
+}
+
+/**
+ * Called on the Checkout success page so the plan is active immediately,
+ * without waiting for the webhook. Only accepts a session for this clinic.
+ */
+export async function confirmCheckoutSession(stripe: Stripe, clinicId: string, sessionId: string) {
+  if (!/^cs_[A-Za-z0-9_]+$/.test(sessionId)) return false;
+  const session = await stripe.checkout.sessions.retrieve(sessionId);
+  if (session.client_reference_id !== clinicId || !session.subscription) return false;
+  const subscription =
+    typeof session.subscription === "string" ? await stripe.subscriptions.retrieve(session.subscription) : session.subscription;
+  await syncSubscription(subscription, clinicId);
+  return true;
 }

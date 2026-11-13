@@ -30,7 +30,8 @@ const SECTIONS: LegalSection[] = [
   {
     title: "Free trial",
     body: [
-      `Each new clinic gets a ${siteConfig.trialDays}-day free trial with every feature. No payment card is required to start. If you subscribe during the trial, your remaining trial days are kept and the first charge happens when the trial ends.`,
+      `Each new clinic can start one ${siteConfig.trialDays}-day free trial of the plan it chooses. A valid payment card is required to start the trial; nothing is charged on the day you start. The trial includes up to 15 SDSs and a limited number of AI scans.`,
+      `Unless you cancel before the trial ends, your subscription starts automatically at the end of the trial and your card is charged the price of the plan you chose, then on every renewal. The checkout page shows the date of the first charge before you confirm. You can cancel at any time during the trial from Billing in your dashboard and you will not be charged.`,
     ],
   },
   {
@@ -49,7 +50,8 @@ const SECTIONS: LegalSection[] = [
     body: [
       "You can cancel at any time from Billing in your dashboard. Cancellation takes effect at the end of the current paid period; you keep full access until then and are not charged again.",
       "Fees already paid are non-refundable, including for partially used periods, except where a refund is required by law. If you were charged in error, contact us within 30 days and we will refund the erroneous charge.",
-      "After a subscription ends, your library stays readable and your team's QR access to SDSs is not switched off for billing reasons; adding new SDSs requires an active plan or trial.",
+      "After a subscription or trial ends, your library is kept and stays readable by owners and admins, but adding new SDSs requires an active plan. Your team's QR access keeps working for 14 days after the end date, then pauses until you choose a plan again; scanning the poster then shows that access is paused.",
+      "Keeping Safety Data Sheets accessible to your employees remains your responsibility under OSHA's Hazard Communication Standard. Before cancelling, or before access pauses, make sure your team has another way to reach them.",
     ],
   },
   {

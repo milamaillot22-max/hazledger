@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { AlertTriangle, Check, CheckCircle2, CreditCard, ShieldCheck } from "lucide-react";
 
 import { ANNUAL_DISCOUNT_PERCENT, PLANS, priceFor } from "@/config/pricing";
+import { routes } from "@/config/site";
 import { openBillingPortal, startCheckout } from "@/features/billing/actions";
-import { limitsFor, type Entitlement } from "@/features/billing/entitlement";
-import { getBillingState } from "@/features/billing/server";
+import { limitsFor, QR_GRACE_DAYS, TRIAL_DAYS, TRIAL_MAX_SDS, type Entitlement } from "@/features/billing/entitlement";
+import { confirmCheckoutSession, getBillingState } from "@/features/billing/server";
 import { requireClinic } from "@/lib/auth/dal";
-import { isStripeConfigured } from "@/lib/stripe";
+import { getStripe, isStripeConfigured } from "@/lib/stripe";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Billing" };
@@ -20,6 +22,9 @@ const ERRORS: Record<string, string> = {
   checkout_failed: "We couldn't open the secure checkout. Please try again.",
 };
 
+const DAY_MS = 86_400_000;
+/** First charge date if a trial starts now (request time; this page is dynamic). */
+const trialEndFromNow = () => new Date(Date.now() + TRIAL_DAYS * DAY_MS);
 const usDate = (d: Date) => d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 
 export default function BillingPage({ searchParams }: PageProps<"/dashboard/billing">) {
@@ -36,12 +41,24 @@ export default function BillingPage({ searchParams }: PageProps<"/dashboard/bill
 
 async function BillingContent({ searchParams }: { searchParams: PageProps<"/dashboard/billing">["searchParams"] }) {
   const [{ clinic }, params] = await Promise.all([requireClinic(), searchParams]);
-  const { entitlement, usage } = await getBillingState(clinic.id);
+  let { entitlement, usage } = await getBillingState(clinic.id);
   const canManage = clinic.role === "owner" || clinic.role === "admin";
   const error = typeof params.error === "string" ? ERRORS[params.error] : undefined;
   const success = params.checkout === "success";
-  const paying = entitlement.kind === "subscribed" || entitlement.kind === "past_due";
+
+  // Back from Checkout: activate now (don't wait for the webhook), then go print the team poster.
+  const sessionId = typeof params.session_id === "string" ? params.session_id : null;
+  if (success && sessionId && entitlement.kind === "none") {
+    const stripe = getStripe();
+    const confirmed = stripe ? await confirmCheckoutSession(stripe, clinic.id, sessionId).catch(() => false) : false;
+    if (confirmed) ({ entitlement, usage } = await getBillingState(clinic.id));
+  }
+  if (success && entitlement.kind !== "none") redirect(`${routes.teamAccess}?welcome=1`);
+
+  const paying = entitlement.kind === "trialing" || entitlement.kind === "subscribed" || entitlement.kind === "past_due";
+  const firstTime = entitlement.kind === "none";
   const limits = limitsFor(entitlement);
+  const firstChargeOn = trialEndFromNow();
 
   return (
     <div className="mt-8 space-y-6">
@@ -50,7 +67,7 @@ async function BillingContent({ searchParams }: { searchParams: PageProps<"/dash
       ) : null}
       {error ? <Notice tone="warning">{error}</Notice> : null}
       {!isStripeConfigured() && canManage ? (
-        <Notice tone="warning">Online payments aren&apos;t switched on yet. Your trial keeps running normally.</Notice>
+        <Notice tone="warning">Online payments aren&apos;t switched on yet. Email us and we&apos;ll set up your plan.</Notice>
       ) : null}
 
       <section className="grid gap-4 rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm sm:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] sm:p-8">
@@ -58,10 +75,12 @@ async function BillingContent({ searchParams }: { searchParams: PageProps<"/dash
           <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">Current plan</p>
           <StatusLine entitlement={entitlement} />
         </div>
-        <dl className="grid grid-cols-2 gap-3">
-          <Usage label="SDSs in library" value={usage.sdsCount} max={limits.maxSds} />
-          <Usage label="AI scans this month" value={usage.scansThisMonth} max={limits.scansPerMonth} />
-        </dl>
+        {paying ? (
+          <dl className="grid grid-cols-2 gap-3">
+            <Usage label="SDSs in library" value={usage.sdsCount} max={limits.maxSds} />
+            <Usage label="AI scans this month" value={usage.scansThisMonth} max={limits.scansPerMonth} />
+          </dl>
+        ) : null}
         {paying && canManage ? (
           <form action={openBillingPortal} className="sm:col-span-2">
             <button className="inline-flex h-11 items-center gap-2 rounded-xl bg-white px-5 text-sm font-semibold text-slate-800 ring-1 ring-slate-200 hover:bg-slate-50">
@@ -74,9 +93,13 @@ async function BillingContent({ searchParams }: { searchParams: PageProps<"/dash
 
       {!paying ? (
         <section>
-          <h2 className="font-heading text-lg font-semibold text-slate-900">Choose your plan</h2>
+          <h2 className="font-heading text-lg font-semibold text-slate-900">
+            {firstTime ? `Start your ${TRIAL_DAYS}-day free trial` : "Choose your plan"}
+          </h2>
           <p className="mt-1 text-sm text-slate-600">
-            Per location. Your remaining free-trial days carry over — you&apos;re only charged when the trial ends. Cancel anytime.
+            {firstTime
+              ? `Pick a plan and add your card — you pay $0 today. Your first charge is on ${usDate(firstChargeOn)}; cancel before then and you pay nothing. The trial includes up to ${TRIAL_MAX_SDS} SDSs.`
+              : "Per location. Billed automatically each period. Cancel anytime."}
           </p>
           <div className="mt-5 grid gap-5 md:grid-cols-2">
             {PLANS.map((plan) => (
@@ -119,14 +142,15 @@ async function BillingContent({ searchParams }: { searchParams: PageProps<"/dash
                           plan.featured ? "bg-primary text-white hover:bg-primary-hover" : "bg-white text-slate-800 ring-1 ring-slate-200 hover:bg-slate-50"
                         )}
                       >
-                        Choose {plan.name} — ${plan.monthly}/month
+                        {firstTime ? `Start free trial — then $${plan.monthly}/month` : `Choose ${plan.name} — $${plan.monthly}/month`}
                       </button>
                     </form>
                     <form action={startCheckout}>
                       <input type="hidden" name="plan" value={plan.id} />
                       <input type="hidden" name="billing" value="annual" />
                       <button className="h-10 w-full rounded-xl text-sm font-medium text-primary hover:bg-sky-50">
-                        Or ${priceFor(plan, "annual").billedAmount.toLocaleString("en-US")}/year — save {ANNUAL_DISCOUNT_PERCENT}%
+                        {firstTime ? "Or after the trial: " : "Or "}${priceFor(plan, "annual").billedAmount.toLocaleString("en-US")}/year — save{" "}
+                        {ANNUAL_DISCOUNT_PERCENT}%
                       </button>
                     </form>
                   </div>
@@ -141,28 +165,33 @@ async function BillingContent({ searchParams }: { searchParams: PageProps<"/dash
 
       <p className="flex items-start gap-2 text-xs leading-relaxed text-slate-500">
         <ShieldCheck className="mt-0.5 size-3.5 shrink-0 text-success" />
-        Your team&apos;s QR access to Safety Data Sheets is never switched off for billing reasons — only adding new SDSs
-        depends on your plan.
+        Cancel anytime from this page. If your subscription ends, your team&apos;s QR access stays on for {QR_GRACE_DAYS} more days,
+        then pauses until you choose a plan. Your library is kept.
       </p>
     </div>
   );
 }
 
 function StatusLine({ entitlement: e }: { entitlement: Entitlement }) {
-  if (e.kind === "subscribed") {
-    const plan = PLANS.find((p) => p.id === e.plan)!;
+  const planName = (id: string) => PLANS.find((p) => p.id === id)?.name ?? id;
+  if (e.kind === "trialing" || e.kind === "subscribed") {
     return (
       <>
         <p className="mt-2 flex items-center gap-2 font-heading text-2xl font-semibold text-slate-900">
-          {plan.name}
+          {planName(e.plan)}
           <span className="rounded-full bg-success-soft px-2 py-0.5 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-100">
-            {e.stripeStatus === "trialing" ? "Trial" : "Active"}
+            {e.kind === "trialing" ? "Free trial" : "Active"}
           </span>
         </p>
         <p className="mt-1 text-sm text-slate-600">
           {e.cycle === "annual" ? "Billed yearly" : "Billed monthly"}
-          {e.stripeStatus === "trialing" && e.trialEndsAt ? ` · first payment on ${usDate(e.trialEndsAt)}` : null}
-          {e.stripeStatus !== "trialing" && e.renewsAt
+          {e.kind === "trialing" && e.trialEndsAt
+            ? e.cancelAtPeriodEnd
+              ? ` · trial ends on ${usDate(e.trialEndsAt)}, you won't be charged`
+              : ` · first payment on ${usDate(e.trialEndsAt)}`
+            : null}
+          {e.kind === "trialing" ? ` · up to ${TRIAL_MAX_SDS} SDSs during the trial` : null}
+          {e.kind === "subscribed" && e.renewsAt
             ? e.cancelAtPeriodEnd
               ? ` · ends on ${usDate(e.renewsAt)}`
               : ` · renews on ${usDate(e.renewsAt)}`
@@ -174,29 +203,31 @@ function StatusLine({ entitlement: e }: { entitlement: Entitlement }) {
   if (e.kind === "past_due") {
     return (
       <>
-        <p className="mt-2 font-heading text-2xl font-semibold text-slate-900">{e.plan === "pro" ? "Pro" : "Starter"}</p>
+        <p className="mt-2 font-heading text-2xl font-semibold text-slate-900">{planName(e.plan)}</p>
         <p className="mt-1 flex items-center gap-1.5 text-sm font-medium text-amber-700">
           <AlertTriangle className="size-4" />
-          Your last payment didn&apos;t go through. Update your card to keep adding SDSs.
+          Your last payment didn&apos;t go through. Update your card to keep your plan.
         </p>
       </>
     );
   }
-  if (e.kind === "trial") {
+  if (e.kind === "ended") {
     return (
       <>
-        <p className="mt-2 font-heading text-2xl font-semibold text-slate-900">Free trial · everything included</p>
+        <p className="mt-2 font-heading text-2xl font-semibold text-slate-900">Subscription ended</p>
         <p className="mt-1 text-sm text-slate-600">
-          {e.daysLeft} {e.daysLeft === 1 ? "day" : "days"} left · ends on {usDate(e.trialEndsAt)}. No card needed until you choose a plan.
+          {e.qrLive && e.qrUntil
+            ? `Team QR access stays on until ${usDate(e.qrUntil)}. Choose a plan to keep it on and add SDSs.`
+            : "Team QR access is paused. Choose a plan to switch it back on — your library is kept."}
         </p>
       </>
     );
   }
   return (
     <>
-      <p className="mt-2 font-heading text-2xl font-semibold text-slate-900">Trial ended</p>
+      <p className="mt-2 font-heading text-2xl font-semibold text-slate-900">No plan yet</p>
       <p className="mt-1 text-sm text-slate-600">
-        Ended on {usDate(e.trialEndedAt)}. Choose a plan to keep adding SDSs — your library and team QR access stay available.
+        Start your {TRIAL_DAYS}-day free trial below to scan SDSs and switch on your team QR poster.
       </p>
     </>
   );

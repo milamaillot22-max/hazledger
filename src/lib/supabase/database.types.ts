@@ -24,11 +24,13 @@ export type Database = {
           clinic_id: string
           created_at: string
           current_period_end: string | null
+          ended_at: string | null
           plan: string | null
           status: string | null
           stripe_customer_id: string | null
           stripe_subscription_id: string | null
           trial_ends_at: string | null
+          trial_used: boolean
           updated_at: string
         }
         Insert: {
@@ -37,11 +39,13 @@ export type Database = {
           clinic_id: string
           created_at?: string
           current_period_end?: string | null
+          ended_at?: string | null
           plan?: string | null
           status?: string | null
           stripe_customer_id?: string | null
           stripe_subscription_id?: string | null
           trial_ends_at?: string | null
+          trial_used?: boolean
           updated_at?: string
         }
         Update: {
@@ -50,11 +54,13 @@ export type Database = {
           clinic_id?: string
           created_at?: string
           current_period_end?: string | null
+          ended_at?: string | null
           plan?: string | null
           status?: string | null
           stripe_customer_id?: string | null
           stripe_subscription_id?: string | null
           trial_ends_at?: string | null
+          trial_used?: boolean
           updated_at?: string
         }
         Relationships: [

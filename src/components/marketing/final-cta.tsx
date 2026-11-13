@@ -43,7 +43,7 @@ export function FinalCta({ title, calculatorHref = "/#calculator" }: { title?: s
               Compare plans
             </Link>
           </div>
-          <p className="mt-5 text-xs text-slate-500">No credit card required · Cancel anytime · ${pro.monthly}/month per location after the trial</p>
+          <p className="mt-5 text-xs text-slate-500">$0 today · Cancel anytime before day {siteConfig.trialDays} · ${pro.monthly}/month per location after the trial</p>
           <Link
             href={calculatorHref}
             className="group mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-hover"

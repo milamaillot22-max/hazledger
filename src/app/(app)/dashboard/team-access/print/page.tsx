@@ -7,7 +7,7 @@ import { routes } from "@/config/site";
 import { PrintButton } from "@/features/team-access/components/print-button";
 import { QrPoster } from "@/features/team-access/components/qr-poster";
 import { getTeamAccess, renderQrSvg } from "@/features/team-access/queries";
-import { requireClinic } from "@/lib/auth/dal";
+import { requirePlan } from "@/features/billing/server";
 
 export const metadata: Metadata = { title: "Print team QR poster" };
 
@@ -32,7 +32,7 @@ export default function PrintPosterPage() {
 }
 
 async function Poster() {
-  const { clinic } = await requireClinic();
+  const { clinic } = await requirePlan();
   const access = await getTeamAccess(clinic.id);
   const svg = await renderQrSvg(access.url);
   return <QrPoster clinicName={clinic.name} qrSvg={svg} url={access.url} />;

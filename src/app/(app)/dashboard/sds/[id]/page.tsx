@@ -18,7 +18,7 @@ import { SdsReviewForm } from "@/features/sds/components/review-form";
 import { SdsStatusBadge } from "@/features/sds/components/status-badge";
 import { getSdsDocument, getSourceUrl, type SdsDetail } from "@/features/sds/queries";
 import type { GhsCode } from "@/features/sds/schema";
-import { requireClinic } from "@/lib/auth/dal";
+import { requirePlan } from "@/features/billing/server";
 
 export const metadata: Metadata = { title: "Review SDS" };
 
@@ -39,7 +39,7 @@ export default function SdsDetailPage({ params }: PageProps<"/dashboard/sds/[id]
 }
 
 async function Detail({ params }: { params: PageProps<"/dashboard/sds/[id]">["params"] }) {
-  const [{ id }, { clinic }] = await Promise.all([params, requireClinic()]);
+  const [{ id }, { clinic }] = await Promise.all([params, requirePlan()]);
   if (!UUID.test(id)) notFound();
   const doc = await getSdsDocument(id, clinic.id);
   if (!doc) notFound();

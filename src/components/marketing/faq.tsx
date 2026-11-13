@@ -31,7 +31,7 @@ const FAQ = [
   },
   {
     q: "How long is the trial, and what happens after?",
-    a: `${siteConfig.trialDays} days with every feature, no credit card. Then choose Starter ($${getPlan("starter").monthly}) or Pro ($${getPlan("pro").monthly}) per location per month, or save ${ANNUAL_DISCOUNT_PERCENT}% with annual billing. Cancel anytime.`,
+    a: `${siteConfig.trialDays} days free on the plan you pick: Starter ($${getPlan("starter").monthly}) or Pro ($${getPlan("pro").monthly}) per location per month, or save ${ANNUAL_DISCOUNT_PERCENT}% with annual billing. A card is required but you pay $0 today; if you don't cancel before the trial ends, your plan starts automatically. Cancel anytime.`,
   },
 ];
 

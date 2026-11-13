@@ -16,7 +16,7 @@ import { jsonLd, pricingStructuredData } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 const TITLE = `Pricing — Starter $${PLANS[0].monthly}, Pro $${PLANS[1].monthly} per location`;
-const DESCRIPTION = `Simple per-location pricing for OSHA HazCom compliance. ${siteConfig.trialDays}-day free trial, no credit card. Save ${ANNUAL_DISCOUNT_PERCENT}% with annual billing.`;
+const DESCRIPTION = `Simple per-location pricing for OSHA HazCom compliance. ${siteConfig.trialDays}-day free trial. Save ${ANNUAL_DISCOUNT_PERCENT}% with annual billing.`;
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 const FAQ = [
   {
     q: "Do I need a credit card to start the trial?",
-    a: `No. Every plan starts with a ${siteConfig.trialDays}-day free trial with every feature, and no credit card.`,
+    a: `Yes, a card is required to start, but you pay $0 today. Every plan starts with a ${siteConfig.trialDays}-day free trial (up to 15 SDSs). Cancel from Billing before the trial ends and you're never charged.`,
   },
   {
     q: "How does annual billing work?",

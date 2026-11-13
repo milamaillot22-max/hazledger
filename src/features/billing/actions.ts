@@ -5,16 +5,14 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 
 import { routes } from "@/config/site";
-import { trialEndFor } from "@/features/billing/entitlement";
+import { TRIAL_DAYS, trialEligible } from "@/features/billing/entitlement";
 import { ensurePrice, getBillingState, saveCustomer } from "@/features/billing/server";
 import { requireClinic } from "@/lib/auth/dal";
 import { getServerEnv } from "@/lib/env";
 import { getStripe } from "@/lib/stripe";
 import { hasAdminClient } from "@/lib/supabase/admin";
-import { createClient } from "@/lib/supabase/server";
 
 const BILLING_ROLES = new Set(["owner", "admin"]);
-const DAY_MS = 86_400_000;
 
 /** Absolute origin of the current request (works on preview, vercel.app and the custom domain). */
 async function origin() {
@@ -39,7 +37,7 @@ const checkoutSchema = z.object({
   billing: z.enum(["monthly", "annual"]),
 });
 
-/** Sends the owner to Stripe Checkout. Remaining free-trial days carry over. */
+/** Sends the owner to Stripe Checkout. First subscription: card required, 14-day free trial. */
 export async function startCheckout(formData: FormData) {
   const { user, clinic } = await requireBillingAdmin();
   const parsed = checkoutSchema.safeParse({ plan: formData.get("plan"), billing: formData.get("billing") });
@@ -51,7 +49,8 @@ export async function startCheckout(formData: FormData) {
 
   const state = await getBillingState(clinic.id);
   // Already paying: plan changes and cancellations go through the customer portal.
-  if (state.entitlement.kind === "subscribed" || state.entitlement.kind === "past_due") {
+  const k = state.entitlement.kind;
+  if (k === "trialing" || k === "subscribed" || k === "past_due") {
     return openBillingPortal();
   }
 
@@ -66,11 +65,7 @@ export async function startCheckout(formData: FormData) {
     await saveCustomer(clinic.id, customerId);
   }
 
-  const supabase = await createClient();
-  const { data: clinicRow } = await supabase.from("clinics").select("created_at").eq("id", clinic.id).single();
-  const trialEnd = clinicRow ? trialEndFor(clinicRow.created_at) : null;
-  // Stripe requires a trial end at least 48 hours out; otherwise billing starts now.
-  const keepTrial = trialEnd && trialEnd.getTime() - Date.now() > 2 * DAY_MS;
+  const withTrial = trialEligible(state.row);
 
   const price = await ensurePrice(stripe, plan, billing);
   const base = await origin();
@@ -79,9 +74,13 @@ export async function startCheckout(formData: FormData) {
     customer: customerId,
     client_reference_id: clinic.id,
     line_items: [{ price, quantity: 1 }],
+    // Card is always collected, even when nothing is due today.
+    payment_method_collection: "always",
     subscription_data: {
       metadata: { clinic_id: clinic.id },
-      ...(keepTrial ? { trial_end: Math.floor(trialEnd.getTime() / 1000) } : {}),
+      ...(withTrial
+        ? { trial_period_days: TRIAL_DAYS, trial_settings: { end_behavior: { missing_payment_method: "cancel" as const } } }
+        : {}),
     },
     allow_promotion_codes: true,
     billing_address_collection: "required",
@@ -89,10 +88,12 @@ export async function startCheckout(formData: FormData) {
     automatic_tax: { enabled: getServerEnv().STRIPE_AUTOMATIC_TAX === "true" },
     custom_text: {
       submit: {
-        message: `By subscribing you agree to the HazLedger Terms of Service (${base}${routes.terms}). Cancel anytime from Billing; cancellation takes effect at the end of the paid period.`,
+        message: withTrial
+          ? `Free for ${TRIAL_DAYS} days, then billed automatically unless you cancel before the trial ends (Billing → Manage subscription). By starting your trial you agree to the HazLedger Terms of Service (${base}${routes.terms}).`
+          : `Billed automatically each period until you cancel (Billing → Manage subscription). By subscribing you agree to the HazLedger Terms of Service (${base}${routes.terms}).`,
       },
     },
-    success_url: `${base}${routes.billing}?checkout=success`,
+    success_url: `${base}${routes.billing}?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${base}${routes.billing}?checkout=canceled`,
   });
   if (!session.url) fail("checkout_failed");

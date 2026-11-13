@@ -59,7 +59,7 @@ export function Pricing({
         <div className="mx-auto mt-10 flex max-w-5xl flex-col items-center justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white/70 px-6 py-5 backdrop-blur sm:flex-row">
           <p className="flex items-center gap-2 text-sm text-slate-600">
             <ShieldCheck className="size-4 shrink-0 text-success" />
-            Every plan: {siteConfig.trialDays}-day free trial · No credit card · Cancel anytime · Hosted in the US, encrypted
+            Every plan: {siteConfig.trialDays}-day free trial · $0 today · Cancel anytime · Hosted in the US, encrypted
           </p>
           <a
             href={`mailto:${siteConfig.contactEmail}?subject=Multi-location%20pricing`}
@@ -181,7 +181,7 @@ function PlanCard({ plan, cycle }: { plan: Plan; cycle: BillingCycle }) {
           </Link>
         </Button>
       </Magnetic>
-      <p className="mt-2.5 text-center text-xs text-slate-500">No credit card required</p>
+      <p className="mt-2.5 text-center text-xs text-slate-500">$0 today · Cancel anytime before the trial ends</p>
 
       <ul className="mt-7 flex flex-wrap gap-1.5" aria-label={`${plan.name} limits`}>
         {plan.limits.map((l) => (

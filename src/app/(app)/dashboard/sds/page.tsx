@@ -9,7 +9,7 @@ import { routes } from "@/config/site";
 import { SdsStatusBadge } from "@/features/sds/components/status-badge";
 import { listSdsDocuments, type SdsListItem } from "@/features/sds/queries";
 import type { GhsCode } from "@/features/sds/schema";
-import { requireClinic } from "@/lib/auth/dal";
+import { requirePlan } from "@/features/billing/server";
 
 export const metadata: Metadata = { title: "SDS library" };
 
@@ -50,7 +50,7 @@ function formatDate(iso: string | null) {
 }
 
 async function Library({ searchParams }: { searchParams: PageProps<"/dashboard/sds">["searchParams"] }) {
-  const [{ clinic }, params] = await Promise.all([requireClinic(), searchParams]);
+  const [{ clinic }, params] = await Promise.all([requirePlan(), searchParams]);
   const docs = await listSdsDocuments(clinic.id);
   const saved = params.saved === "1";
   const counts = {

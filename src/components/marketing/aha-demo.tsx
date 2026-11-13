@@ -152,7 +152,7 @@ export function AhaDemo() {
               <ArrowRight data-icon="inline-end" />
             </Link>
           </Button>
-          <p className="text-sm text-slate-500">Free for {siteConfig.trialDays} days · No credit card</p>
+          <p className="text-sm text-slate-500">Free for {siteConfig.trialDays} days · Cancel anytime</p>
         </div>
       </div>
     </section>

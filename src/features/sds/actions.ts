@@ -42,7 +42,7 @@ export async function processSdsUpload(input: z.input<typeof uploadSchema>): Pro
   if (!parsed.success) return { ok: false, error: "This file can't be scanned. Use a PDF, JPEG, PNG or WebP under 20 MB." };
   const { path, name, size, mime } = parsed.data;
 
-  // Plan gate (trial expired, Starter limits). Team QR access is never gated.
+  // Plan gate: no plan, ended subscription, trial cap (15 SDSs), Starter limits.
   const billing = await getBillingState(clinic.id);
   const check = canAddSds(billing.entitlement, billing.usage);
   if (!check.allowed) return { ok: false, error: check.message };

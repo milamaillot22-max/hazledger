@@ -117,11 +117,16 @@ printing; "Open the full SDS" links appear once `SUPABASE_SERVICE_ROLE_KEY` is s
 - **Products** in the HazLedger Stripe account: `HazLedger Starter` / `HazLedger Pro`, prices with
   lookup keys `hazledger_{starter|pro}_{monthly|annual}` ($79/$790, $149/$1,490), tax code
   `txcd_10103001` (SaaS, business use). Missing prices are created on first checkout (fresh/test accounts).
-- **Flow**: 14-day trial from clinic creation, no card → `/dashboard/billing` → Stripe Checkout
-  (remaining trial days carry over) → webhook mirrors the subscription into `clinic_billing`
-  → customer portal for plan changes, card, invoices, cancellation (at period end).
-- **Gates** (`src/features/billing/entitlement.ts`, tested): expired trial or Starter limits
-  (150 SDSs, 25 scans/month) block **new scans only**. Team QR access is never blocked for billing.
+- **Flow**: create clinic → `/dashboard/billing` (app pages redirect there until a plan exists) →
+  Stripe Checkout with a **card required** and a 14-day trial (`trialing`, $0 today, one trial per
+  clinic) → the success page confirms the session immediately; the webhook mirrors every change into
+  `clinic_billing` (service role). Plan changes, card, invoices and cancellation: Stripe customer portal.
+- **Gates** (`src/features/billing/entitlement.ts`, tested): trial capped at 15 SDSs / 30 scans;
+  Starter 150 SDSs / 25 scans per month; Pro unlimited. No plan or ended subscription: no new scans.
+- **Team QR**: live while trialing/active/past_due and for 14 days after a subscription ends, then the
+  staff view shows "access paused". Enforced in SQL (`private.clinic_qr_live`), not only in the UI.
+- **Stripe settings to keep on**: Billing → Subscriptions and emails → send a reminder email
+  before a trial ends (several US states require it for auto-renewing trials).
 - **Environment (Vercel → Settings → Environment Variables, never in the repo or chat)**:
   `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `SUPABASE_SERVICE_ROLE_KEY` (webhook writes),
   optional `STRIPE_AUTOMATIC_TAX=true` once Stripe Tax registrations exist.

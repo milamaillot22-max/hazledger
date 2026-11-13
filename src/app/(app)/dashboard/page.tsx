@@ -6,13 +6,13 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { routes } from "@/config/site";
-import { getBillingState } from "@/features/billing/server";
+import { TRIAL_MAX_SDS } from "@/features/billing/entitlement";
+import { requirePlan } from "@/features/billing/server";
 import { listSdsDocuments } from "@/features/sds/queries";
 import {
   practiceTypeLabel,
   stateName,
 } from "@/features/clinics/constants";
-import { requireClinic } from "@/lib/auth/dal";
 
 export const metadata: Metadata = { title: "Dashboard" };
 
@@ -27,8 +27,8 @@ export default function DashboardPage() {
 }
 
 async function DashboardContent() {
-  const { clinic } = await requireClinic();
-  const [docs, billing] = await Promise.all([listSdsDocuments(clinic.id), getBillingState(clinic.id)]);
+  const { clinic, billing } = await requirePlan();
+  const docs = await listSdsDocuments(clinic.id);
   const e = billing.entitlement;
   const current = docs.filter((d) => d.status === "current").length;
   const toReview = docs.filter((d) => d.status === "needs_review").length;
@@ -60,21 +60,25 @@ async function DashboardContent() {
         </p>
         <h1 className="text-2xl font-semibold text-slate-900 sm:text-3xl">{clinic.name}</h1>
       </div>
-      {e.kind === "trial" || e.kind === "expired" || e.kind === "past_due" ? (
+      {e.kind === "trialing" || e.kind === "ended" || e.kind === "past_due" ? (
         <div
           className={`mt-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border px-5 py-4 text-sm ${
-            e.kind === "trial" ? "border-sky-100 bg-brand-soft text-sky-900" : "border-amber-200 bg-amber-50 text-amber-900"
+            e.kind === "trialing" ? "border-sky-100 bg-brand-soft text-sky-900" : "border-amber-200 bg-amber-50 text-amber-900"
           }`}
         >
           <p className="font-medium">
-            {e.kind === "trial"
-              ? `Free trial: ${e.daysLeft} ${e.daysLeft === 1 ? "day" : "days"} left — everything included, no card needed yet.`
-              : e.kind === "expired"
-                ? "Your free trial has ended. Choose a plan to keep adding SDSs — team QR access stays on."
-                : "Your last payment didn't go through. Update your card to keep adding SDSs."}
+            {e.kind === "trialing"
+              ? `Free trial${e.daysLeft ? `: ${e.daysLeft} ${e.daysLeft === 1 ? "day" : "days"} left` : ""} — up to ${TRIAL_MAX_SDS} SDSs included.${
+                  e.cancelAtPeriodEnd ? " Your plan won't renew." : ""
+                }`
+              : e.kind === "ended"
+                ? e.qrLive && e.qrUntil
+                  ? `Your subscription has ended. Team QR access stays on until ${e.qrUntil.toLocaleDateString("en-US", { month: "long", day: "numeric" })}.`
+                  : "Your subscription has ended and team QR access is paused. Choose a plan to switch it back on."
+                : "Your last payment didn't go through. Update your card to keep your plan."}
           </p>
           <Link href={routes.billing} className="font-semibold underline underline-offset-2">
-            {e.kind === "past_due" ? "Update payment" : "See plans"}
+            {e.kind === "past_due" ? "Update payment" : e.kind === "ended" ? "Choose a plan" : "Billing"}
           </Link>
         </div>
       ) : null}

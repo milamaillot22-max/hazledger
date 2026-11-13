@@ -1,9 +1,15 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { canAddSds, limitsFor, lookupKeyFor, resolveEntitlement, trialEndFor, type BillingRow } from "../src/features/billing/entitlement.ts";
+import {
+  canAddSds,
+  limitsFor,
+  lookupKeyFor,
+  resolveEntitlement,
+  trialEligible,
+  type BillingRow,
+} from "../src/features/billing/entitlement.ts";
 
-const created = "2026-11-01T12:00:00Z";
 const row = (over: Partial<BillingRow>): BillingRow => ({
   plan: "starter",
   billing_cycle: "monthly",
@@ -14,37 +20,53 @@ const row = (over: Partial<BillingRow>): BillingRow => ({
   ...over,
 });
 
-test("no subscription: 14-day trial without a card, then expired", () => {
-  assert.equal(trialEndFor(created).toISOString(), "2026-11-15T12:00:00.000Z");
-  const during = resolveEntitlement(null, created, new Date("2026-11-11T12:00:00Z"));
-  assert.equal(during.kind, "trial");
-  assert.equal(during.kind === "trial" && during.daysLeft, 4);
-  assert.equal(resolveEntitlement(null, created, new Date("2026-11-16T00:00:00Z")).kind, "expired");
+test("no subscription yet: no plan, trial available, nothing can be added", () => {
+  const e = resolveEntitlement(null);
+  assert.equal(e.kind, "none");
+  assert.equal(trialEligible(null), true);
+  assert.equal(canAddSds(e, { sdsCount: 0, scansThisMonth: 0 }).allowed, false);
+  // A customer saved before checkout (no status) is still eligible
+  assert.equal(resolveEntitlement(row({ status: null, plan: null })).kind, "none");
+  assert.equal(trialEligible(row({ status: null, plan: null })), true);
 });
 
-test("active and trialing subscriptions are subscribed; past_due gets grace", () => {
-  assert.equal(resolveEntitlement(row({}), created).kind, "subscribed");
-  assert.equal(resolveEntitlement(row({ status: "trialing" }), created).kind, "subscribed");
-  assert.equal(resolveEntitlement(row({ status: "past_due" }), created).kind, "past_due");
-  // canceled falls back to the trial clock
-  assert.equal(resolveEntitlement(row({ status: "canceled" }), created, new Date("2026-12-20T00:00:00Z")).kind, "expired");
+test("one trial per clinic", () => {
+  assert.equal(trialEligible(row({ status: "canceled", trial_used: true })), false);
+  assert.equal(trialEligible(row({ status: "active" })), false);
 });
 
-test("trial includes Pro limits; Starter limits are enforced", () => {
-  assert.deepEqual(limitsFor(resolveEntitlement(null, created, new Date("2026-11-02T00:00:00Z"))), { maxSds: null, scansPerMonth: null });
-  const starter = resolveEntitlement(row({}), created);
+test("trialing: card on file, capped at 15 SDSs", () => {
+  const e = resolveEntitlement(row({ plan: "pro", status: "trialing", trial_ends_at: "2026-11-27T12:00:00Z" }), new Date("2026-11-23T12:00:00Z"));
+  assert.equal(e.kind, "trialing");
+  assert.equal(e.kind === "trialing" && e.daysLeft, 4);
+  assert.deepEqual(canAddSds(e, { sdsCount: 14, scansThisMonth: 14 }), { allowed: true });
+  const capped = canAddSds(e, { sdsCount: 15, scansThisMonth: 15 });
+  assert.equal(capped.allowed, false);
+  assert.match(capped.allowed ? "" : capped.message, /free trial includes up to 15 SDSs/);
+});
+
+test("active plans: Starter limits enforced, Pro unlimited; past_due keeps limits", () => {
+  const starter = resolveEntitlement(row({}));
+  assert.equal(starter.kind, "subscribed");
   assert.deepEqual(canAddSds(starter, { sdsCount: 10, scansThisMonth: 3 }), { allowed: true });
   assert.equal(canAddSds(starter, { sdsCount: 150, scansThisMonth: 0 }).allowed, false);
   assert.equal(canAddSds(starter, { sdsCount: 10, scansThisMonth: 25 }).allowed, false);
-  const pro = resolveEntitlement(row({ plan: "pro" }), created);
+  const pro = resolveEntitlement(row({ plan: "pro" }));
   assert.deepEqual(canAddSds(pro, { sdsCount: 5000, scansThisMonth: 900 }), { allowed: true });
+  const late = resolveEntitlement(row({ status: "past_due" }));
+  assert.equal(late.kind, "past_due");
+  assert.deepEqual(limitsFor(late), { maxSds: 150, scansPerMonth: 25 });
 });
 
-test("expired trial blocks new scans only", () => {
-  const expired = resolveEntitlement(null, created, new Date("2027-01-01T00:00:00Z"));
-  const check = canAddSds(expired, { sdsCount: 0, scansThisMonth: 0 });
-  assert.equal(check.allowed, false);
-  assert.match(check.allowed ? "" : check.message, /team QR access stay available/);
+test("ended subscription: QR stays live for 14 days, then suspended; no new SDSs", () => {
+  const ended = row({ status: "canceled", ended_at: "2026-12-01T00:00:00Z", trial_used: true });
+  const during = resolveEntitlement(ended, new Date("2026-12-10T00:00:00Z"));
+  assert.equal(during.kind, "ended");
+  assert.equal(during.kind === "ended" && during.qrLive, true);
+  assert.equal(during.kind === "ended" && during.qrUntil?.toISOString(), "2026-12-15T00:00:00.000Z");
+  const after = resolveEntitlement(ended, new Date("2026-12-16T00:00:00Z"));
+  assert.equal(after.kind === "ended" && after.qrLive, false);
+  assert.equal(canAddSds(during, { sdsCount: 0, scansThisMonth: 0 }).allowed, false);
 });
 
 test("lookup keys match the prices created in Stripe", () => {

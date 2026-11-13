@@ -76,7 +76,7 @@ export default function ProductPage() {
             </div>
           </div>
           <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-slate-500">
-            {["No credit card required", "Set up in minutes", "Cancel anytime"].map((t) => (
+            {["$0 for 14 days", "Set up in minutes", "Cancel anytime"].map((t) => (
               <li key={t} className="flex items-center gap-1.5">
                 <CheckCircle2 className="size-4 text-success" />
                 {t}

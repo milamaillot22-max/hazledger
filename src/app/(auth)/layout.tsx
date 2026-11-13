@@ -29,7 +29,7 @@ export default function AuthLayout({ children }: LayoutProps<"/">) {
           </div>
           <p className="mt-6 flex items-center gap-1.5 text-xs text-slate-500">
             <ShieldCheck className="size-3.5 text-success" />
-            Encrypted · Hosted in the US · No credit card required
+            Encrypted · Hosted in the US · Cancel anytime
           </p>
         </div>
       </div>
