@@ -113,7 +113,7 @@ export function canAddSds(e: Entitlement, usage: { sdsCount: number; scansThisMo
       message:
         e.kind === "trialing"
           ? `The free trial includes up to ${maxSds} SDSs. Start your paid plan now to add your whole library.`
-          : `Starter includes up to ${maxSds} SDSs. Upgrade to Pro for an unlimited library.`,
+          : `Starter includes up to ${maxSds} SDSs. Upgrade your plan for an unlimited library.`,
     };
   }
   if (scansPerMonth !== null && usage.scansThisMonth >= scansPerMonth) {
@@ -123,7 +123,7 @@ export function canAddSds(e: Entitlement, usage: { sdsCount: number; scansThisMo
       message:
         e.kind === "trialing"
           ? `You've used the ${scansPerMonth} AI scans included in the free trial. Start your paid plan now to keep scanning.`
-          : `Starter includes ${scansPerMonth} AI scans per month. Upgrade to Pro for unlimited scans, or wait until next month.`,
+          : `Starter includes ${scansPerMonth} AI scans per month. Upgrade your plan for unlimited scans, or wait until next month.`,
     };
   }
   return { allowed: true };

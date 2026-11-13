@@ -47,11 +47,11 @@ function softwareApplication({ path, description, audience }: { path: string; de
       offerCount: PLANS.length,
       offers: PLANS.map((p) => ({
         "@type": "Offer",
-        name: `${siteConfig.name} ${p.name}`,
+        name: `${p.name} subscription`,
         price: p.monthly.toFixed(2),
         priceCurrency: CURRENCY,
         url: absoluteUrl(`${routes.signup}?plan=${p.id}`),
-        description: `${p.name} plan, per location per month. ${siteConfig.trialDays}-day free trial, cancel anytime.`,
+        description: `Everything included, per location per month. ${siteConfig.trialDays}-day free trial, cancel anytime.`,
       })),
     },
   };

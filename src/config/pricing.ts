@@ -31,7 +31,7 @@ export const ANNUAL_FREE_MONTHS = 2;
 export const PLANS: Plan[] = [
   {
     id: "pro",
-    name: "Pro",
+    name: "HazLedger",
     monthly: 149,
     featured: true,
     tagline: "Everything your practice needs to keep every SDS current and one scan away.",

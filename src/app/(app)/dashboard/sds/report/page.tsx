@@ -45,17 +45,17 @@ async function Report() {
   if (!hasPro) {
     return (
       <div className="rounded-3xl border border-slate-200/80 bg-white p-8 shadow-sm sm:p-10">
-        <p className="text-xs font-semibold tracking-wider text-sky-700 uppercase">Pro feature</p>
+        <p className="text-xs font-semibold tracking-wider text-sky-700 uppercase">Not in your current plan</p>
         <h1 className="mt-2 font-heading text-2xl font-semibold tracking-tight text-slate-900">Inspection-ready SDS report</h1>
         <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-slate-600">
           A dated, printable index of every SDS — CAS numbers, revisions and items to check — ready for the day an inspector asks.
-          It&apos;s included in the Pro plan.
+          It&apos;s included in the current HazLedger plan.
         </p>
         <Link
           href={routes.billing}
           className="mt-6 inline-flex h-11 items-center rounded-xl bg-primary px-5 text-sm font-semibold text-white hover:bg-primary-hover"
         >
-          {e.kind === "ended" ? "Choose a plan" : "Switch to Pro"}
+          {e.kind === "ended" ? "Choose a plan" : "Upgrade your plan"}
         </Link>
       </div>
     );

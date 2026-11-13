@@ -131,7 +131,7 @@ function PlanCard({ plan, cycle }: { plan: Plan; cycle: BillingCycle }) {
     >
       <div className="flex flex-col">
         <div className="flex flex-wrap items-center gap-2">
-          <h3 className="text-xl font-semibold text-slate-900">HazLedger {plan.name}</h3>
+          <h3 className="text-xl font-semibold text-slate-900">{plan.name}</h3>
           <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-gradient-to-r from-sky-600 to-emerald-600 px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm">
             <Sparkles className="size-3" />
             Everything included

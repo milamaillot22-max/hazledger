@@ -210,7 +210,7 @@ export function RiskCalculator({ defaultSector = "dental" }: { defaultSector?: S
                 {r.yearsCoveredByOneCitation !== null ? (
                   <>
                     One serious citation at your size ({usd(r.risk.seriousAfterSizeReduction)}) equals{" "}
-                    <span className="font-semibold text-emerald-950">{r.yearsCoveredByOneCitation} years</span> of {siteConfig.name} {plan.name}.
+                    <span className="font-semibold text-emerald-950">{r.yearsCoveredByOneCitation} years</span> of {siteConfig.name}.
                   </>
                 ) : null}
                 {r.roiPercent !== null && r.roiPercent < 0 ? " Time savings alone don't cover the plan at this size — the case is compliance risk." : null}
@@ -226,7 +226,7 @@ export function RiskCalculator({ defaultSector = "dental" }: { defaultSector?: S
                       [`${siteConfig.name}, hours / year`, hrs(r.time.hazledgerHours)],
                       ["Hours saved", hrs(r.time.hoursSaved)],
                       ["Staff time saved", usd(r.time.valueSaved)],
-                      [`${plan.name} plan / year`, usd(r.subscriptionAnnual)],
+                      [`${plan.name} subscription / year`, usd(r.subscriptionAnnual)],
                       ["Payback", r.paybackDays === null ? "—" : `${r.paybackDays} days`],
                     ].map(([k, v]) => (
                       <tr key={k} className="border-t border-slate-200/70">

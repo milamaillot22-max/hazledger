@@ -48,7 +48,7 @@ const SECTIONS: LegalSection[] = [
     title: "Plans, billing and renewal",
     body: [
       [
-        `HazLedger Pro: $${pro.monthly} per location per month, or $${pro.monthly * 10} per year. Includes unlimited SDSs and unlimited AI scans under a fair-use policy covering your location's own documents.`,
+        `HazLedger subscription: $${pro.monthly} per location per month, or $${pro.monthly * 10} per year. Includes unlimited SDSs and unlimited AI scans under a fair-use policy covering your location's own documents.`,
       ],
       "Prices are in US dollars and exclude applicable sales, use, VAT or similar taxes, which are added to your invoice where we are required to collect them; you are responsible for any other taxes that apply to your purchase. Your bank may show the charge in your local currency and apply its own exchange rate. Subscriptions are billed in advance and renew automatically at the end of each monthly or annual period until cancelled. Payments are processed by Stripe; we never see or store your full card number.",
       "We may change prices with at least 30 days' notice by email. Changes apply from your next renewal after the notice period.",
@@ -70,7 +70,7 @@ const SECTIONS: LegalSection[] = [
         "Upload only Safety Data Sheets, product labels and related documents you are entitled to use.",
         "Do not upload patient information or other protected health information (PHI) — the service is not designed to store it, and we do not act as a HIPAA business associate.",
         "Do not attempt to access other clinics' data, disrupt the service, or resell it without our written agreement.",
-        "Fair use on Pro means scans of your own location's products; automated or bulk scanning for third parties is not included.",
+        "Fair use means scans of your own location's products; automated or bulk scanning for third parties is not included.",
       ],
     ],
   },

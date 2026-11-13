@@ -105,7 +105,7 @@ async function BillingContent({ searchParams }: { searchParams: PageProps<"/dash
           <div className="mt-5 grid gap-6 rounded-3xl bg-white p-6 shadow-lg shadow-sky-900/5 ring-2 ring-sky-300 sm:p-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
             <div className="flex flex-col">
               <div className="flex flex-wrap items-center gap-2">
-                <h3 className="text-lg font-semibold text-slate-900">HazLedger {plan.name}</h3>
+                <h3 className="text-lg font-semibold text-slate-900">{plan.name}</h3>
                 <span className="rounded-full bg-brand-soft px-2.5 py-0.5 text-[11px] font-semibold text-sky-700 ring-1 ring-sky-100">
                   Everything included
                 </span>
