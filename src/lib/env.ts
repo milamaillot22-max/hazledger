@@ -6,15 +6,18 @@ import { z } from "zod";
  *
  * Server-only secrets live in `getServerEnv()` — call it only from server code.
  */
+/** Trims whitespace and stray quotes that sneak in when values are pasted into dashboards. */
+const clean = (v: unknown) => (typeof v === "string" ? v.trim().replace(/^["']|["']$/g, "").trim() : v);
+
 const publicSchema = z.object({
   /** Production domain by default; set http://localhost:3000 locally to test QR links. */
-  NEXT_PUBLIC_SITE_URL: z.url().default("https://gethazledger.com"),
-  NEXT_PUBLIC_SUPABASE_URL: z.url(),
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
+  NEXT_PUBLIC_SITE_URL: z.preprocess(clean, z.url().default("https://gethazledger.com")),
+  NEXT_PUBLIC_SUPABASE_URL: z.preprocess(clean, z.url()),
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.preprocess(clean, z.string().min(1)),
 });
 
 /** Empty strings (e.g. `KEY=` in .env files or dashboards) count as "not set". */
-const optionalSecret = () => z.preprocess((v) => (v === "" ? undefined : v), z.string().min(1).optional());
+const optionalSecret = () => z.preprocess((v) => (clean(v) === "" ? undefined : clean(v)), z.string().min(1).optional());
 
 const serverSchema = z.object({
   SUPABASE_SERVICE_ROLE_KEY: optionalSecret(),
