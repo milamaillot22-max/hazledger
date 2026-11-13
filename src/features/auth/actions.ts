@@ -73,7 +73,12 @@ export async function sendMagicLink(
   });
 
   if (error) {
-    const code = (error as { code?: string }).code ?? (error.status ? `http_${error.status}` : error.name);
+    const baseCode = (error as { code?: string }).code ?? (error.status ? `http_${error.status}` : error.name);
+    // Network-level failures: include the (key-redacted) cause so it can be diagnosed from a screenshot.
+    const code =
+      error.name === "AuthRetryableFetchError"
+        ? `${baseCode}: ${error.message.replace(/eyJ[\w.-]+|sb_[\w-]+/g, "[key]").slice(0, 120)}`
+        : baseCode;
     // Visible in Vercel → Logs; the reason code is also shown to help support.
     console.error("Magic link failed", { code, status: error.status, message: error.message });
     const message =
