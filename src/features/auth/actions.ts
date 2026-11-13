@@ -73,10 +73,15 @@ export async function sendMagicLink(
   });
 
   if (error) {
+    const code = (error as { code?: string }).code ?? (error.status ? `http_${error.status}` : error.name);
+    // Visible in Vercel → Logs; the reason code is also shown to help support.
+    console.error("Magic link failed", { code, status: error.status, message: error.message });
     const message =
-      error.status === 429
-        ? "Too many requests. Wait a minute, then try again."
-        : "We couldn't send your sign-in link. Please try again.";
+      error.status === 429 || code === "over_email_send_rate_limit"
+        ? "Too many sign-in emails were sent recently. Wait a few minutes, or continue with Google."
+        : code === "email_address_not_authorized"
+          ? "Email sign-in isn't fully set up yet for this address. Please continue with Google for now."
+          : `We couldn't send your sign-in link. Please try again or continue with Google. (Reason: ${code})`;
     return { status: "error", message, email };
   }
 
