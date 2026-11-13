@@ -37,6 +37,13 @@ export const siteConfig = {
     "Scan and organize every Safety Data Sheet in your dental, veterinary or medical practice. HazLedger keeps your SDS library current, reviewed and one QR scan away for your team — built for OSHA HazCom (29 CFR 1910.1200) and HazCom 2024.",
   copyrightYear: 2026,
   contactEmail: "sales@gethazledger.com",
+  /**
+   * Legal operator shown in the Terms and Privacy Policy (Swiss e-commerce rules
+   * require a name and postal address). null until confirmed by the owner.
+   */
+  legalEntity: null as null | { name: string; address: string },
+  /** Seat that sets the competent courts in the Terms. */
+  legalSeat: "Switzerland",
   links: {
     // Swap for a Cal.com / Calendly link once sales booking is live.
     bookDemo: "/#demo",

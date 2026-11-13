@@ -9,7 +9,17 @@ export const metadata: Metadata = {
   alternates: { canonical: routes.privacy },
 };
 
+const operator = siteConfig.legalEntity
+  ? `${siteConfig.legalEntity.name}, ${siteConfig.legalEntity.address}`
+  : `${siteConfig.name}, ${siteConfig.legalSeat}`;
+
 const SECTIONS: LegalSection[] = [
+  {
+    title: "Who is responsible",
+    body: [
+      `${operator} is responsible for the processing of personal data described in this policy. Contact: ${siteConfig.contactEmail}.`,
+    ],
+  },
   {
     title: "What we collect",
     body: [
@@ -44,7 +54,14 @@ const SECTIONS: LegalSection[] = [
         "Stripe — payments, invoices and tax calculation.",
         "Anthropic — AI extraction of the SDS documents you choose to scan.",
         "Google — optional sign-in with Google.",
+        "Infomaniak (Switzerland) — sending account emails such as sign-in links.",
       ],
+    ],
+  },
+  {
+    title: "International transfers",
+    body: [
+      "We are based in Switzerland and our application data is hosted in the United States. Transfers to our providers are covered by contractual safeguards such as the standard contractual clauses recognized under Swiss and EU data protection law, or by the provider's certification under the Swiss-US and EU-US Data Privacy Frameworks where available.",
     ],
   },
   {
@@ -68,7 +85,7 @@ const SECTIONS: LegalSection[] = [
   {
     title: "Your choices and rights",
     body: [
-      "You can access, correct, export or delete your data by emailing us. Depending on where you live, you may have additional rights under laws such as the CCPA or the GDPR; we honor these requests.",
+      "You can access, correct, export or delete your data by emailing us. Depending on where you live, you may have additional rights under laws such as the CCPA, the Swiss Federal Act on Data Protection (FADP) or the GDPR; we honor these requests and answer within 30 days.",
     ],
   },
   {

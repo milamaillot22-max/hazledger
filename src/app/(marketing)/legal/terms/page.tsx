@@ -13,7 +13,18 @@ export const metadata: Metadata = {
 const starter = getPlan("starter");
 const pro = getPlan("pro");
 
+const operator = siteConfig.legalEntity
+  ? `${siteConfig.legalEntity.name}, ${siteConfig.legalEntity.address}`
+  : `${siteConfig.name}, ${siteConfig.legalSeat}`;
+
 const SECTIONS: LegalSection[] = [
+  {
+    title: "Who we are",
+    body: [
+      `${siteConfig.name} is operated by ${operator} ("we", "us"). You can reach us at ${siteConfig.contactEmail}.`,
+      "The service is designed for businesses (dental, veterinary and medical practices and similar workplaces). By starting a trial or subscribing, you confirm you are acting on behalf of a business and not as a consumer.",
+    ],
+  },
   {
     title: "The service",
     body: [
@@ -31,7 +42,7 @@ const SECTIONS: LegalSection[] = [
     title: "Free trial",
     body: [
       `Each new clinic can start one ${siteConfig.trialDays}-day free trial of the plan it chooses. A valid payment card is required to start the trial; nothing is charged on the day you start. The trial includes up to 15 SDSs and a limited number of AI scans.`,
-      `Unless you cancel before the trial ends, your subscription starts automatically at the end of the trial and your card is charged the price of the plan you chose, then on every renewal. The checkout page shows the date of the first charge before you confirm. You can cancel at any time during the trial from Billing in your dashboard and you will not be charged.`,
+      `Unless you cancel before the trial ends, your subscription starts automatically at the end of the trial and your card is charged the price of the plan you chose, then on every renewal. The checkout page shows the date of the first charge before you confirm, and we email you a reminder about 7 days before the trial ends. You can cancel at any time during the trial from Billing in your dashboard and you will not be charged.`,
     ],
   },
   {
@@ -41,7 +52,7 @@ const SECTIONS: LegalSection[] = [
         `Starter: $${starter.monthly} per location per month, or $${starter.monthly * 10} per year. Includes up to 150 SDSs and 25 AI scans per month.`,
         `Pro: $${pro.monthly} per location per month, or $${pro.monthly * 10} per year. Includes unlimited SDSs and unlimited AI scans under a fair-use policy covering your location's own documents.`,
       ],
-      "Prices are in US dollars and exclude applicable taxes, which are added at checkout where required. Subscriptions are billed in advance and renew automatically at the end of each monthly or annual period until cancelled. Payments are processed by Stripe; we never see or store your full card number.",
+      "Prices are in US dollars and exclude applicable sales, use, VAT or similar taxes, which are added to your invoice where we are required to collect them; you are responsible for any other taxes that apply to your purchase. Your bank may show the charge in your local currency and apply its own exchange rate. Subscriptions are billed in advance and renew automatically at the end of each monthly or annual period until cancelled. Payments are processed by Stripe; we never see or store your full card number.",
       "We may change prices with at least 30 days' notice by email. Changes apply from your next renewal after the notice period.",
     ],
   },
@@ -59,7 +70,7 @@ const SECTIONS: LegalSection[] = [
     body: [
       [
         "Upload only Safety Data Sheets, product labels and related documents you are entitled to use.",
-        "Do not upload patient information or other protected health information — the service is not designed to store it.",
+        "Do not upload patient information or other protected health information (PHI) — the service is not designed to store it, and we do not act as a HIPAA business associate.",
         "Do not attempt to access other clinics' data, disrupt the service, or resell it without our written agreement.",
         "Fair use on Pro means scans of your own location's products; automated or bulk scanning for third parties is not included.",
       ],
@@ -93,6 +104,26 @@ const SECTIONS: LegalSection[] = [
     title: "Termination",
     body: [
       "We may suspend or terminate accounts that breach these terms, after notice where reasonably possible. You may stop using the service at any time.",
+    ],
+  },
+  {
+    title: "Governing law and disputes",
+    body: [
+      "These terms are governed by the substantive laws of Switzerland, excluding its conflict-of-law rules and the United Nations Convention on Contracts for the International Sale of Goods (CISG).",
+      `Before starting any proceedings, please email us at ${siteConfig.contactEmail} so we can try to resolve the issue informally within 30 days. If we cannot, the courts at our registered office in ${siteConfig.legalSeat} have exclusive jurisdiction, subject to any mandatory law that provides otherwise.`,
+    ],
+  },
+  {
+    title: "General",
+    body: [
+      [
+        "These terms and the Privacy Policy are the entire agreement between you and us about the service.",
+        "If a provision is found unenforceable, the rest of the terms remain in effect.",
+        "We are not liable for delays or failures caused by events beyond our reasonable control (for example outages of internet or hosting providers).",
+        "You may not transfer your account without our consent; we may transfer these terms as part of a reorganization or sale of the business, with notice to you.",
+        "Notices are sent by email: ours to the clinic owner's email address, yours to our contact address.",
+        "These terms are written in English; any translation is for convenience only.",
+      ],
     ],
   },
   {
