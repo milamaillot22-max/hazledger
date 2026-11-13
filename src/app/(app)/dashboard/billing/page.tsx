@@ -124,7 +124,7 @@ async function BillingContent({ searchParams }: { searchParams: PageProps<"/dash
                   <span className="text-sm text-slate-500"> / month per location</span>
                 </p>
                 <ul className="mt-4 space-y-2">
-                  {[...plan.limits, ...plan.features.map((f) => f.label)].map((f) => (
+                  {[...plan.limits, ...plan.features.map((f) => f.label).filter((l) => !plan.limits.some((x) => l.startsWith(x)))].map((f) => (
                     <li key={f} className="flex items-start gap-2 text-sm text-slate-700">
                       <Check className="mt-0.5 size-4 shrink-0 text-success" />
                       {f}
