@@ -134,7 +134,8 @@ export async function syncSubscription(subscription: Stripe.Subscription, clinic
       status: subscription.status,
       trial_ends_at: iso(subscription.trial_end),
       current_period_end: iso(item?.current_period_end),
-      cancel_at_period_end: subscription.cancel_at_period_end,
+      // Flexible billing mode cancels via `cancel_at` (e.g. at trial end) and leaves cancel_at_period_end false.
+      cancel_at_period_end: subscription.cancel_at_period_end || subscription.cancel_at != null,
       ended_at: iso(subscription.ended_at),
       // Once a subscription has had a trial (or any subscription exists), no new trial.
       trial_used: true,
