@@ -204,7 +204,7 @@ export const SOLUTIONS: Solution[] = [
     pains: [
       {
         title: "Multiple departments, one standard",
-        body: "Procedure rooms, the lab and sterile processing each keep their own products. One library with room mapping replaces scattered binders.",
+        body: "Procedure rooms, the lab and sterile processing each keep their own products. One current library and a QR poster in each room replace scattered binders.",
       },
       {
         title: "High-level disinfectants and fixatives",

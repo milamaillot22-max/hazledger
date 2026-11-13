@@ -59,6 +59,8 @@ export const siteConfig = {
     { label: "Pricing", href: "/pricing" },
   ],
   trialDays: 14,
+  /** Turn on once the Google provider is enabled in Supabase Auth (Authentication → Providers). */
+  googleSignIn: false as boolean,
 } as const;
 
 export type SiteConfig = typeof siteConfig;

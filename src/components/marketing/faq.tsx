@@ -20,7 +20,7 @@ const FAQ = [
   },
   {
     q: "Do my hygienists, assistants and vet techs need an account?",
-    a: "No. Anyone in the room can scan the QR code and view the SDSs for that room. Accounts are only for the people who manage the library — usually the practice owner or office manager.",
+    a: "No. Anyone on your team can scan the QR poster with their phone camera and open your practice's current SDSs — no app, no login. Accounts are only for the people who manage the library — usually the practice owner or office manager.",
   },
   {
     q: "What happens to our existing binders?",
@@ -28,7 +28,7 @@ const FAQ = [
   },
   {
     q: "How is our data protected?",
-    a: "Data is encrypted in transit and at rest and hosted in US data centers. Every edit is recorded in an audit trail, and access is controlled by role.",
+    a: "Data is encrypted in transit and at rest and hosted in US data centers. Each SDS keeps who added it and who confirmed it, with dates, and library access is controlled by role (owner, admin, member).",
   },
   {
     q: "How long is the trial, and what happens after?",

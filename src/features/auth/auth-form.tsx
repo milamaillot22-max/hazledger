@@ -33,7 +33,7 @@ const COPY: Record<Mode, { title: string; subtitle: string; cta: string }> = {
   },
   signup: {
     title: "Start your free trial",
-    subtitle: `${siteConfig.trialDays} days free, then pick up where you left off. Cancel anytime.`,
+    subtitle: `${siteConfig.trialDays} days free on Starter or Pro · $0 today · cancel anytime before the trial ends.`,
     cta: "Create my account",
   },
 };
@@ -110,18 +110,22 @@ function EmailFlow({
         </div>
       ) : null}
 
-      <form action={signInWithGoogle} className="mt-8">
-        <input type="hidden" name="next" value={next} />
-        <GoogleButton />
-      </form>
+      {siteConfig.googleSignIn ? (
+        <>
+          <form action={signInWithGoogle} className="mt-8">
+            <input type="hidden" name="next" value={next} />
+            <GoogleButton />
+          </form>
 
-      <div className="my-7 flex items-center gap-3 text-xs font-medium text-slate-400">
-        <span className="h-px flex-1 bg-slate-200" />
-        or continue with email
-        <span className="h-px flex-1 bg-slate-200" />
-      </div>
+          <div className="my-7 flex items-center gap-3 text-xs font-medium text-slate-400">
+            <span className="h-px flex-1 bg-slate-200" />
+            or continue with email
+            <span className="h-px flex-1 bg-slate-200" />
+          </div>
+        </>
+      ) : null}
 
-      <form action={formAction} className="space-y-5" noValidate>
+      <form action={formAction} className={siteConfig.googleSignIn ? "space-y-5" : "mt-8 space-y-5"} noValidate>
         <input type="hidden" name="next" value={next} />
         {source ? <input type="hidden" name="source" value={source} /> : null}
         {plan ? <input type="hidden" name="plan" value={plan} /> : null}

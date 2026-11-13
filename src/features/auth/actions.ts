@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
-import { routes } from "@/config/site";
+import { routes, siteConfig } from "@/config/site";
 import { safeNextPath } from "@/lib/auth/redirect";
 import { env } from "@/lib/env";
 import { createClient } from "@/lib/supabase/server";
@@ -83,10 +83,10 @@ export async function sendMagicLink(
     console.error("Magic link failed", { code, status: error.status, message: error.message });
     const message =
       error.status === 429 || code === "over_email_send_rate_limit"
-        ? "Too many sign-in emails were sent recently. Wait a few minutes, or continue with Google."
+        ? "Too many sign-in emails were sent recently. Please wait a few minutes and try again."
         : code === "email_address_not_authorized"
-          ? "Email sign-in isn't fully set up yet for this address. Please continue with Google for now."
-          : `We couldn't send your sign-in link. Please try again or continue with Google. (Reason: ${code})`;
+          ? `Email sign-in isn't available for this address yet. Email ${siteConfig.contactEmail} and we'll get you in.`
+          : `We couldn't send your sign-in link. Please try again in a moment, or email ${siteConfig.contactEmail}. (Reason: ${code})`;
     return { status: "error", message, email };
   }
 

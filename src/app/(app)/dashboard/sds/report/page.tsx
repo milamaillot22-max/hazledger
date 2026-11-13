@@ -39,7 +39,27 @@ function usDate(iso: string | null) {
 }
 
 async function Report() {
-  const { clinic } = await requirePlan();
+  const { clinic, billing } = await requirePlan();
+  const e = billing.entitlement;
+  const hasPro = (e.kind === "trialing" || e.kind === "subscribed" || e.kind === "past_due") && e.plan === "pro";
+  if (!hasPro) {
+    return (
+      <div className="rounded-3xl border border-slate-200/80 bg-white p-8 shadow-sm sm:p-10">
+        <p className="text-xs font-semibold tracking-wider text-sky-700 uppercase">Pro feature</p>
+        <h1 className="mt-2 font-heading text-2xl font-semibold tracking-tight text-slate-900">Inspection-ready SDS report</h1>
+        <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-slate-600">
+          A dated, printable index of every SDS — CAS numbers, revisions and items to check — ready for the day an inspector asks.
+          It&apos;s included in the Pro plan.
+        </p>
+        <Link
+          href={routes.billing}
+          className="mt-6 inline-flex h-11 items-center rounded-xl bg-primary px-5 text-sm font-semibold text-white hover:bg-primary-hover"
+        >
+          {e.kind === "ended" ? "Choose a plan" : "Switch to Pro"}
+        </Link>
+      </div>
+    );
+  }
   const docs = await listSdsDocuments(clinic.id);
   const { rows, totals } = buildInspectionReport(docs);
   const generated = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });

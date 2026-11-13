@@ -10,6 +10,7 @@ import { limitsFor, QR_GRACE_DAYS, TRIAL_DAYS, TRIAL_MAX_SDS, type Entitlement }
 import { confirmCheckoutSession, getBillingState } from "@/features/billing/server";
 import { requireClinic } from "@/lib/auth/dal";
 import { getStripe, isStripeConfigured } from "@/lib/stripe";
+import { createClient } from "@/lib/supabase/server";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Billing" };
@@ -59,6 +60,8 @@ async function BillingContent({ searchParams }: { searchParams: PageProps<"/dash
   const firstTime = entitlement.kind === "none";
   const limits = limitsFor(entitlement);
   const firstChargeOn = trialEndFromNow();
+  // Plan picked on the pricing page / calculator before signup (stored in user metadata).
+  const picked = firstTime ? await pickedPlan() : null;
 
   return (
     <div className="mt-8 space-y-6">
@@ -102,19 +105,21 @@ async function BillingContent({ searchParams }: { searchParams: PageProps<"/dash
               : "Per location. Billed automatically each period. Cancel anytime."}
           </p>
           <div className="mt-5 grid gap-5 md:grid-cols-2">
-            {PLANS.map((plan) => (
+            {PLANS.map((plan) => {
+              const highlight = picked ? plan.id === picked : plan.featured;
+              return (
               <div
                 key={plan.id}
                 className={cn(
                   "flex flex-col rounded-3xl bg-white p-6 sm:p-7",
-                  plan.featured ? "ring-2 ring-sky-300 shadow-lg shadow-sky-900/5" : "border border-slate-200/80 shadow-sm"
+                  highlight ? "ring-2 ring-sky-300 shadow-lg shadow-sky-900/5" : "border border-slate-200/80 shadow-sm"
                 )}
               >
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold text-slate-900">{plan.name}</h3>
-                  {plan.featured ? (
+                  {highlight ? (
                     <span className="rounded-full bg-brand-soft px-2.5 py-0.5 text-[11px] font-semibold text-sky-700 ring-1 ring-sky-100">
-                      Recommended
+                      {picked ? "Your pick" : "Recommended"}
                     </span>
                   ) : null}
                 </div>
@@ -139,7 +144,7 @@ async function BillingContent({ searchParams }: { searchParams: PageProps<"/dash
                       <button
                         className={cn(
                           "h-11 w-full rounded-xl text-sm font-semibold",
-                          plan.featured ? "bg-primary text-white hover:bg-primary-hover" : "bg-white text-slate-800 ring-1 ring-slate-200 hover:bg-slate-50"
+                          highlight ? "bg-primary text-white hover:bg-primary-hover" : "bg-white text-slate-800 ring-1 ring-slate-200 hover:bg-slate-50"
                         )}
                       >
                         {firstTime ? `Start free trial — then $${plan.monthly}/month` : `Choose ${plan.name} — $${plan.monthly}/month`}
@@ -158,7 +163,8 @@ async function BillingContent({ searchParams }: { searchParams: PageProps<"/dash
                   <p className="mt-auto pt-6 text-sm text-slate-500">Ask your clinic owner to choose a plan.</p>
                 )}
               </div>
-            ))}
+              );
+            })}
           </div>
         </section>
       ) : null}
@@ -170,6 +176,12 @@ async function BillingContent({ searchParams }: { searchParams: PageProps<"/dash
       </p>
     </div>
   );
+}
+
+async function pickedPlan(): Promise<"starter" | "pro" | null> {
+  const { data } = await (await createClient()).auth.getClaims();
+  const meta = data?.claims?.user_metadata as { selected_plan?: unknown } | undefined;
+  return meta?.selected_plan === "starter" || meta?.selected_plan === "pro" ? meta.selected_plan : null;
 }
 
 function StatusLine({ entitlement: e }: { entitlement: Entitlement }) {
