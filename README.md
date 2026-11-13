@@ -66,7 +66,7 @@ decorative and disabled under reduced motion / touch.
 | --- | --- |
 | `/` | Hero, demo, compliance flow, ROI dashboard, specialties, pricing, FAQ |
 | `/product` | Product detail, features, security, comparison, roadmap |
-| `/pricing` | Plans, Starter vs Pro matrix, calculator, pricing FAQ |
+| `/pricing` | Single Pro plan, calculator, pricing FAQ |
 | `/solutions/[slug]` | Dental, veterinary, medical niche pages |
 | `/resources/blog`, `/resources/blog/[slug]` | Sourced OSHA articles (`src/features/blog/posts.ts`) |
 
@@ -95,7 +95,7 @@ printing; "Open the full SDS" links appear once `SUPABASE_SERVICE_ROLE_KEY` is s
 - **Risk & ROI calculator** (`src/features/roi/calculator.ts`, tested): published OSHA
   maximums + size reduction from `src/config/compliance.ts`, editable time assumptions,
   plan prices from `src/config/pricing.ts`. ROI counts staff time only — never risk avoided.
-- **Pricing** (`src/config/pricing.ts`, tested): Starter $79, Pro $149 (featured), annual =
+- **Pricing** (`src/config/pricing.ts`, tested): one plan, Pro $149 per location, annual =
   2 months free; prices show monthly by default with the annual price as a subtitle. Plan
   limits are commercial terms, enforced once billing (Stripe) ships. Pro = unlimited AI scans
   (fair use), binder import, inspection report, priority support — **shipped features only**
@@ -114,7 +114,7 @@ printing; "Open the full SDS" links appear once `SUPABASE_SERVICE_ROLE_KEY` is s
 
 ## Billing (Stripe)
 
-- **Products** in the HazLedger Stripe account: `HazLedger Starter` / `HazLedger Pro`, prices with
+- **Products** in the HazLedger Stripe account: `HazLedger Pro` (Starter archived), prices with
   lookup keys `hazledger_{starter|pro}_{monthly|annual}` ($79/$790, $149/$1,490), tax code
   `txcd_10103001` (SaaS, business use). Missing prices are created on first checkout (fresh/test accounts).
 - **Flow**: create clinic → `/dashboard/billing` (app pages redirect there until a plan exists) →
@@ -122,7 +122,7 @@ printing; "Open the full SDS" links appear once `SUPABASE_SERVICE_ROLE_KEY` is s
   clinic) → the success page confirms the session immediately; the webhook mirrors every change into
   `clinic_billing` (service role). Plan changes, card, invoices and cancellation: Stripe customer portal.
 - **Gates** (`src/features/billing/entitlement.ts`, tested): trial capped at 15 SDSs / 30 scans;
-  Starter 150 SDSs / 25 scans per month; Pro unlimited. No plan or ended subscription: no new scans.
+  Pro unlimited (Starter retired; its limits remain only for legacy rows). No plan or ended subscription: no new scans.
 - **Team QR**: live while trialing/active/past_due and for 14 days after a subscription ends, then the
   staff view shows "access paused". Enforced in SQL (`private.clinic_qr_live`), not only in the UI.
 - **Stripe settings to keep on**: Billing → Subscriptions and emails → send a reminder email

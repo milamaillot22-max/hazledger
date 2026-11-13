@@ -65,7 +65,7 @@ export async function requirePlan() {
 }
 
 /** Finds the active price for a plan by lookup key; creates it if this Stripe account has none (fresh/test accounts). */
-export async function ensurePrice(stripe: Stripe, plan: PlanId, cycle: BillingCycle): Promise<string> {
+export async function ensurePrice(stripe: Stripe, plan: "pro", cycle: BillingCycle): Promise<string> {
   const lookupKey = lookupKeyFor(plan, cycle);
   const existing = await stripe.prices.list({ lookup_keys: [lookupKey], active: true, limit: 1 });
   if (existing.data[0]) return existing.data[0].id;

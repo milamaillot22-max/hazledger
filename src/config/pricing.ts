@@ -3,8 +3,8 @@
  * calculator and schema.org offers. No framework imports (unit-tested).
  *
  * Plan limits are commercial terms; they are enforced once billing ships.
- * Plans list shipped features only. `comingSoon` exists for Starter-side
- * teasers, but the Pro plan must never carry one (see tests/pricing.test.ts).
+ * Plans list shipped features only — never a "coming soon" item
+ * (see tests/pricing.test.ts).
  */
 
 export type BillingCycle = "monthly" | "annual";
@@ -12,7 +12,7 @@ export type BillingCycle = "monthly" | "annual";
 export type PlanFeature = { label: string; comingSoon?: boolean };
 
 export type Plan = {
-  id: "starter" | "pro";
+  id: "pro";
   name: string;
   /** List price, per location, billed monthly. */
   monthly: number;
@@ -27,40 +27,27 @@ export const CURRENCY = "USD";
 /** Annual billing = 12 months for the price of (12 − this). */
 export const ANNUAL_FREE_MONTHS = 2;
 
+/** One plan: everything included. (Starter was retired; legacy ids stay valid in billing.) */
 export const PLANS: Plan[] = [
-  {
-    id: "starter",
-    name: "Starter",
-    monthly: 79,
-    featured: false,
-    tagline: "For single-location practices moving off the paper binder.",
-    limits: ["1 location", "Up to 150 SDSs", "25 AI scans / month"],
-    features: [
-      { label: "AI SDS scanner — PDFs and label photos" },
-      { label: "Human review with CAS-number validation" },
-      { label: "Team QR poster & login-free staff view" },
-      { label: "Emergency-first view: first aid, spills, PPE" },
-      { label: "Email support" },
-    ],
-  },
   {
     id: "pro",
     name: "Pro",
     monthly: 149,
     featured: true,
-    tagline: "For clinics that want their binder done for them.",
-    limits: ["1 location", "Unlimited SDSs", "Unlimited AI scans"],
+    tagline: "Everything your practice needs to keep every SDS current and one scan away.",
+    limits: ["1 location", "Unlimited SDSs", "Unlimited AI scans (fair use)"],
     features: [
-      { label: "Everything in Starter" },
-      { label: "Unlimited AI scans (fair use)" },
-      { label: "We import your existing binder for you" },
+      { label: "AI SDS scanner — PDFs and label photos" },
+      { label: "Human review with CAS-number validation" },
+      { label: "Team QR poster & login-free staff view" },
+      { label: "Emergency-first view: first aid, spills, PPE" },
       { label: "Inspection-ready SDS report — print or PDF" },
-      { label: "Priority support, same business day" },
+      { label: "Email support" },
     ],
   },
 ];
 
-export function getPlan(id: Plan["id"]) {
+export function getPlan(id: Plan["id"] = "pro") {
   const plan = PLANS.find((p) => p.id === id);
   if (!plan) throw new Error(`Unknown plan: ${id}`);
   return plan;
@@ -81,33 +68,3 @@ export function priceFor(plan: Plan, cycle: BillingCycle) {
 }
 
 export const ANNUAL_DISCOUNT_PERCENT = Math.round((ANNUAL_FREE_MONTHS / 12) * 100);
-
-/** Plan comparison matrix for /pricing. `true` = included, `false` = not included, string = value. */
-export type MatrixValue = boolean | string;
-export const PLAN_MATRIX: { group: string; rows: { label: string; starter: MatrixValue; pro: MatrixValue }[] }[] = [
-  {
-    group: "Library",
-    rows: [
-      { label: "Locations", starter: "1", pro: "1" },
-      { label: "SDSs in your library", starter: "Up to 150", pro: "Unlimited" },
-      { label: "AI scans per month", starter: "25", pro: "Unlimited (fair use)" },
-    ],
-  },
-  {
-    group: "Compliance workflow",
-    rows: [
-      { label: "AI SDS scanner (PDF & label photos)", starter: true, pro: true },
-      { label: "Human review with CAS-number validation", starter: true, pro: true },
-      { label: "Team QR poster & login-free staff view", starter: true, pro: true },
-      { label: "Emergency-first view: first aid, spills, PPE", starter: true, pro: true },
-      { label: "Inspection-ready SDS report (print or PDF)", starter: false, pro: true },
-    ],
-  },
-  {
-    group: "Service",
-    rows: [
-      { label: "We import your existing binder", starter: false, pro: true },
-      { label: "Support", starter: "Email", pro: "Priority, same business day" },
-    ],
-  },
-];

@@ -44,22 +44,22 @@ export function Pricing({
             Simple pricing. Serious protection.
           </Heading>
           <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
-            Per location, everything included in your {siteConfig.trialDays}-day trial. No setup fees, no long contracts.
+            One plan, everything included. Per location, no setup fees, no long contracts.
           </p>
         </div>
 
         <BillingToggle cycle={cycle} onChange={setCycle} />
 
-        <div className="mx-auto mt-12 grid max-w-5xl items-stretch gap-6 md:grid-cols-2">
+        <div className="mx-auto mt-12 max-w-4xl">
           {PLANS.map((plan) => (
             <PlanCard key={plan.id} plan={plan} cycle={cycle} />
           ))}
         </div>
 
-        <div className="mx-auto mt-10 flex max-w-5xl flex-col items-center justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white/70 px-6 py-5 backdrop-blur sm:flex-row">
+        <div className="mx-auto mt-10 flex max-w-4xl flex-col items-center justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white/70 px-6 py-5 backdrop-blur sm:flex-row">
           <p className="flex items-center gap-2 text-sm text-slate-600">
             <ShieldCheck className="size-4 shrink-0 text-success" />
-            Every plan: {siteConfig.trialDays}-day free trial · $0 today · Cancel anytime · Hosted in the US, encrypted
+            {siteConfig.trialDays}-day free trial · $0 today · Cancel anytime · Hosted in the US, encrypted
           </p>
           <a
             href={`mailto:${siteConfig.contactEmail}?subject=Multi-location%20pricing`}
@@ -72,7 +72,7 @@ export function Pricing({
         {showDetailsLink ? (
           <p className="mt-6 text-center">
             <Link href={routes.pricing} className="group inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline">
-              Full plan details and pricing FAQ
+              Pricing details and FAQ
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </p>
@@ -126,88 +126,77 @@ function PlanCard({ plan, cycle }: { plan: Plan; cycle: BillingCycle }) {
 
   const card = (
     <SpotlightCard
-      glow={featured ? "emerald" : "blue"}
-      className={cn(
-        "lift flex h-full flex-col rounded-3xl p-7 sm:p-8",
-        featured
-          ? "bg-white/85 shadow-2xl shadow-sky-900/10 backdrop-blur-xl"
-          : "border border-slate-200/80 bg-white shadow-lg shadow-slate-200/50"
-      )}
+      glow="emerald"
+      className="lift grid h-full gap-8 rounded-3xl bg-white/85 p-7 shadow-2xl shadow-sky-900/10 backdrop-blur-xl sm:p-9 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-10"
     >
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <h3 className="text-xl font-semibold text-slate-900">{plan.name}</h3>
-          <p className="mt-1 text-sm leading-relaxed text-slate-600">{plan.tagline}</p>
-        </div>
-        {featured ? (
+      <div className="flex flex-col">
+        <div className="flex flex-wrap items-center gap-2">
+          <h3 className="text-xl font-semibold text-slate-900">HazLedger {plan.name}</h3>
           <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-gradient-to-r from-sky-600 to-emerald-600 px-2.5 py-1 text-[11px] font-semibold text-white shadow-sm">
             <Sparkles className="size-3" />
-            Recommended for clinics
+            Everything included
           </span>
-        ) : null}
+        </div>
+        <p className="mt-2 text-sm leading-relaxed text-slate-600">{plan.tagline}</p>
+
+        <div className="mt-7 flex items-baseline gap-1.5">
+          <span className="font-heading text-5xl font-semibold tracking-tight text-slate-900 tabular">
+            <AnimatedNumber value={price.perMonth} format={usd} duration={350} />
+          </span>
+          <span className="text-base font-medium text-slate-700">/ month</span>
+          <span className="text-sm text-slate-500">per location</span>
+        </div>
+        <p className="mt-2 min-h-5 text-[13px] text-slate-500">
+          {cycle === "annual" ? (
+            <>
+              Billed {usd(price.billedAmount)} yearly ·{" "}
+              <span className="font-semibold text-emerald-700">save {usd(price.savings)}</span> vs. {usd(plan.monthly)}/month
+            </>
+          ) : (
+            <>
+              or {usd(annual.perMonth)}/month billed annually ({usd(annual.billedAmount)}/year) ·{" "}
+              <span className="font-semibold text-emerald-700">{ANNUAL_DISCOUNT_PERCENT}% off</span>
+            </>
+          )}
+        </p>
+
+        <Magnetic className="mt-7 w-full">
+          <Button asChild size="xl" className="w-full">
+            <Link href={href}>
+              Start {siteConfig.trialDays}-Day Free Trial
+              <ArrowRight data-icon="inline-end" />
+            </Link>
+          </Button>
+        </Magnetic>
+        <p className="mt-2.5 text-center text-xs text-slate-500">$0 today · Cancel anytime before the trial ends</p>
       </div>
 
-      <div className="mt-7 flex items-baseline gap-1.5">
-        <span className="font-heading text-5xl font-semibold tracking-tight text-slate-900 tabular">
-          <AnimatedNumber value={price.perMonth} format={usd} duration={350} />
-        </span>
-        <span className="text-base font-medium text-slate-700">/ month</span>
-        <span className="text-sm text-slate-500">per location</span>
+      <div className="border-t border-slate-100 pt-7 md:border-t-0 md:border-l md:pt-0 md:pl-10">
+        <ul className="flex flex-wrap gap-1.5" aria-label={`${plan.name} limits`}>
+          {plan.limits.map((l) => (
+            <li key={l} className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">
+              {l}
+            </li>
+          ))}
+        </ul>
+        <ul className="mt-6 space-y-3">
+          {plan.features.map((f) => (
+            <li key={f.label} className="flex items-start gap-2.5 text-sm text-slate-700">
+              <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-success-soft text-success">
+                <Check className="size-3" strokeWidth={3} />
+              </span>
+              <span className="font-medium text-slate-800">{f.label}</span>
+            </li>
+          ))}
+        </ul>
       </div>
-      <p className="mt-2 min-h-5 text-[13px] text-slate-500">
-        {cycle === "annual" ? (
-          <>
-            Billed {usd(price.billedAmount)} yearly ·{" "}
-            <span className="font-semibold text-emerald-700">save {usd(price.savings)}</span> vs. {usd(plan.monthly)}/month
-          </>
-        ) : (
-          <>
-            or {usd(annual.perMonth)}/month billed annually ({usd(annual.billedAmount)}/year) ·{" "}
-            <span className="font-semibold text-emerald-700">{ANNUAL_DISCOUNT_PERCENT}% off</span>
-          </>
-        )}
-      </p>
-
-      <Magnetic className="mt-7 w-full">
-        <Button
-          asChild
-          size="xl"
-          variant={featured ? "default" : "outline"}
-          className={cn("w-full", !featured && "border-slate-200 bg-white text-slate-800 shadow-xs hover:border-sky-200 hover:bg-sky-50/60")}
-        >
-          <Link href={href}>
-            Start {siteConfig.trialDays}-Day Clinic Trial
-            <ArrowRight data-icon="inline-end" />
-          </Link>
-        </Button>
-      </Magnetic>
-      <p className="mt-2.5 text-center text-xs text-slate-500">$0 today · Cancel anytime before the trial ends</p>
-
-      <ul className="mt-7 flex flex-wrap gap-1.5" aria-label={`${plan.name} limits`}>
-        {plan.limits.map((l) => (
-          <li key={l} className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">
-            {l}
-          </li>
-        ))}
-      </ul>
-
-      <ul className="mt-6 space-y-3 border-t border-slate-100 pt-6">
-        {plan.features.map((f) => (
-          <li key={f.label} className="flex items-start gap-2.5 text-sm text-slate-700">
-            <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-success-soft text-success">
-              <Check className="size-3" strokeWidth={3} />
-            </span>
-            <span className={cn(featured && f.label !== "Everything in Starter" && "font-medium text-slate-800")}>{f.label}</span>
-          </li>
-        ))}
-      </ul>
     </SpotlightCard>
   );
 
   if (!featured) return card;
   // Featured: hairline gradient border + soft halo (glass effect).
   return (
-    <div className="relative rounded-3xl bg-gradient-to-b from-sky-400/70 via-sky-200/50 to-emerald-400/60 p-px md:-my-3">
+    <div className="relative rounded-3xl bg-gradient-to-b from-sky-400/70 via-sky-200/50 to-emerald-400/60 p-px">
       <div aria-hidden="true" className="absolute -inset-6 -z-10 rounded-[2.5rem] bg-gradient-to-b from-sky-200/40 to-emerald-200/30 blur-2xl" />
       <div className="h-full rounded-[calc(1.5rem-1px)] bg-gradient-to-b from-sky-50/60 to-white">{card}</div>
     </div>

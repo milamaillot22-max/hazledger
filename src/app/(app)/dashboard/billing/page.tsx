@@ -3,21 +3,20 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { AlertTriangle, Check, CheckCircle2, CreditCard, ShieldCheck } from "lucide-react";
 
-import { ANNUAL_DISCOUNT_PERCENT, PLANS, priceFor } from "@/config/pricing";
+import { ANNUAL_DISCOUNT_PERCENT, getPlan, PLANS, priceFor } from "@/config/pricing";
 import { routes } from "@/config/site";
 import { openBillingPortal, startCheckout } from "@/features/billing/actions";
 import { limitsFor, QR_GRACE_DAYS, TRIAL_DAYS, TRIAL_MAX_SDS, type Entitlement } from "@/features/billing/entitlement";
 import { confirmCheckoutSession, getBillingState } from "@/features/billing/server";
 import { requireClinic } from "@/lib/auth/dal";
 import { getStripe, isStripeConfigured } from "@/lib/stripe";
-import { createClient } from "@/lib/supabase/server";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Billing" };
 
 const ERRORS: Record<string, string> = {
   forbidden: "Only the clinic owner or an admin can manage billing.",
-  invalid_plan: "That plan isn't available. Pick Starter or Pro.",
+  invalid_plan: "That plan isn't available. Please try again.",
   not_configured: "Online payments aren't switched on yet. Email us and we'll set up your plan.",
   no_customer: "There's no subscription to manage yet. Choose a plan below.",
   checkout_failed: "We couldn't open the secure checkout. Please try again.",
@@ -60,8 +59,7 @@ async function BillingContent({ searchParams }: { searchParams: PageProps<"/dash
   const firstTime = entitlement.kind === "none";
   const limits = limitsFor(entitlement);
   const firstChargeOn = trialEndFromNow();
-  // Plan picked on the pricing page / calculator before signup (stored in user metadata).
-  const picked = firstTime ? await pickedPlan() : null;
+  const plan = getPlan();
 
   return (
     <div className="mt-8 space-y-6">
@@ -97,74 +95,56 @@ async function BillingContent({ searchParams }: { searchParams: PageProps<"/dash
       {!paying ? (
         <section>
           <h2 className="font-heading text-lg font-semibold text-slate-900">
-            {firstTime ? `Start your ${TRIAL_DAYS}-day free trial` : "Choose your plan"}
+            {firstTime ? `Start your ${TRIAL_DAYS}-day free trial` : "Restart your plan"}
           </h2>
           <p className="mt-1 text-sm text-slate-600">
             {firstTime
-              ? `Pick a plan and add your card — you pay $0 today. Your first charge is on ${usDate(firstChargeOn)}; cancel before then and you pay nothing. The trial includes up to ${TRIAL_MAX_SDS} SDSs.`
+              ? `Add your card — you pay $0 today. Your first charge is on ${usDate(firstChargeOn)}; cancel before then and you pay nothing. The trial includes up to ${TRIAL_MAX_SDS} SDSs.`
               : "Per location. Billed automatically each period. Cancel anytime."}
           </p>
-          <div className="mt-5 grid gap-5 md:grid-cols-2">
-            {PLANS.map((plan) => {
-              const highlight = picked ? plan.id === picked : plan.featured;
-              return (
-              <div
-                key={plan.id}
-                className={cn(
-                  "flex flex-col rounded-3xl bg-white p-6 sm:p-7",
-                  highlight ? "ring-2 ring-sky-300 shadow-lg shadow-sky-900/5" : "border border-slate-200/80 shadow-sm"
-                )}
-              >
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-slate-900">{plan.name}</h3>
-                  {highlight ? (
-                    <span className="rounded-full bg-brand-soft px-2.5 py-0.5 text-[11px] font-semibold text-sky-700 ring-1 ring-sky-100">
-                      {picked ? "Your pick" : "Recommended"}
-                    </span>
-                  ) : null}
-                </div>
-                <p className="mt-1 text-sm text-slate-600">{plan.tagline}</p>
-                <p className="mt-4">
-                  <span className="font-heading text-4xl font-semibold text-slate-900 tabular">${plan.monthly}</span>
-                  <span className="text-sm text-slate-500"> / month per location</span>
-                </p>
-                <ul className="mt-4 space-y-2">
-                  {[...plan.limits, ...plan.features.map((f) => f.label).filter((l) => !plan.limits.some((x) => l.startsWith(x)))].map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm text-slate-700">
-                      <Check className="mt-0.5 size-4 shrink-0 text-success" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                {canManage ? (
-                  <div className="mt-auto grid gap-2 pt-6">
-                    <form action={startCheckout}>
-                      <input type="hidden" name="plan" value={plan.id} />
-                      <input type="hidden" name="billing" value="monthly" />
-                      <button
-                        className={cn(
-                          "h-11 w-full rounded-xl text-sm font-semibold",
-                          highlight ? "bg-primary text-white hover:bg-primary-hover" : "bg-white text-slate-800 ring-1 ring-slate-200 hover:bg-slate-50"
-                        )}
-                      >
-                        {firstTime ? `Start free trial — then $${plan.monthly}/month` : `Choose ${plan.name} — $${plan.monthly}/month`}
-                      </button>
-                    </form>
-                    <form action={startCheckout}>
-                      <input type="hidden" name="plan" value={plan.id} />
-                      <input type="hidden" name="billing" value="annual" />
-                      <button className="h-10 w-full rounded-xl text-sm font-medium text-primary hover:bg-sky-50">
-                        {firstTime ? "Or after the trial: " : "Or "}${priceFor(plan, "annual").billedAmount.toLocaleString("en-US")}/year — save{" "}
-                        {ANNUAL_DISCOUNT_PERCENT}%
-                      </button>
-                    </form>
-                  </div>
-                ) : (
-                  <p className="mt-auto pt-6 text-sm text-slate-500">Ask your clinic owner to choose a plan.</p>
-                )}
+          <div className="mt-5 grid gap-6 rounded-3xl bg-white p-6 shadow-lg shadow-sky-900/5 ring-2 ring-sky-300 sm:p-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+            <div className="flex flex-col">
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="text-lg font-semibold text-slate-900">HazLedger {plan.name}</h3>
+                <span className="rounded-full bg-brand-soft px-2.5 py-0.5 text-[11px] font-semibold text-sky-700 ring-1 ring-sky-100">
+                  Everything included
+                </span>
               </div>
-              );
-            })}
+              <p className="mt-1 text-sm text-slate-600">{plan.tagline}</p>
+              <p className="mt-4">
+                <span className="font-heading text-4xl font-semibold text-slate-900 tabular">${plan.monthly}</span>
+                <span className="text-sm text-slate-500"> / month per location</span>
+              </p>
+              {canManage ? (
+                <div className="mt-auto grid gap-2 pt-6">
+                  <form action={startCheckout}>
+                    <input type="hidden" name="plan" value={plan.id} />
+                    <input type="hidden" name="billing" value="monthly" />
+                    <button className="h-11 w-full rounded-xl bg-primary text-sm font-semibold text-white hover:bg-primary-hover">
+                      {firstTime ? `Start free trial — then $${plan.monthly}/month` : `Restart — $${plan.monthly}/month`}
+                    </button>
+                  </form>
+                  <form action={startCheckout}>
+                    <input type="hidden" name="plan" value={plan.id} />
+                    <input type="hidden" name="billing" value="annual" />
+                    <button className="h-11 w-full rounded-xl bg-white text-sm font-semibold text-slate-800 ring-1 ring-slate-200 hover:bg-slate-50">
+                      {firstTime ? "Or yearly after the trial: " : "Or yearly: "}${priceFor(plan, "annual").billedAmount.toLocaleString("en-US")}/year — save{" "}
+                      {ANNUAL_DISCOUNT_PERCENT}%
+                    </button>
+                  </form>
+                </div>
+              ) : (
+                <p className="mt-auto pt-6 text-sm text-slate-500">Ask your clinic owner to start the plan.</p>
+              )}
+            </div>
+            <ul className="space-y-2 border-t border-slate-100 pt-6 md:border-t-0 md:border-l md:pt-0 md:pl-8">
+              {[...plan.limits, ...plan.features.map((f) => f.label)].map((f) => (
+                <li key={f} className="flex items-start gap-2 text-sm text-slate-700">
+                  <Check className="mt-0.5 size-4 shrink-0 text-success" />
+                  {f}
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       ) : null}
@@ -176,12 +156,6 @@ async function BillingContent({ searchParams }: { searchParams: PageProps<"/dash
       </p>
     </div>
   );
-}
-
-async function pickedPlan(): Promise<"starter" | "pro" | null> {
-  const { data } = await (await createClient()).auth.getClaims();
-  const meta = data?.claims?.user_metadata as { selected_plan?: unknown } | undefined;
-  return meta?.selected_plan === "starter" || meta?.selected_plan === "pro" ? meta.selected_plan : null;
 }
 
 function StatusLine({ entitlement: e }: { entitlement: Entitlement }) {

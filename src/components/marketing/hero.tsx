@@ -69,7 +69,7 @@ export function Hero() {
               href={routes.pricing}
               className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-white/10 px-6 text-[15px] font-medium text-white ring-1 ring-white/30 backdrop-blur transition-colors hover:bg-white/20 sm:w-auto"
             >
-              Compare plans
+              See pricing
             </Link>
           </div>
 

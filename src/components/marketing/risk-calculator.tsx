@@ -8,7 +8,7 @@ import { Magnetic } from "@/components/fx/magnetic";
 import { Tooth } from "@/components/icons/tooth";
 import { Eyebrow } from "@/components/marketing/section-heading";
 import { CORE_HAZCOM_REQUIREMENTS, OSHA_PENALTIES } from "@/config/compliance";
-import { PLANS, type Plan } from "@/config/pricing";
+import { getPlan } from "@/config/pricing";
 import { siteConfig } from "@/config/site";
 import {
   calculate,
@@ -42,8 +42,7 @@ export function RiskCalculator({ defaultSector = "dental" }: { defaultSector?: S
   const [rooms, setRooms] = useState(4);
   const [productsOverride, setProductsOverride] = useState<number | undefined>(undefined);
   const [assumptions, setAssumptions] = useState<Assumptions>(DEFAULT_ASSUMPTIONS);
-  const [planId, setPlanId] = useState<Plan["id"]>("pro");
-  const plan = PLANS.find((p) => p.id === planId) ?? PLANS[0];
+  const plan = getPlan();
 
   // Pure and cheap: recomputed synchronously on every input event — no lag, no tween.
   const r = useMemo(
@@ -192,23 +191,9 @@ export function RiskCalculator({ defaultSector = "dental" }: { defaultSector?: S
               {/* KPI tiles */}
               <div className="mt-8 flex items-center justify-between gap-3">
                 <p className="text-xs font-semibold tracking-wider text-slate-500 uppercase">Return</p>
-                <div role="radiogroup" aria-label="Plan" className="flex rounded-lg bg-slate-200/60 p-0.5 text-xs font-semibold">
-                  {PLANS.map((p) => (
-                    <button
-                      key={p.id}
-                      type="button"
-                      role="radio"
-                      aria-checked={p.id === planId}
-                      onClick={() => setPlanId(p.id)}
-                      className={cn(
-                        "rounded-md px-2.5 py-1 transition-colors duration-150",
-                        p.id === planId ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-900"
-                      )}
-                    >
-                      {p.name} · ${p.monthly}
-                    </button>
-                  ))}
-                </div>
+                <span className="rounded-lg bg-slate-200/60 px-2.5 py-1 text-xs font-semibold text-slate-700">
+                  {plan.name} · ${plan.monthly}/month
+                </span>
               </div>
               <dl className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
                 <Kpi label="Hours saved" value={hrs(r.time.hoursSaved)} />
@@ -258,7 +243,7 @@ export function RiskCalculator({ defaultSector = "dental" }: { defaultSector?: S
                   href={`${siteConfig.links.startTrial}?plan=${plan.id}&source=calculator`}
                   className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 text-[15px] font-semibold text-white shadow-[0_8px_24px_-8px_rgb(2_132_199/0.45)] transition-all duration-200 hover:bg-primary-hover hover:shadow-[0_0_0_4px_rgb(2_132_199/0.12)]"
                 >
-                  Start {siteConfig.trialDays}-Day {plan.name} Trial
+                  Start {siteConfig.trialDays}-Day Free Trial
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                 </Link>
               </Magnetic>

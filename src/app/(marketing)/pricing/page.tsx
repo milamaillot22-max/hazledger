@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Check, Minus } from "lucide-react";
 
 import { FinalCta } from "@/components/marketing/final-cta";
 import { Pricing } from "@/components/marketing/pricing";
@@ -10,12 +9,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ANNUAL_DISCOUNT_PERCENT, ANNUAL_FREE_MONTHS, PLAN_MATRIX, PLANS, type MatrixValue } from "@/config/pricing";
+import { ANNUAL_DISCOUNT_PERCENT, ANNUAL_FREE_MONTHS, getPlan, priceFor } from "@/config/pricing";
 import { routes, siteConfig } from "@/config/site";
 import { jsonLd, pricingStructuredData } from "@/lib/seo";
-import { cn } from "@/lib/utils";
 
-const TITLE = `Pricing — Starter $${PLANS[0].monthly}, Pro $${PLANS[1].monthly} per location`;
+const pro = getPlan();
+const TITLE = `Pricing — $${pro.monthly}/month per location, everything included`;
 const DESCRIPTION = `Simple per-location pricing for OSHA HazCom compliance. ${siteConfig.trialDays}-day free trial. Save ${ANNUAL_DISCOUNT_PERCENT}% with annual billing.`;
 
 export const metadata: Metadata = {
@@ -28,47 +27,29 @@ export const metadata: Metadata = {
 const FAQ = [
   {
     q: "Do I need a credit card to start the trial?",
-    a: `Yes, a card is required to start, but you pay $0 today. Every plan starts with a ${siteConfig.trialDays}-day free trial (up to 15 SDSs). Cancel from Billing before the trial ends and you're never charged.`,
+    a: `Yes, a card is required to start, but you pay $0 today. You get a ${siteConfig.trialDays}-day free trial (up to 15 SDSs). Cancel from Billing before the trial ends and you're never charged.`,
   },
   {
     q: "How does annual billing work?",
-    a: `Annual billing gives you ${ANNUAL_FREE_MONTHS} months free — ${ANNUAL_DISCOUNT_PERCENT}% off the monthly price, billed once a year.`,
+    a: `Annual billing gives you ${ANNUAL_FREE_MONTHS} months free: $${priceFor(pro, "annual").billedAmount.toLocaleString("en-US")} per year instead of $${(pro.monthly * 12).toLocaleString("en-US")}, billed once a year (${ANNUAL_DISCOUNT_PERCENT}% off).`,
   },
   {
     q: "What counts as an AI scan?",
-    a: "Each document you upload for extraction — an SDS PDF or a label photo — counts as one scan. Reviewing, editing and sharing records never counts. Starter includes 25 scans a month; Pro is unlimited under a fair-use policy covering your location's own documents.",
+    a: "Each document you upload for extraction — an SDS PDF or a label photo — counts as one scan. Reviewing, editing and sharing records never counts. Scans are unlimited under a fair-use policy covering your location's own documents.",
   },
   {
-    q: "What does “we import your binder” mean on Pro?",
-    a: "Send us your existing SDSs (scans or PDFs). Our team runs them through the scanner for you; you review and confirm each record before it goes live.",
+    q: "Is there a cheaper plan?",
+    a: "No. There is one plan with everything included, so there are no limits to outgrow and no features held back. You only choose how you pay: monthly, or yearly with 2 months free.",
   },
   {
     q: "Can I cancel anytime?",
-    a: "Yes. Monthly plans stop at the end of the current month, and your records remain yours — ask us for a copy at any time.",
+    a: "Yes, from Billing in your dashboard. Your plan stays active until the end of the period you have paid for and is not renewed. Your records remain yours — ask us for a copy at any time.",
   },
   {
     q: "We have several locations or a DSO.",
     a: `Pricing is per location. For groups, contact ${siteConfig.contactEmail} — a multi-location dashboard is on our roadmap.`,
   },
 ];
-
-function Cell({ value }: { value: MatrixValue }) {
-  if (value === true) {
-    return (
-      <span className="inline-flex size-5 items-center justify-center rounded-full bg-success-soft text-success" aria-label="Included">
-        <Check className="size-3" strokeWidth={3} />
-      </span>
-    );
-  }
-  if (value === false) {
-    return (
-      <span className="inline-flex size-5 items-center justify-center text-slate-300" aria-label="Not included">
-        <Minus className="size-4" />
-      </span>
-    );
-  }
-  return <span className="text-sm font-medium text-slate-800">{value}</span>;
-}
 
 export default function PricingPage() {
   return (
@@ -77,51 +58,6 @@ export default function PricingPage() {
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={jsonLd(d)} />
       ))}
       <Pricing headingLevel="h1" />
-
-      <section aria-labelledby="matrix-title" className="mx-auto max-w-5xl px-4 py-20 sm:px-6">
-        <h2 id="matrix-title" className="font-heading text-2xl font-semibold tracking-[-0.02em] text-slate-900 sm:text-3xl">
-          Compare plans
-        </h2>
-        <div className="card-soft relative mt-8 overflow-x-auto rounded-3xl">
-          <table className="w-full min-w-[560px] text-left">
-            <thead>
-              <tr className="border-b border-slate-100">
-                <th scope="col" className="px-5 py-4 text-sm font-medium text-slate-500">
-                  <span className="sr-only">Feature</span>
-                </th>
-                {PLANS.map((p) => (
-                  <th key={p.id} scope="col" className={cn("w-40 px-5 py-4 text-center", p.featured && "bg-sky-50/60")}>
-                    <span className="block font-heading text-base font-semibold text-slate-900">{p.name}</span>
-                    <span className="block text-xs font-normal text-slate-500">${p.monthly} / month</span>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            {PLAN_MATRIX.map((group) => (
-              <tbody key={group.group}>
-                <tr>
-                  <th colSpan={3} scope="colgroup" className="bg-slate-50/80 px-5 py-2 text-xs font-semibold tracking-wider text-slate-500 uppercase">
-                    {group.group}
-                  </th>
-                </tr>
-                {group.rows.map((r) => (
-                  <tr key={r.label} className="border-t border-slate-100">
-                    <th scope="row" className="px-5 py-3.5 text-sm font-normal text-slate-700">
-                      {r.label}
-                    </th>
-                    <td className="px-5 py-3.5 text-center">
-                      <Cell value={r.starter} />
-                    </td>
-                    <td className="bg-sky-50/40 px-5 py-3.5 text-center">
-                      <Cell value={r.pro} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            ))}
-          </table>
-        </div>
-      </section>
 
       <RiskCalculator />
 
@@ -141,7 +77,7 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <FinalCta title="Start your trial on Pro. Downgrade anytime." calculatorHref="#calculator" />
+      <FinalCta title="Start your 14-day free trial today." calculatorHref="#calculator" />
     </>
   );
 }

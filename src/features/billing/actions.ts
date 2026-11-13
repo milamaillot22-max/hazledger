@@ -33,7 +33,7 @@ async function requireBillingAdmin() {
 }
 
 const checkoutSchema = z.object({
-  plan: z.enum(["starter", "pro"]),
+  plan: z.enum(["pro"]),
   billing: z.enum(["monthly", "annual"]),
 });
 

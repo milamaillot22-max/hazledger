@@ -12,7 +12,7 @@ const POINTS: { icon: LucideIcon; title: string; body: string }[] = [
   {
     icon: Clock3,
     title: "About 30 seconds per SDS",
-    body: "Snap a bottle or drop in the manufacturer's PDF. On Pro, we import your existing binder for you.",
+    body: "Snap a bottle or drop in the manufacturer's PDF. Each SDS is extracted in about 30 seconds."
   },
   {
     icon: ShieldCheck,

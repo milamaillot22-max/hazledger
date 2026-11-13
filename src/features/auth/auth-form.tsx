@@ -33,7 +33,7 @@ const COPY: Record<Mode, { title: string; subtitle: string; cta: string }> = {
   },
   signup: {
     title: "Start your free trial",
-    subtitle: `${siteConfig.trialDays} days free on Starter or Pro · $0 today · cancel anytime before the trial ends.`,
+    subtitle: `${siteConfig.trialDays} days free, everything included · $0 today · cancel anytime before the trial ends.`,
     cta: "Create my account",
   },
 };

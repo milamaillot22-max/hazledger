@@ -24,7 +24,7 @@ const FAQ = [
   },
   {
     q: "What happens to our existing binders?",
-    a: "On the Pro plan, we import your existing binder for you. On Starter, snap each SDS or upload the PDF — each takes about 30 seconds to extract.",
+    a: "Keep them until your digital library is complete. Snap a photo of each label or upload the manufacturer's PDF: HazLedger extracts it in about 30 seconds and you confirm it before it goes live.",
   },
   {
     q: "How is our data protected?",
@@ -32,7 +32,7 @@ const FAQ = [
   },
   {
     q: "How long is the trial, and what happens after?",
-    a: `${siteConfig.trialDays} days free on the plan you pick: Starter ($${getPlan("starter").monthly}) or Pro ($${getPlan("pro").monthly}) per location per month, or save ${ANNUAL_DISCOUNT_PERCENT}% with annual billing. A card is required but you pay $0 today; if you don't cancel before the trial ends, your plan starts automatically. Cancel anytime.`,
+    a: `${siteConfig.trialDays} days free with everything included. A card is required but you pay $0 today. If you don't cancel before the trial ends, your plan starts automatically at $${getPlan().monthly} per location per month, or $${getPlan().monthly * 10} per year (save ${ANNUAL_DISCOUNT_PERCENT}%). Cancel anytime.`,
   },
 ];
 

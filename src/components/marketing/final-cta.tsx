@@ -24,7 +24,7 @@ export function FinalCta({ title, calculatorHref = "/#calculator" }: { title?: s
             {title ?? "Be inspection-ready before your next patient."}
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-base lg:mx-0 leading-relaxed text-slate-500 sm:text-lg">
-            Start on {pro.name} for {siteConfig.trialDays} days, free. We import your binder, you print your team QR poster today.
+            Try {siteConfig.name} free for {siteConfig.trialDays} days. Scan your first SDS and print your team QR poster today.
           </p>
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
             <Magnetic className="w-full sm:w-auto">
@@ -32,7 +32,7 @@ export function FinalCta({ title, calculatorHref = "/#calculator" }: { title?: s
                 href={`${routes.signup}?plan=${pro.id}&source=final-cta`}
                 className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 text-[15px] font-semibold text-white shadow-[0_8px_24px_-8px_rgb(2_132_199/0.45)] transition-all duration-200 hover:bg-primary-hover hover:shadow-[0_0_0_4px_rgb(2_132_199/0.12),0_12px_28px_-8px_rgb(2_132_199/0.5)] sm:w-auto"
               >
-                Start {siteConfig.trialDays}-Day {pro.name} Trial
+                Start {siteConfig.trialDays}-Day Free Trial
                 <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
               </Link>
             </Magnetic>
@@ -40,7 +40,7 @@ export function FinalCta({ title, calculatorHref = "/#calculator" }: { title?: s
               href={routes.pricing}
               className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-white px-6 text-[15px] font-medium text-slate-700 shadow-sm ring-1 ring-slate-200 transition-colors hover:bg-slate-50 hover:text-slate-900 sm:w-auto"
             >
-              Compare plans
+              See pricing
             </Link>
           </div>
           <p className="mt-5 text-xs text-slate-500">$0 today · Cancel anytime before day {siteConfig.trialDays} · ${pro.monthly}/month per location after the trial</p>
