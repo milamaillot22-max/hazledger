@@ -87,6 +87,11 @@ export async function startCheckout(formData: FormData) {
     billing_address_collection: "required",
     customer_update: { address: "auto", name: "auto" },
     automatic_tax: { enabled: getServerEnv().STRIPE_AUTOMATIC_TAX === "true" },
+    custom_text: {
+      submit: {
+        message: `By subscribing you agree to the HazLedger Terms of Service (${base}${routes.terms}). Cancel anytime from Billing; cancellation takes effect at the end of the paid period.`,
+      },
+    },
     success_url: `${base}${routes.billing}?checkout=success`,
     cancel_url: `${base}${routes.billing}?checkout=canceled`,
   });

@@ -147,8 +147,15 @@ function EmailFlow({
 
       {mode === "signup" ? (
         <p className="mt-4 text-center text-xs leading-relaxed text-slate-500">
-          By creating an account you agree to the {siteConfig.name} Terms of
-          Service and Privacy Policy.
+          By creating an account you agree to the {siteConfig.name}{" "}
+          <Link href={routes.terms} className="underline underline-offset-2 hover:text-slate-700">
+            Terms of Service
+          </Link>{" "}
+          and{" "}
+          <Link href={routes.privacy} className="underline underline-offset-2 hover:text-slate-700">
+            Privacy Policy
+          </Link>
+          .
         </p>
       ) : null}
 

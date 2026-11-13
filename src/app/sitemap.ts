@@ -25,5 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     })),
     { url: absoluteUrl(routes.signup), changeFrequency: "yearly", priority: 0.5 },
+    { url: absoluteUrl(routes.terms), changeFrequency: "yearly", priority: 0.2 },
+    { url: absoluteUrl(routes.privacy), changeFrequency: "yearly", priority: 0.2 },
   ];
 }

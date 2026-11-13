@@ -20,6 +20,8 @@ export const routes = {
   pricing: "/pricing",
   blog: "/resources/blog",
   blogPost: (slug: string) => `/resources/blog/${slug}`,
+  terms: "/legal/terms",
+  privacy: "/legal/privacy",
 } as const;
 
 /** Login-free employee view opened by the team QR code. */

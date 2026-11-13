@@ -22,6 +22,8 @@ const COLUMNS = [
     links: [
       { label: "Blog", href: routes.blog },
       ...POSTS.slice(0, 3).map((p) => ({ label: p.title.split(":")[0], href: routes.blogPost(p.slug) })),
+      { label: "Terms of Service", href: routes.terms },
+      { label: "Privacy Policy", href: routes.privacy },
     ],
   },
 ];
