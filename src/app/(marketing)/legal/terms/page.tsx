@@ -110,7 +110,7 @@ const SECTIONS: LegalSection[] = [
     title: "Governing law and disputes",
     body: [
       "These terms are governed by the substantive laws of Switzerland, excluding its conflict-of-law rules and the United Nations Convention on Contracts for the International Sale of Goods (CISG).",
-      `Before starting any proceedings, please email us at ${siteConfig.contactEmail} so we can try to resolve the issue informally within 30 days. If we cannot, the courts at our registered office in ${siteConfig.legalSeat} have exclusive jurisdiction, subject to any mandatory law that provides otherwise.`,
+      `Before starting any proceedings, please email us at ${siteConfig.contactEmail} so we can try to resolve the issue informally within 30 days. If we cannot, the competent courts of ${siteConfig.legalSeat} have exclusive jurisdiction, subject to any mandatory law that provides otherwise.`,
     ],
   },
   {

@@ -41,9 +41,12 @@ export const siteConfig = {
    * Legal operator shown in the Terms and Privacy Policy (Swiss e-commerce rules
    * require a name and postal address). null until confirmed by the owner.
    */
-  legalEntity: null as null | { name: string; address: string },
+  legalEntity: { name: "Johanna Keisler (sole proprietor)", address: "Le Montrobert 4, 1483 Frasses, Switzerland" } as null | {
+    name: string;
+    address: string;
+  },
   /** Seat that sets the competent courts in the Terms. */
-  legalSeat: "Switzerland",
+  legalSeat: "the canton of Fribourg, Switzerland",
   links: {
     // Swap for a Cal.com / Calendly link once sales booking is live.
     bookDemo: "/#demo",
