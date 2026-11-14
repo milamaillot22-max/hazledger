@@ -6,6 +6,7 @@ import { FinalCta } from "@/components/marketing/final-cta";
 import { Hero } from "@/components/marketing/hero";
 import { HowItWorks } from "@/components/marketing/how-it-works";
 import { Pricing } from "@/components/marketing/pricing";
+import { ProductVideo } from "@/components/marketing/product-video";
 import { RiskCalculator } from "@/components/marketing/risk-calculator";
 import { Specialties } from "@/components/marketing/specialties";
 
@@ -22,6 +23,7 @@ export default function LandingPage() {
       <Hero />
       <AhaDemo />
       <HowItWorks />
+      <ProductVideo />
       <RiskCalculator />
       <Specialties />
       <Pricing showDetailsLink />
