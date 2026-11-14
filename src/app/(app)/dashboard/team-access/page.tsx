@@ -8,6 +8,7 @@ import { routes } from "@/config/site";
 import { listSdsDocuments } from "@/features/sds/queries";
 import { CopyLinkButton } from "@/features/team-access/components/copy-link-button";
 import { RotateTokenButton } from "@/features/team-access/components/rotate-button";
+import { PrintDurabilityTips } from "@/features/team-access/components/print-durability-tips";
 import { getTeamAccess, renderQrSvg } from "@/features/team-access/queries";
 import { requirePlan } from "@/features/billing/server";
 
@@ -125,6 +126,7 @@ async function TeamAccess({ searchParams }: { searchParams: PageProps<"/dashboar
               </a>
             </Button>
           </div>
+          <PrintDurabilityTips compact className="mt-6" />
         </section>
 
         <div className="space-y-6">

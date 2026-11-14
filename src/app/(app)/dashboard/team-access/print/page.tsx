@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 
 import { routes } from "@/config/site";
 import { PrintButton } from "@/features/team-access/components/print-button";
+import { PrintDurabilityTips } from "@/features/team-access/components/print-durability-tips";
 import { QrPoster } from "@/features/team-access/components/qr-poster";
 import { getTeamAccess, renderQrSvg } from "@/features/team-access/queries";
 import { requirePlan } from "@/features/billing/server";
@@ -24,6 +25,7 @@ export default function PrintPosterPage() {
           <PrintButton />
         </div>
       </div>
+      <PrintDurabilityTips className="mb-6 print:hidden" />
       <Suspense fallback={<div className="aspect-[8.5/11] animate-pulse rounded-2xl bg-slate-100" />}>
         <Poster />
       </Suspense>
